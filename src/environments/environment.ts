@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  botLink: "https://discord.com/api/oauth2/authorize?client_id=714141847035052051&permissions=8&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth%2Fbot&scope=bot&response_type=code&disable_guild_select=true&guild_id=",
+  oauthLink: "https://discord.com/api/oauth2/authorize?client_id=714141847035052051&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth&response_type=code&scope=identify%20guilds"
 };
 
 /*
