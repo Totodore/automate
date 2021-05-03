@@ -1,0 +1,48 @@
+@import '../../../styles.scss';
+
+h1 {
+	text-align: center;
+	font-size: 3rem;
+	line-height: 4.5rem;
+}
+.wrapper {
+  display: flex;
+	.left {
+		position: relative;
+		width: 50%;
+		min-height: calc(100vh - 48px);
+		#chatt {
+			width: 60%;
+			max-width: 200px;
+			height: auto;
+			top: 40%;
+			left: 78%;
+			position: absolute;
+			transform: translate(-50%, -50%);
+			path {
+				position: absolute;
+				stroke-dasharray: 2363;
+				stroke-dashoffset: 2363;
+				animation: svg-animation 2s ease-in;
+				animation-fill-mode: forwards;
+			}
+		}
+		.logo {
+			position: absolute;
+			width: 90%;
+			height: auto;
+			max-width: 300px;
+			top: 60%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			filter: drop-shadow(0 0 0.20rem $accent-color);
+		}
+	}
+}
+
+
+@keyframes svg-animation {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
