@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: "", component: AuthComponent, canActivate: [NoUserGuard] },
   { path: "board", component: DashboardComponent, canActivate: [UserGuard] },
   { path: "board/:id", component: DashboardComponent, canActivate: [UserGuard] },
-  { path: "**/*", redirectTo: "" }
+  { path: "**", redirectTo: "" },
 ];
 
 @NgModule({
