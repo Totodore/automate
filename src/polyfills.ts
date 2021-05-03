@@ -61,3 +61,30 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+ (function(elmProto){
+  if ('scrollTopMax' in elmProto) {
+      return;
+  }
+  Object.defineProperties(elmProto, {
+    'scrollTopMax': {
+      get: function scrollTopMax(this: HTMLElement) {
+        return this.scrollHeight - this.clientHeight;
+      }
+    },
+    'scrollLeftMax': {
+      get: function scrollLeftMax(this: HTMLElement) {
+        return this.scrollWidth - this.clientWidth;
+      }
+    },
+    'isMaxScrollTop': {
+      get: function isMaxScrollTop(this: HTMLElement) {
+        return this.scrollHeight - Math.abs(this.scrollTop) - this.clientHeight < 1;
+      }
+    },
+    'isMaxScrollLeft': {
+      get: function isMaxScrollLeft(this: HTMLElement) {
+        return this.scrollWidth - Math.abs(this.scrollLeft) - Math.floor(this.clientWidth) < 1;
+      }
+    }
+  });
+ })(HTMLElement.prototype);
