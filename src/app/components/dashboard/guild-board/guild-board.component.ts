@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class GuildBoardComponent implements OnInit {
 
   @Input()
-  private guildId?: string;
+  public guildId?: string;
   
   constructor() { }
 
