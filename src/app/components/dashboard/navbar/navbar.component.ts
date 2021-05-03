@@ -16,19 +16,19 @@ export class NavbarComponent implements OnInit {
 
   public readonly cdn = environment.discordCdn;
   constructor(
-    public readonly api: ApiService
+    public readonly api: ApiService,
   ) { }
 
   ngOnInit(): void {
-    console.log(this.api.profile);
   }
 
-  public get guilds(): GuildInfo[] | undefined {
-    return this.api.profile?.guilds;
-  }
-
+  
   public onGuildDrop(event: CdkDragDrop<GuildInfo[]>) {
     if (this.api.profile?.guilds)
-      moveItemInArray(this.api.profile.guilds, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.api.profile.guilds, event.previousIndex, event.currentIndex);
+  }
+  
+  public get guilds(): GuildInfo[] | undefined {
+    return this.api.profile?.guilds;
   }
 }
