@@ -5,6 +5,9 @@
 }
 .wrapper {
 	overflow: auto;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 	.guilds {
 		display: flex;
 		padding-top: 10px;
@@ -26,7 +29,7 @@
 				content: "";
 				position: absolute;
 				left: 0;
-				height: 50%;
+				height: 40%;
 				width: 4px;
 				background-color: white;
 				top: 25%;

@@ -21,13 +21,17 @@ import { NavbarComponent } from './components/dashboard/navbar/navbar.component'
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GuildBoardComponent } from './components/dashboard/guild-board/guild-board.component';
+import { MenuComponent } from './components/dashboard/menu/menu.component';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     DashboardComponent,
     NavbarComponent,
-    GuildBoardComponent
+    GuildBoardComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,8 @@ import { GuildBoardComponent } from './components/dashboard/guild-board/guild-bo
     MatDividerModule,
     MatTabsModule,
     MatTooltipModule,
-    DragDropModule
+    DragDropModule,
+    MatTableModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
