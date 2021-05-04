@@ -6,9 +6,9 @@
 		height: 100%;
 		width: 70px;
 		display: flex;
-		transform: translateX(-90%);
+		transform: translateX(-30%);
 		opacity: 0.2;
-		animation: navbar-fade-in 500ms ease-in;
+		animation: navbar-fade-in 250ms ease;
 		animation-fill-mode: forwards;
 	}
 }
