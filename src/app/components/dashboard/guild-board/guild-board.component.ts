@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -7,12 +8,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GuildBoardComponent implements OnInit {
 
-  @Input()
-  public guildId?: string;
+  public guildId: string | null = null;
   
-  constructor() { }
+  constructor(
+    private readonly route: ActivatedRoute
+  ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.route.paramMap.subscribe(e => this.guildId = e.get("id"));
   }
 
 }

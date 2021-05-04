@@ -1,4 +1,5 @@
 <div class="wrapper">
 	<app-navbar [currentGuildId]="currentGuildId"></app-navbar>
-	<app-guild-board [guildId]="currentGuildId"></app-guild-board>
+	<!-- <app-guild-board *ngIf="currentGuildId" [guildId]="currentGuildId"></app-guild-board> -->
+	<router-outlet></router-outlet>
 </div>

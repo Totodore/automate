@@ -1,3 +1,5 @@
+import { GuildBoardComponent } from './components/dashboard/guild-board/guild-board.component';
+import { MenuComponent } from './components/dashboard/menu/menu.component';
 import { NoUserGuard } from './guards/no-user.guard';
 import { UserGuard } from './guards/user.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -7,8 +9,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: "", component: AuthComponent, canActivate: [NoUserGuard] },
-  { path: "board", component: DashboardComponent, canActivate: [UserGuard] },
-  { path: "board/:id", component: DashboardComponent, canActivate: [UserGuard] },
+  {
+    path: "board", component: DashboardComponent, canActivate: [UserGuard],
+    children: [
+      { path: "", component: MenuComponent },
+      { path: ":id", component: GuildBoardComponent }
+    ]
+  },
+  // { path: "board/:id", component: DashboardComponent, canActivate: [UserGuard] },
   { path: "**", redirectTo: "" },
 ];
 
