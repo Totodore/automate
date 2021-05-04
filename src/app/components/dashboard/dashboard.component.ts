@@ -1,3 +1,4 @@
+import { GuildInfo } from 'passport-discord';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
 

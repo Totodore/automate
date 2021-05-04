@@ -10,18 +10,59 @@
 		padding-top: 10px;
 		flex-direction: column;
 		align-items: center;
-		.guild {
-			width: 95%;
+		.guild, .menu {
+			width: 90%;
 			cursor: pointer;
-			img {
+			position: relative;
+			img, mat-icon {
 				width: 100%;
 				height: auto;
 				border-radius: 25px;
 				@include mat-elevation(3);
 				transition: all 200ms;
+				margin-left: 3px;
 			}
-			&:hover img {
-				border-radius: 15px;
+			&::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				height: 50%;
+				width: 4px;
+				background-color: white;
+				top: 25%;
+				border-radius: 0 10px 10px 0;
+				transition: all 250ms;
+				opacity: 0;
+				transform: scale(0.2);
+			}
+			&:hover {
+				img, mat-icon {
+					border-radius: 15px;
+				}
+				&::before {
+					visibility: visible;
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
+			&.selected::before {
+				visibility: visible;
+				opacity: 1;
+				transform: scale(1);
+				height: 70%;
+				top: 15%;
+			}
+		}
+		.menu {
+			margin-bottom: 3px;
+			mat-icon {
+				background-color: #eaa256;
+				color: black;
+				font-size: 30px;
+				height: 48.65px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
 		}
 	}

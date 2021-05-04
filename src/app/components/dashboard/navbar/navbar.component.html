@@ -1,6 +1,9 @@
 <div class="wrapper" #wrapper cdkDropList (cdkDropListDropped)="onGuildDrop($event)">
 	<div class="guilds">
-		<button cdkDrag [routerLink]="'/board/' + guild.id" class="guild" *ngFor="let guild of guilds" [matTooltip]="guild.name" matTooltipPosition="right">
+		<button matTooltip="Menu" matTooltipPosition="right" class="menu" [class.selected]="!currentGuildId" (click)="onGuildClick()" [routerLink]="'board'">
+			<mat-icon class="mat-18">menu</mat-icon>
+		</button>
+		<button cdkDrag [routerLink]="'/board/' + guild.id" class="guild" [class.selected]="guild.id == currentGuildId" *ngFor="let guild of guilds" [matTooltip]="guild.name" matTooltipPosition="right">
 			<img [alt]="guild.name +'\'s photo'" [src]="guild.icon ? cdn + '/icons/' + guild.id + '/' + guild.icon + '.jpg?size=256' : 'assets/discord.svg'" draggable="false">
 			<img *cdkDragPreview [alt]="guild.name +'\'s photo'" [src]="guild.icon ? cdn + '/icons/' + guild.id + '/' + guild.icon + '.jpg?size=256' : 'assets/discord.svg'" draggable="false">
 			<div class="placeholder" *cdkDragPlaceholder></div>
