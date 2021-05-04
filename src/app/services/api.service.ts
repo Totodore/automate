@@ -1,3 +1,4 @@
+import { MessageModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -24,11 +25,24 @@ export class ApiService {
     localStorage.removeItem("jwt");
   }
 
+  public async getLastMessages(): Promise<MessageModel[] | undefined> {
+    try {
+      return await this.post("guild/last", this.profile);
+    } catch (e) { console.error(e) }
+    return;
+  }
+
   private async get<R>(path: string, token?: string) {
     if (path.startsWith("/"))
       path = path.substring(1);
     const headers = new HttpHeaders({ Authorization: `Bearer ${token || this.token}` });
     return this.http.get<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
+  }
+  private async post<Q, R>(path: string, body: Q) {
+    if (path.startsWith("/"))
+      path = path.substring(1);
+    const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+    return this.http.post<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
   }
 
   private get token(): string {
