@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>
+  {{ discordGuild.name }}'s settings
+</h1>
+
+<div mat-dialog-content style="text-align: center;">
+	<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all users to see programmed messages</mat-slide-toggle><br>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button color="accent" mat-dialog-close>Close</button>
+</div>
