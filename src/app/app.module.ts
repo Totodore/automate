@@ -10,6 +10,7 @@ import { appearance } from './style/default';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconModule } from "@angular/material/icon";
 import { FormsModule } from "@angular/forms";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
@@ -26,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { LastMessagesComponent } from './components/dashboard/menu/last-messages/last-messages.component';
 import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/added-guilds.component';
 import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-header/guild-header.component';
+import { GuildOptionsComponent } from './components/dashboard/guild-board/guild-options/guild-options.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-h
     MenuComponent,
     LastMessagesComponent,
     AddedGuildsComponent,
-    GuildHeaderComponent
+    GuildHeaderComponent,
+    GuildOptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-h
     MatTabsModule,
     MatTooltipModule,
     DragDropModule,
-    MatTableModule
+    MatTableModule,
+    MatSlideToggleModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
