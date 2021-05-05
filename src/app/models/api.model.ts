@@ -1,14 +1,4 @@
 import { Profile, GuildInfo } from 'passport-discord';
-export class GuildModel {
-  constructor(
-    public id: string,
-    public timezone: string,
-    public timezoneCode: string,
-    public messages: MessageModel[],
-    public name?: string,
-    public profile?: string
-  ) { }
-}
 export class UserModel {
   constructor(  
     public id: string,
@@ -28,7 +18,6 @@ export class MessageModel {
     public rawMessage: string,
     public description: string,
     public type: MessageType,
-    public guild: GuildModel,
     public creator: UserModel,
     public files: File[],
     public updatedDate: Date,
@@ -45,4 +34,26 @@ export interface DiscordGuild extends GuildInfo {
 export enum MessageType {
   PONCTUAL,
   FREQUENTIAL
+}
+
+
+export class GuildReqModel {
+  
+  constructor(
+    public id: string,
+    public messages: MessageModel[],
+    public channels: GuildElement[],
+    public timezone: string,
+    public timezoneCode: string,
+    public name: string,
+    public roles: GuildElement[],
+    public maxMessages: number,
+    public scope: boolean
+  ) {}
+
+}
+
+export interface GuildElement {
+  name: string;
+  id: string;
 }
