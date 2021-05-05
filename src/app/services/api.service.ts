@@ -1,4 +1,4 @@
-import { DiscordProfile, MessageModel } from './../models/api.model';
+import { DiscordProfile, MessageModel, GuildReqModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -31,6 +31,17 @@ export class ApiService {
     return;
   }
 
+  public async getGuild(guildId: string): Promise<GuildReqModel | undefined> {
+    try {
+      return await this.get<GuildReqModel>(`guild/${guildId}`);
+    } catch (e) { console.error(e) }
+    return;
+  }
+
+  public async patchGuildScope(scope: boolean, guildId: string) {
+    return await this.patch<void, void>(`guild/${guildId}/scope?scope=${scope}`);
+  }
+
   private async get<R>(path: string, token?: string) {
     if (path.startsWith("/"))
       path = path.substring(1);
@@ -42,6 +53,12 @@ export class ApiService {
       path = path.substring(1);
     const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
     return this.http.post<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
+  }
+  private async patch<Q, R>(path: string, body?: Q) {
+    if (path.startsWith("/"))
+      path = path.substring(1);
+    const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+    return this.http.patch<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
   }
 
   private get token(): string {
