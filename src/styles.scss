@@ -28,16 +28,17 @@ body {
 
 @include mat-core();
 
+$accent-color: #F79058;
 $palette: (
-	50: #EAA256,
-	100: #EAA256,
-	500: #EAA256,
-	700: #EAA256,
+	50: accent-color,
+	100: accent-color,
+	500: accent-color,
+	700: accent-color,
 	contrast: (
-		A50: #EAA256,
-		A100: #EAA256,
-		A500: #EAA256,
-		A700: #EAA256,
+		A50: accent-color,
+		A100: accent-color,
+		A500: accent-color,
+		A700: accent-color,
 	)
 );
 
@@ -53,7 +54,6 @@ $theme: mat-dark-theme((color: (primary: $primary, accent: $accent)));
 // that you are using.
 @include angular-material-theme($theme);
 
-$accent-color: #EAA256;
 
 button {
 	background-color: inherit;
@@ -65,4 +65,11 @@ button {
 	font-weight: 500 !important;
 	font-size: 0.7rem;
 	letter-spacing: 0.05rem;
+}
+
+@keyframes fade-in {
+	to {
+		transform: inherit;
+		opacity: 1;
+	}
 }

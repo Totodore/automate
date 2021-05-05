@@ -1,5 +1,5 @@
 @import '~@angular/material/theming';
-
+@import '../../../../styles.scss';
 .divider {
 	height: 100%;
 }
@@ -59,7 +59,7 @@
 		.menu {
 			margin-bottom: 3px;
 			mat-icon {
-				background-color: #eaa256;
+				background-color: $accent-color;
 				color: black;
 				font-size: 30px;
 				height: 48.65px;

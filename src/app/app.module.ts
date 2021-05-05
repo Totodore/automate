@@ -23,6 +23,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GuildBoardComponent } from './components/dashboard/guild-board/guild-board.component';
 import { MenuComponent } from './components/dashboard/menu/menu.component';
 import { MatTableModule } from '@angular/material/table';
+import { LastMessagesComponent } from './components/dashboard/menu/last-messages/last-messages.component';
+import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/added-guilds.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { MatTableModule } from '@angular/material/table';
     DashboardComponent,
     NavbarComponent,
     GuildBoardComponent,
-    MenuComponent
+    MenuComponent,
+    LastMessagesComponent,
+    AddedGuildsComponent
   ],
   imports: [
     BrowserModule,

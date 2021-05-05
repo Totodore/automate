@@ -1,12 +1,12 @@
+import { Profile, GuildInfo } from 'passport-discord';
 export class GuildModel {
   constructor(
     public id: string,
-    public token: string,
-    public tokenExpires: number,
-    public refreshToken: string,
     public timezone: string,
     public timezoneCode: string,
     public messages: MessageModel[],
+    public name?: string,
+    public profile?: string
   ) { }
 }
 export class UserModel {
@@ -34,6 +34,13 @@ export class MessageModel {
     public updatedDate: Date,
     public channelName?: string,
   ) { }
+}
+
+export interface DiscordProfile extends Profile {
+  guilds: DiscordGuild[];
+}
+export interface DiscordGuild extends GuildInfo {
+  added: boolean;
 }
 export enum MessageType {
   PONCTUAL,

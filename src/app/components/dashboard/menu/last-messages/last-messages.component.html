@@ -1,0 +1,46 @@
+<div class="wrapper" *ngIf="loaded">
+	<h1>My last server messages:</h1>
+	<table mat-table [dataSource]="messages">
+
+		<tr mat-header-row *matHeaderRowDef="columns"></tr>
+		<tr mat-row *matRowDef="let row; columns: columns;" [routerLink]="row.guild.id"></tr>
+
+		<ng-container matColumnDef="Server">
+			<th mat-header-cell *matHeaderCellDef>Server</th>
+			<td mat-cell *matCellDef="let element"> 
+				<div class="server-wrapper">
+					<img *ngIf="element.guild.profile" draggable="false" [src]="cdn + '/icons/' + element.guild.id + '/' + element.guild.profile + '.jpg?size=128'"/> 
+					{{ element.guild.name }} 
+				</div>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Description">
+			<th mat-header-cell *matHeaderCellDef>Description</th>
+			<td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="Message">
+			<th mat-header-cell *matHeaderCellDef>Message</th>
+			<td mat-cell *matCellDef="let element"> 
+				{{ element.parsedMessage }} 
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Author">
+			<th mat-header-cell *matHeaderCellDef>Creator</th>
+			<td mat-cell *matCellDef="let element">
+				<div class="server-wrapper">
+					<img *ngIf="element.guild.profile" draggable="false" [src]="cdn + '/avatars/' + element.creator.id + '/' + element.creator.profile + '.jpg?size=128'"/> 
+					{{ element.creator.name }} 
+				</div>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Attachments">
+			<th mat-header-cell *matHeaderCellDef>Attachments</th>
+			<td mat-cell *matCellDef="let element"> {{ element.files.length }} </td>
+		</ng-container>
+	</table>	
+</div>
+<h1 class="error" *ngIf="errored">Impossible to fetch last guild messages !</h1>

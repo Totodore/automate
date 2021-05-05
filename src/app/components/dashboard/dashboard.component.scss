@@ -11,6 +11,12 @@
 		animation: navbar-fade-in 250ms ease;
 		animation-fill-mode: forwards;
 	}
+	::ng-deep {
+		app-menu {
+			flex: 1;
+			overflow: auto;
+		}
+	}
 }
 
 

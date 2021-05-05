@@ -1,22 +1,21 @@
-import { MessageModel } from './../models/api.model';
+import { DiscordProfile, MessageModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Profile } from 'passport-discord';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  public profile?: Profile;
+  public profile?: DiscordProfile;
 
   constructor(
     private readonly http: HttpClient
   ) { }
 
   public async login(token?: string) {
-    this.profile = await this.get<Profile>("user/me", token || this.token);
+    this.profile = await this.get<DiscordProfile>("user/me", token || this.token);
     if (token)
       localStorage.setItem("jwt", token);
   }

@@ -16,7 +16,6 @@ const routes: Routes = [
       { path: ":id", component: GuildBoardComponent }
     ]
   },
-  // { path: "board/:id", component: DashboardComponent, canActivate: [UserGuard] },
   { path: "**", redirectTo: "" },
 ];
 

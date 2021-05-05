@@ -1,0 +1,7 @@
+<div class="wrapper">
+	<h1>Added Servers:</h1>
+	<div class="guilds">
+		<img *ngFor="let guild of guilds" 
+			[src]="guild.icon ? cdn + '/icons/' + guild.id + '/' + guild.icon + '.jpg?size=128' : 'assets/discord.svg'">
+	</div>
+</div>
