@@ -25,6 +25,7 @@ import { MenuComponent } from './components/dashboard/menu/menu.component';
 import { MatTableModule } from '@angular/material/table';
 import { LastMessagesComponent } from './components/dashboard/menu/last-messages/last-messages.component';
 import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/added-guilds.component';
+import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-header/guild-header.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/a
     GuildBoardComponent,
     MenuComponent,
     LastMessagesComponent,
-    AddedGuildsComponent
+    AddedGuildsComponent,
+    GuildHeaderComponent
   ],
   imports: [
     BrowserModule,
