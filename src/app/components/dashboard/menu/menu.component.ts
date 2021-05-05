@@ -10,4 +10,24 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent { }
+export class MenuComponent implements OnInit { 
+
+  public messages!: MessageModel[];
+  public status = APIState.LOADING;
+
+  constructor(
+    private readonly api: ApiService
+  ) { }
+  
+  public async ngOnInit(): Promise<void> {
+    this.messages = await this.api.getLastMessages() || [];
+    if (!this.messages)
+      this.status = APIState.ERROR;
+    else
+      this.status = APIState.LOADED;
+  }
+  
+  public get displayable() {
+    return this.status != APIState.LOADING;
+  }
+}
