@@ -3,7 +3,6 @@ import { ApiService } from 'src/app/services/api.service';
 import { GuildReqModel, DiscordGuild } from './../../../../models/api.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import * as moment from "moment-timezone";
 @Component({
   selector: 'app-guild-options',
   templateUrl: './guild-options.component.html',
@@ -14,7 +13,7 @@ export class GuildOptionsComponent {
   public guild: GuildReqModel;
   public discordGuild: DiscordGuild;
   public timezoneInput?: string;
-  public timezones = TIMEZONES.map(el => el.replaceAll("_", " ").replaceAll("/", " - "));
+  public timezones = TIMEZONES;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: [DiscordGuild, GuildReqModel],
@@ -27,17 +26,26 @@ export class GuildOptionsComponent {
   public async updateGuildScope() {
     try {
       await this.api.patchGuildScope(this.guild.scope, this.guild.id);
+      this.snackbar.snack("Messages visibility successfully updated!");
     } catch (e) {
       console.error(e);
-      this.snackbar.snack("Error while trying to change guild options !");
+      this.snackbar.snack("Error while trying to change guild options!");
       this.guild.scope = !this.guild.scope;
     }
   }
 
-  public searchTz() {
-    this.timezones = TIMEZONES
-      .filter(el => el.includes(this.timezoneInput?.toLowerCase() || ""))
-      .map(el => el.replaceAll("_", " ").replaceAll("/", " - "));
+  public async updateGuildTimezone() {
+    if (!this.timezoneInput || !this.timezones.includes(this.timezoneInput))
+      return;
+    try {
+      await this.api.patchGuildTimezone(this.timezoneInput, this.guild.id);
+      this.guild.timezone = this.timezoneInput;
+      this.snackbar.snack("Timezone successfuly updated!");
+    } catch (e) {
+      console.error(e);
+      this.snackbar.snack("Error while trying to change guild options!");
+      this.timezoneInput = "";
+    }
   }
 }
 

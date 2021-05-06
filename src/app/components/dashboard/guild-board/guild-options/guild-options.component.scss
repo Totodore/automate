@@ -1,6 +1,29 @@
+@import '../../../../../styles.scss';
+@import '~@angular/material/theming';
+
 section {
 	margin: 15px 0;
 }
 .tz-picker {
+	position: relative;
 	width: 100%;
+	mat-form-field {
+		width: 100%;
+	}
+	.autocomplete {
+		@include mat-elevation(1);
+		z-index: 100;
+		position: absolute;
+		max-height: 217px;
+		width: 100%;
+		overflow: auto;
+		background-color: #424242;
+		border-radius: 0 0 6px 6px;
+		top: 55px;
+		button {
+			text-align: left;
+			box-shadow: none;
+			width: 100%;
+		}
+	}
 }

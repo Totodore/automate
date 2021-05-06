@@ -41,6 +41,9 @@ export class ApiService {
   public async patchGuildScope(scope: boolean, guildId: string) {
     return await this.patch<void, void>(`guild/${guildId}/scope?scope=${scope}`);
   }
+  public async patchGuildTimezone(tz: string, guildId: string) {
+    return await this.patch<void, void>(`guild/${guildId}/timezone?timezone=${tz}`);
+  }
 
   private async get<R>(path: string, token?: string) {
     if (path.startsWith("/"))

@@ -24,11 +24,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GuildBoardComponent } from './components/dashboard/guild-board/guild-board.component';
 import { MenuComponent } from './components/dashboard/menu/menu.component';
 import { MatTableModule } from '@angular/material/table';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { LastMessagesComponent } from './components/dashboard/menu/last-messages/last-messages.component';
 import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/added-guilds.component';
 import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-header/guild-header.component';
 import { GuildOptionsComponent } from './components/dashboard/guild-board/guild-options/guild-options.component';
+import { MomentTimezonePickerModule } from "moment-timezone-picker";
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { GuildOptionsComponent } from './components/dashboard/guild-board/guild-
     DragDropModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatAutocompleteModule
+    MomentTimezonePickerModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },

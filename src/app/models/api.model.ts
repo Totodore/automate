@@ -44,7 +44,6 @@ export class GuildReqModel {
     public messages: MessageModel[],
     public channels: GuildElement[],
     public timezone: string,
-    public timezoneCode: string,
     public name: string,
     public roles: GuildElement[],
     public maxMessages: number,

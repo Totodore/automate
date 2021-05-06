@@ -2,19 +2,23 @@
   {{ discordGuild.name }}'s settings
 </h1>
 
-<div mat-dialog-content style="text-align: center;">
-	<section>
-		<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all users to see programmed messages</mat-slide-toggle><br>
-	</section>
+<div style="text-align: center;">
 	<section>
 		<h3>Change my server timezone:</h3>
-		<mat-form-field color="accent" class="tz-picker">
-			<mat-label>Timezones</mat-label>
-			<input type="text" matInput [matAutocomplete]="timezonesChoices" [(ngModel)]="timezoneInput" (ngModelChange)="searchTz()">
-			<mat-autocomplete #timezonesChoices="matAutocomplete">
-				<mat-option *ngFor="let tz of timezones" [value]="tz">{{ tz }}</mat-option>
-			</mat-autocomplete>
-		</mat-form-field>
+		<div class="tz-picker">
+			<mat-form-field color="accent">
+				<mat-label>Timezones</mat-label>
+				<input type="text" matInput [(ngModel)]="timezoneInput" autocomplete="off" (ngModelChange)="updateGuildTimezone()">
+			</mat-form-field>
+			<div class="autocomplete" *ngIf="(timezoneInput?.length || 0) >  2 && !timezones.includes(timezoneInput || '')">
+				<ng-container *ngFor="let tz of timezones">
+					<button *ngIf="tz.toLowerCase().includes(timezoneInput?.toLowerCase() || '')" mat-button (click)="timezoneInput = tz; updateGuildTimezone()">{{ tz }}</button>
+				</ng-container>
+			</div>
+		</div>
+	</section>
+	<section>
+		<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all users to see programmed messages</mat-slide-toggle><br>
 	</section>
 </div>
 
