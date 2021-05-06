@@ -3,7 +3,19 @@
 </h1>
 
 <div mat-dialog-content style="text-align: center;">
-	<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all users to see programmed messages</mat-slide-toggle><br>
+	<section>
+		<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all users to see programmed messages</mat-slide-toggle><br>
+	</section>
+	<section>
+		<h3>Change my server timezone:</h3>
+		<mat-form-field color="accent" class="tz-picker">
+			<mat-label>Timezones</mat-label>
+			<input type="text" matInput [matAutocomplete]="timezonesChoices" [(ngModel)]="timezoneInput" (ngModelChange)="searchTz()">
+			<mat-autocomplete #timezonesChoices="matAutocomplete">
+				<mat-option *ngFor="let tz of timezones" [value]="tz">{{ tz }}</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
+	</section>
 </div>
 
 <div mat-dialog-actions align="end">

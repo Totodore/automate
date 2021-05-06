@@ -6,4 +6,8 @@ declare global {
     isMaxScrollTop: boolean;
     isMaxScrollLeft: boolean;
   }
+
+  interface String {
+    replaceAll(needle: string, value: string): string;
+  }
 }

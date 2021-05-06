@@ -50,6 +50,10 @@ export class GuildHeaderComponent implements OnInit {
   }
   
   public onOptionsClick() {
-    this.dialogs.open(GuildOptionsComponent, { data: [this.discordGuild, this.guild] });
+    this.dialogs.open(GuildOptionsComponent, {
+      data: [this.discordGuild, this.guild],
+      maxHeight: "90%",
+      // width: "800px"
+    });
   }
 }
