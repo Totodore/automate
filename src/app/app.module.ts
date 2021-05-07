@@ -29,6 +29,7 @@ import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/a
 import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-header/guild-header.component';
 import { GuildOptionsComponent } from './components/dashboard/guild-board/guild-options/guild-options.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { GuildTableComponent } from './components/dashboard/guild-board/guild-table/guild-table.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     LastMessagesComponent,
     AddedGuildsComponent,
     GuildHeaderComponent,
-    GuildOptionsComponent
+    GuildOptionsComponent,
+    GuildTableComponent
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,6 @@ export class GuildBoardComponent implements OnInit {
   public discordGuild?: DiscordGuild;
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
-  public readonly columns = ["Author", "Description", "Message", "Attachments", "Enabled"];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -31,21 +30,7 @@ export class GuildBoardComponent implements OnInit {
       if (this.guildId) {
         this.discordGuild = this.api.profile?.guilds.find(el => el.id === this.guildId);
         this.guild = await this.api.getGuild(this.guildId);
-        console.log(this.guild);
       }
     });
-  }
-
-  public async updateMessageState(state: boolean, msgId: string) {
-    try {
-      await this.api.patchMessageState(state, msgId, this.guild!.id);
-      this.snackbar.snack(`Message successfully ${state ? "enabled" : "disabled"}!`);
-    } catch (e) {
-      const msg = this.guild!.messages.find(el => el.id === msgId);
-      if (msg)
-        msg.activated = !msg.activated;
-      this.snackbar.snack("Ooops, impossible to update this message");
-      console.error(e);
-    }
   }
 }

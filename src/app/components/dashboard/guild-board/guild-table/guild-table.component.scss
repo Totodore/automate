@@ -1,0 +1,74 @@
+@import '~@angular/material/theming';
+
+h1 {
+	text-align: left;
+	margin: 20px 0;
+	font-size: 2rem;
+	color: whitesmoke;
+}
+
+table {
+	overflow: hidden;
+	width: 100%;
+	box-shadow: none;
+	background-color: inherit;
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+	border-radius: 5px;
+	border-spacing: 5px !important;
+	table-layout: auto;
+	border-collapse: collapse;
+
+	th {
+		font-size: 0.85rem;
+		color: whitesmoke;
+	}
+
+	tr {
+		transition: all 250ms;
+		overflow: hidden;
+
+		&:last-of-type td {
+			border-bottom: none;
+		}
+
+		td {
+			vertical-align: middle;
+		}
+
+		td:last-of-type,
+		th:last-of-type {
+			padding-right: unset;
+		}
+	}
+
+	::ng-deep tbody tr {
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.12);
+		}
+	}
+
+	.server-wrapper {
+		padding: 10px 0;
+		display: flex;
+		align-items: center;
+
+		img {
+			width: 54px;
+			height: 54px;
+			border-radius: 25px;
+			margin-right: 14px;
+			position: relative;
+			@include mat-elevation(3);
+		}
+	}
+	.attachment-wrapper {
+		display: flex;
+		align-items: center;
+		mat-icon {
+			margin-left: 7px;
+			transform: rotate(270deg);
+		}
+	}
+}

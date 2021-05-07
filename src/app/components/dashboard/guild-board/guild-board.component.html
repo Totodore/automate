@@ -1,48 +1,4 @@
 <app-guild-header [bodyWrapper]="wrapper.parentElement" [guild]="guild" [discordGuild]="discordGuild" *ngIf="guild && discordGuild"></app-guild-header>
 <div class="wrapper" #wrapper>
-	<h1 *ngIf="guild && discordGuild" >My server messages:</h1>
-	<table mat-table [dataSource]="guild.messages" *ngIf="guild && discordGuild">
-
-		<tr mat-header-row *matHeaderRowDef="columns"></tr>
-		<tr mat-row *matRowDef="let row; columns: columns;"></tr>
-
-		<ng-container matColumnDef="Author">
-			<th mat-header-cell *matHeaderCellDef>Creator</th>
-			<td mat-cell *matCellDef="let element">
-				<div class="server-wrapper">
-					<img *ngIf="element.creator.profile" draggable="false" [src]="cdn + '/avatars/' + element.creator.id + '/' + element.creator.profile + '.jpg?size=128'"/> 
-					{{ element.creator.name }} 
-				</div>
-			</td>
-		</ng-container>
-
-		<ng-container matColumnDef="Description">
-			<th mat-header-cell *matHeaderCellDef>Description</th>
-			<td mat-cell *matCellDef="let element"> {{ element.description }} </td>
-		</ng-container>
-
-		<ng-container matColumnDef="Message">
-			<th mat-header-cell *matHeaderCellDef>Message</th>
-			<td mat-cell *matCellDef="let element"> 
-				{{ element.parsedMessage }} 
-			</td>
-		</ng-container>
-
-		<ng-container matColumnDef="Attachments">
-			<th mat-header-cell *matHeaderCellDef>Attachments</th>
-			<td mat-cell *matCellDef="let element">
-				<div class="attachment-wrapper">
-					{{ element.files.length }} 
-					<mat-icon class="mat-18" color="accent">attachment</mat-icon>
-				</div>
-			</td>
-		</ng-container>
-
-		<ng-container matColumnDef="Enabled">
-			<th mat-header-cell *matHeaderCellDef>Enabled</th>
-			<td mat-cell *matCellDef="let element"> 
-				<mat-checkbox [(ngModel)]="element.activated" (ngModelChange)="updateMessageState($event, element.id)" color="accent"></mat-checkbox>
-			</td>
-		</ng-container>
-	</table>
+	<app-guild-table [guild]="guild" [discordGuild]="discordGuild" *ngIf="guild && discordGuild"></app-guild-table>
 </div>
