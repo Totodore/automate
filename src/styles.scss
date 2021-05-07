@@ -30,24 +30,24 @@ body {
 
 $accent-color: #F79058;
 $palette: (
-	50: accent-color,
-	100: accent-color,
-	500: accent-color,
-	700: accent-color,
+	50: $accent-color,
+	100: $accent-color,
+	500: $accent-color,
+	700: $accent-color,
 	contrast: (
-		A50: accent-color,
-		A100: accent-color,
-		A500: accent-color,
-		A700: accent-color,
+		A50: $accent-color,
+		A100: $accent-color,
+		A500: $accent-color,
+		A700: $accent-color,
 	)
 );
 
-$primary: mat-palette($palette, 50, 50, 50);
-$accent: mat-palette($palette, 50, 50, 50);
-
+$primary: mat-palette($palette);
+$accent: mat-palette($palette);
+$warn: mat-palette($mat-red);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.
-$theme: mat-dark-theme((color: (primary: $primary, accent: $accent)));
+$theme: mat-dark-theme($primary, $accent, $warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
