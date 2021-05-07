@@ -12,7 +12,7 @@ export class GuildOptionsComponent {
 
   public guild: GuildReqModel;
   public discordGuild: DiscordGuild;
-  public timezoneInput?: string;
+  public timezoneInput: string;
   public timezones = TIMEZONES;
 
   constructor(
@@ -21,6 +21,7 @@ export class GuildOptionsComponent {
     private readonly snackbar: SnackbarService
   ) {
     [this.discordGuild, this.guild] = data;
+    this.timezoneInput = this.guild.timezone;
   }
 
   public async updateGuildScope() {
