@@ -31,7 +31,7 @@
 			<th mat-header-cell *matHeaderCellDef>Creator</th>
 			<td mat-cell *matCellDef="let element">
 				<div class="server-wrapper">
-					<img *ngIf="element.guild.profile" draggable="false" [src]="cdn + '/avatars/' + element.creator.id + '/' + element.creator.profile + '.jpg?size=128'"/> 
+					<img *ngIf="element.creator.profile" draggable="false" [src]="cdn + '/avatars/' + element.creator.id + '/' + element.creator.profile + '.jpg?size=128'"/> 
 					{{ element.creator.name }} 
 				</div>
 			</td>

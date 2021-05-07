@@ -20,6 +20,7 @@ export class MessageModel {
     public type: MessageType,
     public creator: UserModel,
     public files: File[],
+    public activated: boolean,
     public updatedDate: Date,
     public channelName?: string,
   ) { }

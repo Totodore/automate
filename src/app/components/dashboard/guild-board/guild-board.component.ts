@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { GuildReqModel } from './../../../models/api.model';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,6 +15,8 @@ export class GuildBoardComponent implements OnInit {
   public guildId: string | null = null;
   public discordGuild?: DiscordGuild;
   public guild?: GuildReqModel;
+  public readonly cdn = environment.discordCdn;
+  public readonly columns = ["Description", "Message", "Author", "Attachments", "Enabled"];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -26,6 +29,7 @@ export class GuildBoardComponent implements OnInit {
       if (this.guildId) {
         this.discordGuild = this.api.profile?.guilds.find(el => el.id === this.guildId);
         this.guild = await this.api.getGuild(this.guildId);
+        console.log(this.guild);
       }
     });
   }
