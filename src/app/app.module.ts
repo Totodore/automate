@@ -28,7 +28,7 @@ import { LastMessagesComponent } from './components/dashboard/menu/last-messages
 import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/added-guilds.component';
 import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-header/guild-header.component';
 import { GuildOptionsComponent } from './components/dashboard/guild-board/guild-options/guild-options.component';
-import { MomentTimezonePickerModule } from "moment-timezone-picker";
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { MomentTimezonePickerModule } from "moment-timezone-picker";
     DragDropModule,
     MatTableModule,
     MatSlideToggleModule,
-    MomentTimezonePickerModule
+    MatCheckboxModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },

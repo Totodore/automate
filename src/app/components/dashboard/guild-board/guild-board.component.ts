@@ -1,3 +1,4 @@
+import { SnackbarService } from './../../../services/snackbar.service';
 import { environment } from './../../../../environments/environment';
 import { GuildReqModel } from './../../../models/api.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -16,11 +17,12 @@ export class GuildBoardComponent implements OnInit {
   public discordGuild?: DiscordGuild;
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
-  public readonly columns = ["Description", "Message", "Author", "Attachments", "Enabled"];
+  public readonly columns = ["Author", "Description", "Message", "Attachments", "Enabled"];
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly api: ApiService
+    private readonly api: ApiService,
+    private readonly snackbar: SnackbarService
   ) { }
 
   public ngOnInit(): void {
@@ -32,5 +34,18 @@ export class GuildBoardComponent implements OnInit {
         console.log(this.guild);
       }
     });
+  }
+
+  public async updateMessageState(state: boolean, msgId: string) {
+    try {
+      await this.api.patchMessageState(state, msgId, this.guild!.id);
+      this.snackbar.snack(`Message successfully ${state ? "enabled" : "disabled"}!`);
+    } catch (e) {
+      const msg = this.guild!.messages.find(el => el.id === msgId);
+      if (msg)
+        msg.activated = !msg.activated;
+      this.snackbar.snack("Ooops, impossible to update this message");
+      console.error(e);
+    }
   }
 }
