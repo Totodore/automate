@@ -1,4 +1,4 @@
-<h1 *ngIf="guild && discordGuild">My server messages:</h1>
+<h1>My server messages:</h1>
 <table mat-table [dataSource]="guild.messages" *ngIf="guild && discordGuild">
 
 	<tr mat-header-row *matHeaderRowDef="columns"></tr>
