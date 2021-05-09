@@ -1,0 +1,25 @@
+<h1>Add a new frequential message:</h1>
+
+<form>
+	<cron-editor [(cron)]="cron" (cronChange)="onCronChange($event)" [options]="cronOptions">
+	</cron-editor>
+	<mat-divider *ngIf="description"></mat-divider>
+	<div *ngIf="description" class="infos">
+		<p class="desc">{{ description }}</p>
+		<button mat-button (click)="expandedMessage = !expandedMessage">Write my message <mat-icon color="accent" [style]="expandedMessage ? 'transform: rotate(180deg) translateY(3px)' : ''">arrow_downward</mat-icon></button>
+	</div>
+	<mat-divider *ngIf="expandedMessage && description"></mat-divider>
+	<div *ngIf="expandedMessage && description" class="message-builder">
+		<textarea #textarea [(ngModel)]="message" [ngModelOptions]="{standalone: true}" placeholder="Write your message here..." (input)="onInput($event)"></textarea>
+		<mat-divider *ngIf="suggestions.length > 0 && inputMode" class="divider-suggestions"></mat-divider>
+		<div class="suggestions" *ngIf="suggestions.length > 0 && inputMode">
+			<button mat-button class="suggestion-el" *ngFor="let el of suggestions" (click)="onSuggestionsClick(el)">
+				{{ inputMode }}{{ el.name }}
+			</button>
+		</div>
+	</div>
+	<mat-divider *ngIf="expandedMessage && description && message.length > 0" class="divider-channel-picker"></mat-divider>
+	<div *ngIf="expandedMessage && description && message.length > 0" class="channel-picker">
+
+	</div>
+</form>

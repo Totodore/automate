@@ -1,0 +1,108 @@
+@import '../../../../../styles.scss';
+h1 {
+	text-align: left;
+	margin: 20px 0;
+	font-size: 2rem;
+	color: whitesmoke;
+	margin-top: 30px;
+}
+form {
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+	border-radius: 5px;
+	overflow: hidden;
+	.infos {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		.desc {
+			margin: 12px;
+			max-width: calc(100% - 185px);
+			font-size: 0.9rem;
+		}
+		button {
+			margin-right: 4px;
+			mat-icon {
+				font-size: 1.3rem;
+    		margin-left: 5px;
+				transition: all 300ms;
+				transform-origin: center;
+			}
+		}
+	}
+	.message-builder {
+		width: 100%;
+		padding: 6px 9px;
+		box-sizing: border-box;
+		textarea {
+			@extend .mat-body, .mat-body-1, .mat-typography;
+			background: transparent;
+			width: 100%;
+			min-width: 100%;
+			max-width: 100%;
+			height: 100px;
+			max-height: 700px;
+			border: none;
+			outline: none;
+			color: whitesmoke;
+			&::placeholder {
+				@extend .mat-body, .mat-body-1, .mat-typography;
+			}
+		}
+		.divider-suggestions, .suggestions {
+			width: calc(100% + 18px);
+			margin-left: -9px;
+		}
+		.suggestions {
+			height: 34px;
+			padding-left: 5px;
+			.suggestion-el {
+				margin-top: 2px;
+				color: $accent-color;
+				opacity: 0.1;
+				transform: translateX(10px);
+				animation: fade-in 300ms ease;
+				animation-fill-mode: forwards;
+			}
+		}
+	}
+}
+::ng-deep {
+  @import "~cron-editor-material-style/scss/mixin";
+  @include cron-editor-material-style($accent-color);
+	ul {
+		margin-top: 2px !important;
+	}
+	.nav *, .cron-editor-container * {
+		color: whitesmoke !important;
+		border-color: whitesmoke !important;
+		background: #1b1b1b !important;
+	}
+	.nav {
+		border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+	}
+	.well.well-small {
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+	.tab-pane {
+		opacity: 0.2;
+		transform: translateX(-10px);
+		animation: fade-in 300ms ease;
+		animation-fill-mode: forwards;
+	}
+	.timeFormControl, .days {
+		width: 35px !important;
+	}
+	select {
+		margin: 0 5px !important;
+		option {
+			transition: all 250ms !important;
+			cursor: pointer !important;
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.12) !important;
+			}
+		}
+	}
+}
