@@ -88,3 +88,13 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
     }
   });
  })(HTMLElement.prototype);
+
+ 
+String.prototype.insert = function(index: number, what: string) {
+  return index > 0
+      ? this.replace(new RegExp('.{' + index + '}'), '$&' + what)
+      : what + this;
+};
+String.prototype.delete = function(from: number, length: number = 1) {
+  return this.substring(0, from) + this.substring(from + length, this.length);
+}

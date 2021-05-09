@@ -9,5 +9,7 @@ declare global {
 
   interface String {
     replaceAll(needle: string, value: string): string;
+    insert: (index: number, value: string) => string;
+    delete: (from: number, length?: number) => string;
   }
 }
