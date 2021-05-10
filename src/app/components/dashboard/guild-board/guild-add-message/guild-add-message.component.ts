@@ -133,6 +133,10 @@ export class GuildAddMessageComponent implements AfterViewInit {
     this.suggestions = [];
   }
 
+  public addMessage() {
+    
+  }
+
 }
 
 type InputMode = null | "#" | "@";

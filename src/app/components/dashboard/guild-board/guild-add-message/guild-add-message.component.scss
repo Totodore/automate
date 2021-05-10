@@ -72,17 +72,23 @@ form {
 	}
 	.channel-picker {
 		width: 100%;
-		::ng-deep {
-			.mat-form-field-wrapper {
-				margin: 0;
-				padding: 0;
-			}
-			.mat-form-field-outline div {
-				border-color: rgba(255, 255, 255, 0.12);
-				border-bottom: none !important;
-				border-right: none !important;
-				border-left: none !important;
-				border-radius: 0;
+		display: flex;
+		align-items: center;
+		border-top: rgba(255, 255, 255, 0.12) 1px solid;
+		height: 44px;
+		mat-select {
+			flex: 1;
+			margin-left: 10px;
+		}
+		button {
+			margin-left: 5px;
+			margin-right: 4px;
+			border: none;
+			mat-icon {
+				font-size: 1.3rem;
+    		margin-left: 5px;
+				transition: all 300ms;
+				transform-origin: center;
 			}
 		}
 	}
