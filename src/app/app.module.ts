@@ -1,3 +1,4 @@
+import { CronEditorModule } from 'cron-editor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http"
@@ -9,7 +10,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { appearance } from './style/default';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconModule } from "@angular/material/icon";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -29,8 +30,9 @@ import { AddedGuildsComponent } from './components/dashboard/menu/added-guilds/a
 import { GuildHeaderComponent } from './components/dashboard/guild-board/guild-header/guild-header.component';
 import { GuildOptionsComponent } from './components/dashboard/guild-board/guild-options/guild-options.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 import { GuildTableComponent } from './components/dashboard/guild-board/guild-table/guild-table.component';
-
+import { GuildAddMessageComponent } from './components/dashboard/guild-board/guild-add-message/guild-add-message.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,8 @@ import { GuildTableComponent } from './components/dashboard/guild-board/guild-ta
     AddedGuildsComponent,
     GuildHeaderComponent,
     GuildOptionsComponent,
-    GuildTableComponent
+    GuildTableComponent,
+    GuildAddMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,10 @@ import { GuildTableComponent } from './components/dashboard/guild-board/guild-ta
     DragDropModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    CronEditorModule,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },

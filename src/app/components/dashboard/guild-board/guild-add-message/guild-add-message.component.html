@@ -1,7 +1,7 @@
 <h1>Add a new frequential message:</h1>
 
 <form>
-	<cron-editor [(cron)]="cron" (cronChange)="onCronChange($event)" [options]="cronOptions">
+	<cron-editor [cron]="cron" (cronChange)="onCronChange($event)" [options]="cronOptions">
 	</cron-editor>
 	<mat-divider *ngIf="description"></mat-divider>
 	<div *ngIf="description" class="infos">
@@ -10,16 +10,18 @@
 	</div>
 	<mat-divider *ngIf="expandedMessage && description"></mat-divider>
 	<div *ngIf="expandedMessage && description" class="message-builder">
-		<textarea #textarea [(ngModel)]="message" [ngModelOptions]="{standalone: true}" placeholder="Write your message here..." (input)="onInput($event)"></textarea>
+		<textarea #textarea [(ngModel)]="message" [ngModelOptions]="{standalone: true}" placeholder="Write your message here..." (input)="onInput($event)" (keydown)="onKeydown($event)"></textarea>
 		<mat-divider *ngIf="suggestions.length > 0 && inputMode" class="divider-suggestions"></mat-divider>
 		<div class="suggestions" *ngIf="suggestions.length > 0 && inputMode">
-			<button mat-button class="suggestion-el" *ngFor="let el of suggestions" (click)="onSuggestionsClick(el)">
+			<button mat-button class="suggestion-el" *ngFor="let el of suggestions; let i = index" [class.selected]="i === selectedIndex" (click)="onSuggestionsClick(el)">
 				{{ inputMode }}{{ el.name }}
 			</button>
 		</div>
 	</div>
-	<mat-divider *ngIf="expandedMessage && description && message.length > 0" class="divider-channel-picker"></mat-divider>
-	<div *ngIf="expandedMessage && description && message.length > 0" class="channel-picker">
-
-	</div>
+	<!-- <mat-divider *ngIf="expandedMessage && description && message.length > 0" class="divider-channel-picker"></mat-divider> -->
+	<mat-form-field *ngIf="expandedMessage && description && message.length > 0" class="channel-picker">
+		<mat-select [(ngModel)]="selectedChannel" placeholder="Select your channel" [ngModelOptions]="{standalone: true}">
+				<mat-option *ngFor="let item of guild!.channels" [value]="item.id">#{{ item.name }}</mat-option>
+		</mat-select>
+	</mat-form-field>
 </form>

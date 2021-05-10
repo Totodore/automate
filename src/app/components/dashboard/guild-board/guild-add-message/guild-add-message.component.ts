@@ -12,12 +12,14 @@ import { GuildElement } from 'src/app/models/api.model';
 export class GuildAddMessageComponent implements AfterViewInit {
 
 
-  public cron = "* * * * 12";
+  public cron: string = "* * * * 12";
   public description: string | null = "";
   public message: string = "";
   public expandedMessage = false;
   public inputMode: InputMode = null;
   public suggestions: (MemberModel | GuildElement)[] = [];
+  public selectedIndex = 0;
+  public selectedChannel?: string;
   
   private needle = "";
 
@@ -58,8 +60,11 @@ export class GuildAddMessageComponent implements AfterViewInit {
     (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
   }
 
-  public onCronChange(e: string) {
+  public onCronChange(e: Object) {
+    if (typeof e !== "string")
+      return;
     try {
+      this.cron = e;
       this.description = cronDescriptor(e, {
         use24HourTimeFormat: true,
         verbose: true
@@ -67,7 +72,9 @@ export class GuildAddMessageComponent implements AfterViewInit {
     } catch (error) { this.description = null }
   }
 
-  public async onInput(e: InputEvent) {
+  public async onInput(e: Event) {
+    if (!(e instanceof InputEvent))
+      return;
     if ((e.data == " " && this.inputMode) || (e.inputType === "deleteContentBackward" && e.data === this.inputMode)) {
       this.inputMode = null;
       this.needle = "";
@@ -95,13 +102,28 @@ export class GuildAddMessageComponent implements AfterViewInit {
             return el;
           })
         ];
-        console.log(this.suggestions);
       } else {
         const needle = this.needle.toLowerCase().delete(0, 1);
         this.suggestions = this.guild.channels.filter(el => el.name.toLowerCase().includes(needle));
       }
     }
-    console.log(this.inputMode, this.suggestions, e.inputType);
+  }
+
+  public onKeydown(e: KeyboardEvent) {
+    if (!this.inputMode)
+      return;
+    if (e.key == "ArrowRight" && this.textarea?.nativeElement.selectionStart === this.textarea?.nativeElement.value.length) {
+      if (this.selectedIndex <= this.suggestions.length)
+        this.selectedIndex++;
+      else this.selectedIndex = 0;
+      e.preventDefault();
+    } else if (e.key == "ArrowLeft" && this.selectedIndex > 0) {
+      this.selectedIndex--;
+      e.preventDefault();
+    } else if (e.key == "Enter") {
+      e.preventDefault();
+      this.onSuggestionsClick(this.suggestions[this.selectedIndex]);
+    }
   }
 
   public onSuggestionsClick(el: GuildElement) {

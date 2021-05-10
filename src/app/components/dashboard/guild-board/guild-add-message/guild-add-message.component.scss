@@ -63,6 +63,26 @@ form {
 				transform: translateX(10px);
 				animation: fade-in 300ms ease;
 				animation-fill-mode: forwards;
+				transition: background-color 50ms;
+				&.selected {
+					background-color: #ffffff0e;
+				}
+			}
+		}
+	}
+	.channel-picker {
+		width: 100%;
+		::ng-deep {
+			.mat-form-field-wrapper {
+				margin: 0;
+				padding: 0;
+			}
+			.mat-form-field-outline div {
+				border-color: rgba(255, 255, 255, 0.12);
+				border-bottom: none !important;
+				border-right: none !important;
+				border-left: none !important;
+				border-radius: 0;
 			}
 		}
 	}

@@ -57,3 +57,13 @@ export interface GuildElement {
   name: string;
   id: string;
 }
+
+
+export class MemberModel {
+
+  constructor(
+    public name: string,
+    public username: string,
+    public id: string
+  ) {}
+}

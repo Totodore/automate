@@ -1,4 +1,5 @@
-import { DiscordProfile, MessageModel, GuildReqModel } from './../models/api.model';
+import { GuildElement } from 'src/app/models/api.model';
+import { DiscordProfile, MessageModel, GuildReqModel, MemberModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -36,6 +37,9 @@ export class ApiService {
       return await this.get<GuildReqModel>(`guild/${guildId}`);
     } catch (e) { console.error(e) }
     return;
+  }
+  public async getMembers(needle: string, guildId: string): Promise<MemberModel[]> {
+    return await this.get<MemberModel[]>(`guild/${guildId}/members?q=${needle}`);
   }
 
   public async patchGuildScope(scope: boolean, guildId: string) {
