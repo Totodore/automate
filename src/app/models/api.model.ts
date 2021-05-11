@@ -58,7 +58,6 @@ export interface GuildElement {
   id: string;
 }
 
-
 export class MemberModel {
 
   constructor(
@@ -66,4 +65,43 @@ export class MemberModel {
     public username: string,
     public id: string
   ) {}
+}
+
+export class DataMessageModel {
+  constructor(
+    public message: string,
+    public parsedMessage: string,
+  ) {}
+}
+
+export class PostMessageModel extends DataMessageModel {
+  constructor(
+    public channelId: string,
+    public description: string,
+    public message: string,
+    public parsedMessage: string,
+  ) { super(message, parsedMessage) }
+}
+
+export class PostFreqMessageInModel extends PostMessageModel {
+  
+  constructor(
+    public channelId: string,
+    public description: string,
+    public message: string,
+    public parsedMessage: string,
+    public cron: string
+  ) { super(channelId, description, message, parsedMessage) }
+
+}
+
+export class PostPonctMessageInModel extends PostMessageModel {
+
+  constructor(
+    public channelId: string,
+    public description: string,
+    public message: string,
+    public parsedMessage: string,
+    public date: string
+  ) { super(channelId, description, message, parsedMessage) }
 }

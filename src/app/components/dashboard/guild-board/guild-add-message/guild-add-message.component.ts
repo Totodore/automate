@@ -1,6 +1,7 @@
-import { GuildReqModel, MemberModel } from './../../../../models/api.model';
+import { SnackbarService } from './../../../../services/snackbar.service';
+import { GuildReqModel, MemberModel, MessageModel, PostFreqMessageInModel } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
-import { Component, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { CronOptions } from 'cron-editor';
 import { toString as cronDescriptor } from "cronstrue";
 import { GuildElement } from 'src/app/models/api.model';
@@ -20,14 +21,13 @@ export class GuildAddMessageComponent implements AfterViewInit {
   public suggestions: (MemberModel | GuildElement)[] = [];
   public selectedIndex = 0;
   public selectedChannel?: string;
+  public addedTags: Map<string, string> = new Map();
   
   private needle = "";
 
   @ViewChild("textarea")
   private textarea?: ElementRef<HTMLTextAreaElement>;
 
-  @Input()
-  public guild?: GuildReqModel;
 
   public readonly cronOptions: CronOptions = {
        
@@ -53,7 +53,8 @@ export class GuildAddMessageComponent implements AfterViewInit {
 
  };
   constructor(
-    private readonly api: ApiService
+    public readonly api: ApiService,
+    private readonly snackbar: SnackbarService
   ) { }
 
   public ngAfterViewInit(): void {
@@ -91,12 +92,12 @@ export class GuildAddMessageComponent implements AfterViewInit {
       }
     }
     
-    if (this.inputMode && this.guild && this.needle.length > 0) {
+    if (this.inputMode && this.api.currentGuild && this.needle.length > 0) {
       if (this.inputMode === "@") {
         const needle = this.needle.toLowerCase();
         this.suggestions = [
-          ...await this.api.getMembers(needle, this.guild.id),
-          ...this.guild.roles.filter(el => el.name.toLowerCase().includes(needle.substr(1))).map(el => {
+          ...await this.api.getMembers(needle),
+          ...this.api.currentGuild.roles.filter(el => el.name.toLowerCase().includes(needle.substr(1))).map(el => {
             if (el.name.startsWith("@"))
               el.name = el.name.substr(1);
             return el;
@@ -104,7 +105,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
         ];
       } else {
         const needle = this.needle.toLowerCase().delete(0, 1);
-        this.suggestions = this.guild.channels.filter(el => el.name.toLowerCase().includes(needle));
+        this.suggestions = this.api.currentGuild.channels.filter(el => el.name.toLowerCase().includes(needle));
       }
     }
   }
@@ -131,10 +132,35 @@ export class GuildAddMessageComponent implements AfterViewInit {
     this.needle = "";
     this.inputMode = null;
     this.suggestions = [];
+    this.addedTags.set(this.inputMode + el.name, el.id);
   }
 
-  public addMessage() {
-    
+  public async addMessage() {
+    let parsedMessage = this.message;
+    for (const [tag, id] of this.addedTags.entries())
+      parsedMessage = parsedMessage.replaceAll(tag, `<${tag.substr(0, 1)}${id}>`);
+    try {
+      const msg = await this.api.postFreqMessage([], new PostFreqMessageInModel(
+        this.selectedChannel!,
+        this.description!,
+        this.message,
+        parsedMessage,
+        this.cron
+      ));
+      this.api.currentGuild?.messages.push(msg);
+      this.description = null;
+      this.cron = "* * * * 12";
+      this.addedTags = new Map();
+      this.message = "";
+      this.inputMode = null;
+      this.selectedChannel = undefined;
+      this.selectedIndex = 0;
+      this.needle = "";
+      this.snackbar.snack("Message successfuly added!");
+    } catch (e) {
+      console.error(e);
+      this.snackbar.snack("Impossible to post this message!");
+    }
   }
 
 }

@@ -1,3 +1,4 @@
+import { ApiService } from 'src/app/services/api.service';
 import { GuildOptionsComponent } from './../guild-options/guild-options.component';
 import { DiscordGuild, GuildReqModel } from './../../../../models/api.model';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
@@ -15,9 +16,6 @@ export class GuildHeaderComponent implements OnInit {
   public discordGuild!: DiscordGuild;
 
   @Input()
-  public guild!: GuildReqModel;
-
-  @Input()
   public bodyWrapper: HTMLElement | null = null;
 
   @ViewChild("wrapper")
@@ -29,7 +27,8 @@ export class GuildHeaderComponent implements OnInit {
   public readonly cdn = environment.discordCdn;
 
   constructor(
-    private readonly dialogs: MatDialog
+    private readonly dialogs: MatDialog,
+    public readonly api: ApiService
   ) {}
 
   public ngOnInit(): void {
@@ -51,7 +50,7 @@ export class GuildHeaderComponent implements OnInit {
   
   public onOptionsClick() {
     this.dialogs.open(GuildOptionsComponent, {
-      data: [this.discordGuild, this.guild],
+      data: [this.discordGuild, this.api.currentGuild],
       maxHeight: "90%",
       // height: "70%"
       // width: "800px"

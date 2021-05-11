@@ -1,5 +1,5 @@
 <h1>My server messages:</h1>
-<table mat-table [dataSource]="guild.messages" *ngIf="guild && discordGuild">
+<table mat-table [dataSource]="api.currentGuild.messages" *ngIf="api.currentGuild && discordGuild">
 
 	<tr mat-header-row *matHeaderRowDef="columns"></tr>
 	<tr mat-row *matRowDef="let row; columns: columns;"></tr>
@@ -13,6 +13,11 @@
 				{{ element.creator.name }}
 			</div>
 		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="Channel">
+		<th mat-header-cell *matHeaderCellDef>Channel</th>
+		<td mat-cell *matCellDef="let element">#{{ getChannelName(element.channelId) }}</td>
 	</ng-container>
 
 	<ng-container matColumnDef="Description">

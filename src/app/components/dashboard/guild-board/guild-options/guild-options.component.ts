@@ -26,7 +26,7 @@ export class GuildOptionsComponent {
 
   public async updateGuildScope() {
     try {
-      await this.api.patchGuildScope(this.guild.scope, this.guild.id);
+      await this.api.patchGuildScope(this.guild.scope);
       this.snackbar.snack("Messages visibility successfully updated!");
     } catch (e) {
       console.error(e);
@@ -39,7 +39,7 @@ export class GuildOptionsComponent {
     if (!this.timezoneInput || !this.timezones.includes(this.timezoneInput))
       return;
     try {
-      await this.api.patchGuildTimezone(this.timezoneInput, this.guild.id);
+      await this.api.patchGuildTimezone(this.timezoneInput);
       this.guild.timezone = this.timezoneInput;
       this.snackbar.snack("Timezone successfuly updated!");
     } catch (e) {

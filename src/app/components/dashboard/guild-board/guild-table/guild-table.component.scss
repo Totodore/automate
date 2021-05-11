@@ -19,6 +19,7 @@ table {
 	border-collapse: collapse;
 
 	th {
+		padding: 0 10px !important;
 		font-size: 0.85rem;
 		color: whitesmoke;
 	}
@@ -32,6 +33,7 @@ table {
 		}
 
 		td {
+			padding: 0 10px;
 			vertical-align: middle;
 		}
 

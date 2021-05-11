@@ -20,9 +20,9 @@
 	</div>
 	<div class="channel-picker" *ngIf="expandedMessage && description && message.length > 0">
 		<mat-select [(ngModel)]="selectedChannel" placeholder="Select your channel" [ngModelOptions]="{standalone: true}">
-				<mat-option *ngFor="let item of guild!.channels" [value]="item.id">#{{ item.name }}</mat-option>
+				<mat-option *ngFor="let item of api.currentGuild!.channels" [value]="item.id">#{{ item.name }}</mat-option>
 		</mat-select>
-		<button mat-button (click)="addMessage()">Add my message <mat-icon color="accent" class="mat-18">send</mat-icon></button>
+		<button [attr.disabled]="selectedChannel ? null : true" mat-button (click)="addMessage()">Add my message <mat-icon color="accent" class="mat-18">send</mat-icon></button>
 	</div>
 	<!-- <mat-divider *ngIf="expandedMessage && description && message.length > 0" class="divider-channel-picker"></mat-divider> -->
 </form>

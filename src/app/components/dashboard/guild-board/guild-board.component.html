@@ -1,5 +1,5 @@
-<app-guild-header [bodyWrapper]="wrapper.parentElement" [guild]="guild" [discordGuild]="discordGuild" *ngIf="guild && discordGuild"></app-guild-header>
+<app-guild-header [discordGuild]="discordGuild" [bodyWrapper]="wrapper.parentElement" *ngIf="guild && discordGuild"></app-guild-header>
 <div class="wrapper" #wrapper>
-	<app-guild-table [guild]="guild" [discordGuild]="discordGuild" *ngIf="guild && discordGuild"></app-guild-table>
-	<app-guild-add-message [guild]="guild"></app-guild-add-message>
+	<app-guild-table [discordGuild]="discordGuild" *ngIf="guild && discordGuild"></app-guild-table>
+	<app-guild-add-message></app-guild-add-message>
 </div>

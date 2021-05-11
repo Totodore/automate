@@ -1,4 +1,4 @@
-import { GuildElement } from 'src/app/models/api.model';
+import { GuildElement, PostFreqMessageInModel } from 'src/app/models/api.model';
 import { DiscordProfile, MessageModel, GuildReqModel, MemberModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 export class ApiService {
 
   public profile?: DiscordProfile;
+  public currentGuild?: GuildReqModel;
 
   constructor(
     private readonly http: HttpClient
@@ -34,22 +35,30 @@ export class ApiService {
 
   public async getGuild(guildId: string): Promise<GuildReqModel | undefined> {
     try {
-      return await this.get<GuildReqModel>(`guild/${guildId}`);
+      return this.currentGuild = await this.get<GuildReqModel>(`guild/${guildId}`);
     } catch (e) { console.error(e) }
     return;
   }
-  public async getMembers(needle: string, guildId: string): Promise<MemberModel[]> {
-    return await this.get<MemberModel[]>(`guild/${guildId}/members?q=${needle}`);
+  public async getMembers(needle: string): Promise<MemberModel[]> {
+    return await this.get<MemberModel[]>(`guild/${this.currentGuild?.id}/members?q=${needle}`);
   }
 
-  public async patchGuildScope(scope: boolean, guildId: string) {
-    return await this.patch<void, void>(`guild/${guildId}/scope?scope=${scope}`);
+  public async patchGuildScope(scope: boolean) {
+    return await this.patch<void, void>(`guild/${this.currentGuild?.id}/scope?scope=${scope}`);
   }
-  public async patchGuildTimezone(tz: string, guildId: string) {
-    return await this.patch<void, void>(`guild/${guildId}/timezone?timezone=${tz}`);
+  public async patchGuildTimezone(tz: string) {
+    return await this.patch<void, void>(`guild/${this.currentGuild?.id}/timezone?timezone=${tz}`);
   }
-  public async patchMessageState(state: boolean, msgId: string, guildId: string) {
-    return await this.patch<void, void>(`guild/${guildId}/message/${msgId}/state?state=${state}`);
+  public async patchMessageState(state: boolean, msgId: string) {
+    return await this.patch<void, void>(`guild/${this.currentGuild?.id}/message/${msgId}/state?state=${state}`);
+  }
+  public async postFreqMessage(files: File[], body: Partial<PostFreqMessageInModel>): Promise<MessageModel> {
+    const formData = new FormData();
+    for (const [key, val] of Object.entries(body))
+      formData.append(key, val!);
+    for (const file of files)
+      formData.append("files", file);
+    return await this.post(`guild/${this.currentGuild?.id}/message/freq`, body);
   }
 
   private async get<R>(path: string, token?: string) {
