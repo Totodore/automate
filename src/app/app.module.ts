@@ -33,6 +33,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { GuildTableComponent } from './components/dashboard/guild-board/guild-table/guild-table.component';
 import { GuildAddMessageComponent } from './components/dashboard/guild-board/guild-add-message/guild-add-message.component';
+import { NoGuildComponent } from './components/dashboard/no-guild/no-guild.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,8 @@ import { GuildAddMessageComponent } from './components/dashboard/guild-board/gui
     GuildHeaderComponent,
     GuildOptionsComponent,
     GuildTableComponent,
-    GuildAddMessageComponent
+    GuildAddMessageComponent,
+    NoGuildComponent
   ],
   imports: [
     BrowserModule,

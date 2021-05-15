@@ -1,3 +1,6 @@
+import { GuildGuard } from './guards/guild.guard';
+import { NoGuildComponent } from './components/dashboard/no-guild/no-guild.component';
+import { NoGuildGuard } from './guards/no-guild.guard';
 import { GuildBoardComponent } from './components/dashboard/guild-board/guild-board.component';
 import { MenuComponent } from './components/dashboard/menu/menu.component';
 import { NoUserGuard } from './guards/no-user.guard';
@@ -13,7 +16,8 @@ const routes: Routes = [
     path: "board", component: DashboardComponent, canActivate: [UserGuard],
     children: [
       { path: "", component: MenuComponent },
-      { path: ":id", component: GuildBoardComponent }
+      { path: ":id", component: GuildBoardComponent, canActivate: [NoGuildGuard] },
+      { path: ":id/add", component: NoGuildComponent, canActivate: [GuildGuard] }
     ]
   },
   { path: "**", redirectTo: "" },

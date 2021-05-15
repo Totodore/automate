@@ -1,10 +1,11 @@
 <div class="wrapper">
 	<ng-container *ngIf="displayable">
-		<app-last-messages [messages]="messages" [status]	="status"></app-last-messages>
+		<app-last-messages [messages]="messages" [status]="status"></app-last-messages>
 		<app-added-guilds></app-added-guilds>
 
 	</ng-container>
 
-	<a *ngIf="api.profile?.joinedServer" class="join-btn" mat-stroked-button href="https://discord.gg/hBWPKpa" target="_blank">Join the official Automate
+	<a *ngIf="api.profile?.joinedServer" class="join-btn" mat-stroked-button href="https://discord.gg/hBWPKpa"
+		target="_blank">Join the official Automate
 		server !</a>
 </div>

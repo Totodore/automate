@@ -16,17 +16,14 @@ export class NoUserGuard implements CanActivate {
   ) { }
   
   public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // this.router.navigateByUrl("board");
     if (this.api.logged) {
-      this.router.navigateByUrl("board");
-      return false;
+      return this.router.parseUrl("/board");
     }
     const token = route.queryParamMap.get("token");
     if (token) {
       try {
         await this.api.login(token);
-        this.router.navigateByUrl("board");
-        return false;
+        return this.router.parseUrl("/board");
       } catch (e) {
         this.snackbar.snack("Whoops ! It seems like your connection to automate is impossible!")
         return true;
