@@ -27,6 +27,7 @@ table {
 	tr {
 		transition: all 250ms;
 		overflow: hidden;
+		position: relative;
 
 		&:last-of-type td {
 			border-bottom: none;
@@ -37,10 +38,6 @@ table {
 			vertical-align: middle;
 		}
 
-		td:last-of-type,
-		th:last-of-type {
-			padding-right: unset;
-		}
 	}
 
 	::ng-deep tbody tr {

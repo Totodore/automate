@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
   public status = APIState.LOADING;
 
   constructor(
-    private readonly api: ApiService
+    public readonly api: ApiService
   ) { }
   
   public async ngOnInit(): Promise<void> {

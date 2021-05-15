@@ -1,5 +1,6 @@
+import { GuildTableComponent } from './../guild-table/guild-table.component';
 import { SnackbarService } from './../../../../services/snackbar.service';
-import { GuildReqModel, MemberModel, MessageModel, PostFreqMessageInModel } from './../../../../models/api.model';
+import { GuildReqModel, MemberModel, MessageModel, PostFreqMessageInModel, UserModel } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
 import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { CronOptions } from 'cron-editor';
@@ -27,6 +28,9 @@ export class GuildAddMessageComponent implements AfterViewInit {
 
   @ViewChild("textarea")
   private textarea?: ElementRef<HTMLTextAreaElement>;
+
+  @Output()
+  public readonly newMessage = new EventEmitter<MessageModel>();
 
 
   public readonly cronOptions: CronOptions = {
@@ -147,7 +151,10 @@ export class GuildAddMessageComponent implements AfterViewInit {
         parsedMessage,
         this.cron
       ));
+      msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.displayName, this.api.profile!.avatar);
       this.api.currentGuild?.messages.push(msg);
+      this.newMessage.emit(msg);
+      (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
       this.description = null;
       this.cron = "* * * * 12";
       this.addedTags = new Map();

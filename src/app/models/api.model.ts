@@ -4,7 +4,7 @@ export class UserModel {
     public id: string,
     public name: string,
     public profile: string,
-    public messages: MessageModel[],
+    public messages?: MessageModel[],
   ) {}
 }
 export class MessageModel {
@@ -28,13 +28,14 @@ export class MessageModel {
 
 export interface DiscordProfile extends Profile {
   guilds: DiscordGuild[];
+  joinedServer: boolean;
 }
 export interface DiscordGuild extends GuildInfo {
   added: boolean;
 }
 export enum MessageType {
-  PONCTUAL,
-  FREQUENTIAL
+  PONCTUAL = "PONCTUAL",
+  FREQUENTIAL = "FREQUENTIAL"
 }
 
 

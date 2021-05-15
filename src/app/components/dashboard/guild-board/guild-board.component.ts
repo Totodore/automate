@@ -1,3 +1,4 @@
+import { GuildTableComponent } from './guild-table/guild-table.component';
 import { SnackbarService } from './../../../services/snackbar.service';
 import { environment } from './../../../../environments/environment';
 import { GuildReqModel } from './../../../models/api.model';

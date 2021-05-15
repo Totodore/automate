@@ -5,6 +5,6 @@
 
 	</ng-container>
 
-	<a class="join-btn" mat-stroked-button href="https://discord.gg/hBWPKpa" target="_blank">Join the official Automate
+	<a *ngIf="api.profile?.joinedServer" class="join-btn" mat-stroked-button href="https://discord.gg/hBWPKpa" target="_blank">Join the official Automate
 		server !</a>
 </div>
