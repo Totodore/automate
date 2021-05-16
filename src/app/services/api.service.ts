@@ -66,7 +66,9 @@ export class ApiService {
       formData.append("files", file);
     return await this.post(`guild/${this.currentGuild?.id}/message/freq`, body);
   }
-
+  public async deleteGuildFromServer() {
+    await this.delete(`guild/${this.currentGuild?.id}`);
+  }
   private async get<R>(path: string, token?: string) {
     if (path.startsWith("/"))
       path = path.substring(1);
@@ -84,6 +86,12 @@ export class ApiService {
       path = path.substring(1);
     const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
     return this.http.patch<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
+  }
+  private async delete<R>(path: string) {
+    if (path.startsWith("/"))
+      path = path.substring(1);
+    const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+    return this.http.delete<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
   }
 
   private get token(): string {

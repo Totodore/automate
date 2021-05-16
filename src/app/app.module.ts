@@ -34,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { GuildTableComponent } from './components/dashboard/guild-board/guild-table/guild-table.component';
 import { GuildAddMessageComponent } from './components/dashboard/guild-board/guild-add-message/guild-add-message.component';
 import { NoGuildComponent } from './components/dashboard/no-guild/no-guild.component';
+import { ConfirmComponent } from './components/utils/confirm/confirm.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import { NoGuildComponent } from './components/dashboard/no-guild/no-guild.compo
     GuildOptionsComponent,
     GuildTableComponent,
     GuildAddMessageComponent,
-    NoGuildComponent
+    NoGuildComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

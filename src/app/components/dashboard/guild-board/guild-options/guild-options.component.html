@@ -20,6 +20,9 @@
 	<section>
 		<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all members to see programmed messages</mat-slide-toggle><br>
 	</section>
+	<section>
+		<button mat-stroked-button color="accent" (click)="removeAutomate()">Remove Automate from this server</button>
+	</section>
 </div>
 
 <div mat-dialog-actions align="end">

@@ -1,8 +1,10 @@
+import { Router } from '@angular/router';
+import { ConfirmComponent } from './../../../utils/confirm/confirm.component';
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { ApiService } from 'src/app/services/api.service';
 import { GuildReqModel, DiscordGuild } from './../../../../models/api.model';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-guild-options',
   templateUrl: './guild-options.component.html',
@@ -18,7 +20,10 @@ export class GuildOptionsComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) data: [DiscordGuild, GuildReqModel],
     private readonly api: ApiService,
-    private readonly snackbar: SnackbarService
+    private readonly snackbar: SnackbarService,
+    private readonly dialog: MatDialog,
+    private readonly router: Router,
+    private readonly dialogRef: MatDialogRef<GuildOptionsComponent>
   ) {
     [this.discordGuild, this.guild] = data;
     this.timezoneInput = this.guild.timezone;
@@ -47,6 +52,23 @@ export class GuildOptionsComponent {
       this.snackbar.snack("Error while trying to change guild options!");
       this.timezoneInput = "";
     }
+  }
+
+  public async removeAutomate() {
+    const dial = this.dialog.open(ConfirmComponent, { data: "Are you sure to remove Automate from your server ?" });
+    dial.componentInstance.confirm.subscribe(async () => {
+      dial.close();
+      try {
+        await this.api.deleteGuildFromServer();
+        this.api.profile!.guilds.find(el => el.id === this.guild.id)!.added = false;
+        this.dialogRef.close();
+        this.router.navigateByUrl("/board");
+        this.snackbar.snack(`Automate has been removed from ${this.guild.name} !`);
+      } catch (e) {
+        console.error(e);
+        this.snackbar.snack(`Error while removing automate from ${this.guild.name} !`);
+      }
+    });
   }
 }
 
