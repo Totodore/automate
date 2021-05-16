@@ -12,7 +12,7 @@
 		animation-fill-mode: forwards;
 	}
 	::ng-deep {
-		app-menu, app-guild-board {
+		app-menu, app-guild-board, app-no-guild {
 			flex: 1;
 			overflow: auto;
 		}
