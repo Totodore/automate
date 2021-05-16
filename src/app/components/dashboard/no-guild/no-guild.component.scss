@@ -26,11 +26,15 @@
 			max-width: 400px;
 			height: auto;
 			border-radius: 1000px;
+			animation: fade-in 300ms ease;
+			animation-fill-mode: forwards;
 			&:first-of-type {
 				margin-right: -15px;
+				transform: translateX(-25px);
 			}
 			&:last-of-type {
 				margin-left: -15px;
+				transform: translateX(25px);
 			}
 		}
 	}
