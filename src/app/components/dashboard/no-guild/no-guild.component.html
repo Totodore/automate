@@ -1,9 +1,9 @@
-<div class="wrapper" *ngIf="guild">
-	<a mat-stroked-button [href]="botLink + guild.id">
+<div class="wrapper" *ngIf="guild && !dispIframe">
+	<button mat-stroked-button (click)="onDispIframe()">
 		<div>
 			<img src="assets/automate.png" class="icon" alt="Automate's icon">
 			<img *ngIf="guild.icon" [src]="cdn + '/icons/' + guild.id + '/' + guild.icon + '.jpg?size=128'" [alt]="guild?.name + '\s icon'">
 		</div>
 		<h1>Add ¡ Automate ! to {{ guild?.name }}.</h1>
-	</a>
+	</button>
 </div>

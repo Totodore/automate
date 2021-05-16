@@ -1,9 +1,11 @@
+import { SseService } from './sse.service';
+import { Observable } from 'rxjs';
+import { map, timeout } from "rxjs/operators";
 import { GuildElement, PostFreqMessageInModel } from 'src/app/models/api.model';
 import { DiscordProfile, MessageModel, GuildReqModel, MemberModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,8 @@ export class ApiService {
   public currentGuild?: GuildReqModel;
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
+    private readonly sse: SseService
   ) { }
 
   public async login(token?: string) {
@@ -33,6 +36,9 @@ export class ApiService {
     return;
   }
 
+  public getCreatedGuild(guildId: string): Observable<string> {
+    return this.sse.getSse(`guild/${guildId}/add`, this.token).pipe(timeout(120_000), map(el => el.data));
+  }
   public async getGuild(guildId: string): Promise<GuildReqModel | undefined> {
     try {
       return this.currentGuild = await this.get<GuildReqModel>(`guild/${guildId}`);
