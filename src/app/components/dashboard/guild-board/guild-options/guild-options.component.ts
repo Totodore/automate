@@ -54,22 +54,6 @@ export class GuildOptionsComponent {
     }
   }
 
-  public async removeAutomate() {
-    const dial = this.dialog.open(ConfirmComponent, { data: "Are you sure to remove Automate from your server ?" });
-    dial.componentInstance.confirm.subscribe(async () => {
-      dial.close();
-      try {
-        await this.api.deleteGuildFromServer();
-        this.api.profile!.guilds.find(el => el.id === this.guild.id)!.added = false;
-        this.dialogRef.close();
-        this.router.navigateByUrl("/board");
-        this.snackbar.snack(`Automate has been removed from ${this.guild.name} !`);
-      } catch (e) {
-        console.error(e);
-        this.snackbar.snack(`Error while removing automate from ${this.guild.name} !`);
-      }
-    });
-  }
 }
 
 const TIMEZONES = [
