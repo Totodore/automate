@@ -35,6 +35,7 @@ export class NoGuildComponent implements OnInit {
     discordWindow?.addEventListener("close", () => this.dispIframe = this.done ? this.dispIframe : false);
     const subscribtion = this.api.getCreatedGuild(this.id!).subscribe(el => {
       this.api.profile!.guilds.find(el => el.id == this.id)!.added = true;
+      this.dispIframe = false;
       discordWindow?.close();
       this.router.navigateByUrl(`/board/${this.id}`);
       subscribtion.unsubscribe();
@@ -43,7 +44,7 @@ export class NoGuildComponent implements OnInit {
 
   public onError() {
     this.dispIframe = false;
-    this.snackbar.snack("Impossible to add Automate to " + this.guild!.name);
+    this.snackbar.snack("Impossible to add Automate to " + this.guild!.name + ", try to reload the application !");
   }
 
   public get guild(): DiscordGuild | undefined {

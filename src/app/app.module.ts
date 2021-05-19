@@ -34,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { GuildTableComponent } from './components/dashboard/guild-board/guild-table/guild-table.component';
 import { GuildAddMessageComponent } from './components/dashboard/guild-board/guild-add-message/guild-add-message.component';
 import { NoGuildComponent } from './components/dashboard/no-guild/no-guild.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConfirmComponent } from './components/utils/confirm/confirm.component';
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ConfirmComponent } from './components/utils/confirm/confirm.component';
     MatCheckboxModule,
     CronEditorModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
