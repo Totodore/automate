@@ -4,7 +4,7 @@ WORKDIR /build
 
 COPY . .
 
-RUN npm it && npm run build --prod
+RUN npm it && npm run build
 
 FROM nginx:latest
 
