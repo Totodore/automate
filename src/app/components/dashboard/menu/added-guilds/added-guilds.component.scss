@@ -23,7 +23,16 @@
     border-radius: 25px;
     margin-right: 14px;
     position: relative;
-    @include mat-elevation(3);
+    @include mat-elevation(2);
+		cursor: pointer;
+		transition: transform 250ms;
+		&:hover {
+    	@include mat-elevation(3);
+			transform: scale(0.92);
+		}
+		&:active {
+			transform: scale(0.87);
+		}
   }
 
 }
