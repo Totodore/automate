@@ -12,6 +12,6 @@ WORKDIR /app
 
 COPY ./docker/nginx.conf .
 
-COPY --from=build /build/dist/automate/* /app
+COPY --from=build /build/dist/automate/* /app/
 
 EXPOSE 80
