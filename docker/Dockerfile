@@ -10,7 +10,7 @@ FROM nginx:latest
 
 WORKDIR /app
 
-COPY ./docker/nginx.conf .
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build /build/dist/automate/* /app/
 
