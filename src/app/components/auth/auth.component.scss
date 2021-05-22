@@ -1,5 +1,3 @@
-@import '../../../styles.scss';
-
 h1 {
 	text-align: center;
 	font-size: 3rem;
@@ -35,7 +33,7 @@ h1 {
 			top: 60%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			filter: drop-shadow(0 0 0.20rem $accent-color);
+			filter: drop-shadow(0 0 0.20rem #F79058);
 		}
 	}
 }

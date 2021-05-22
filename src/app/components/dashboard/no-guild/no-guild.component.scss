@@ -1,5 +1,4 @@
-@import "../../../../styles.scss";
-@import '~@angular/material/theming';
+@use '~@angular/material/theming';
 
 .wrapper {
 	width: 100%;
@@ -21,7 +20,7 @@
 		display: flex;
 		justify-content: center;
 		img {
-			@include mat-elevation(3);
+			@include theming.mat-elevation(3);
 			width: 25%;
 			max-width: 400px;
 			height: auto;

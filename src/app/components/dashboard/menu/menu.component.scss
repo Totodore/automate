@@ -1,11 +1,9 @@
-@import '../../../../styles.scss';
-
 .wrapper {
 	position: relative;
 	min-height: 100vh;
 	.join-btn {
 		position: absolute;
-		background-color: $accent-color;
+		background-color: #F79058;
 		left: 50%;
 		bottom: 40px;
 		transform: translateX(-50%);

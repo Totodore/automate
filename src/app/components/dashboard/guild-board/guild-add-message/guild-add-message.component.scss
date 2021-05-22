@@ -1,4 +1,4 @@
-@import '../../../../../styles.scss';
+@import "../../../../../styles.scss";
 h1 {
 	text-align: left;
 	margin: 20px 0;
@@ -58,7 +58,7 @@ form {
 			padding-left: 5px;
 			.suggestion-el {
 				margin-top: 2px;
-				color: $accent-color;
+				color: #F79058;
 				opacity: 0.1;
 				transform: translateX(10px);
 				animation: fade-in 300ms ease;
@@ -95,7 +95,7 @@ form {
 }
 ::ng-deep {
   @import "~cron-editor-material-style/scss/mixin";
-  @include cron-editor-material-style($accent-color);
+  @include cron-editor-material-style(#F79058);
 	ul {
 		margin-top: 2px !important;
 	}

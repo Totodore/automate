@@ -1,5 +1,4 @@
-@import '../../../../../styles.scss';
-@import '~@angular/material/theming';
+@use '~@angular/material/theming';
 
 div {
 	width: clamp(500px, 70%, 1000px);
@@ -69,7 +68,7 @@ div {
         border-radius: 25px;
         margin-right: 14px;
 				position: relative;
-				@include mat-elevation(3);
+				@include theming.mat-elevation(3);
       }
     }
   }

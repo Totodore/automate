@@ -1,5 +1,4 @@
-@import '../../../../../styles.scss';
-@import '~@angular/material/theming';
+@use '~@angular/material/theming';
 
 .wrapper {
   width: clamp(500px, 70%, 1000px);
@@ -23,11 +22,11 @@
     border-radius: 25px;
     margin-right: 14px;
     position: relative;
-    @include mat-elevation(2);
+    @include theming.mat-elevation(2);
 		cursor: pointer;
 		transition: transform 250ms;
 		&:hover {
-    	@include mat-elevation(3);
+    	@include theming.mat-elevation(3);
 			transform: scale(0.92);
 		}
 		&:active {
