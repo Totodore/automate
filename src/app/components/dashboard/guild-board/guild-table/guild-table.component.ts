@@ -1,8 +1,11 @@
+import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { DiscordGuild, GuildReqModel } from './../../../../models/api.model';
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ConfirmComponent } from 'src/app/components/utils/confirm/confirm.component';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-guild-table',
@@ -22,7 +25,8 @@ export class GuildTableComponent implements OnInit {
   constructor(
     private readonly snackbar: SnackbarService,
     private readonly changeDetectorRef: ChangeDetectorRef,
-    public readonly api: ApiService
+    public readonly api: ApiService,
+    private readonly dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -40,6 +44,19 @@ export class GuildTableComponent implements OnInit {
       this.snackbar.snack("Ooops, impossible to update this message");
       console.error(e);
     }
+  }
+  public removeMessage(msgId: string) {
+    const dialog = this.dialog.open(ConfirmComponent, { data: "Are you sure to delete this message?" });
+    dialog.componentInstance.confirm.subscribe(async () => {
+      dialog.close();
+      try {
+        await this.api.deleteMessage(msgId);
+        this.snackbar.snack("Message removed!");
+      } catch (error) {
+        console.error(error);
+        this.snackbar.snack("Ooops, impossible to delete this message");
+      }
+    });
   }
 
   public getChannelName(id: string) {

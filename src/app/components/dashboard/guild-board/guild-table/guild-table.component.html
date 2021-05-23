@@ -47,8 +47,8 @@
 		<td mat-cell *matCellDef="let element">
 			<mat-checkbox [(ngModel)]="element.activated" (ngModelChange)="updateMessageState($event, element.id)"
 				color="accent"></mat-checkbox>
-				<button color="accent" mat-icon-button><mat-icon>edit</mat-icon></button>
-				<button color="accent" mat-icon-button><mat-icon>delete</mat-icon></button>
+			<button color="accent" mat-icon-button><mat-icon>edit</mat-icon></button>
+			<button color="accent" mat-icon-button (click)="removeMessage(element.id)"><mat-icon>delete</mat-icon></button>
 		</td>
 	</ng-container>
 </table>

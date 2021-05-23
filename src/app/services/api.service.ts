@@ -69,6 +69,10 @@ export class ApiService {
   public async deleteGuildFromServer() {
     await this.delete(`guild/${this.currentGuild?.id}`);
   }
+  public async deleteMessage(msgId: string) {
+    await this.delete(`guild/${msgId}`);
+    this.currentGuild!.messages = this.currentGuild!.messages.filter(el => el.id !== msgId);
+  }
   private async get<R>(path: string, token?: string) {
     if (path.startsWith("/"))
       path = path.substring(1);
