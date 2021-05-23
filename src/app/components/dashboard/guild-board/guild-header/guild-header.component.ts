@@ -1,7 +1,7 @@
 import { ApiService } from 'src/app/services/api.service';
 import { GuildOptionsComponent } from './../guild-options/guild-options.component';
 import { DiscordGuild, GuildReqModel } from './../../../../models/api.model';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -20,9 +20,8 @@ export class GuildHeaderComponent implements OnInit {
 
   @ViewChild("wrapper")
   private headerWrapper!: ElementRef<HTMLDivElement>;
-  
-  private readonly baseHeaderPos = 50;
-  private baseSize?: number;
+
+  public stickyHeader = false;
 
   public readonly cdn = environment.discordCdn;
 
@@ -32,20 +31,11 @@ export class GuildHeaderComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    // this.bodyWrapper?.addEventListener("scroll", () => this.onScroll())
+    document.querySelector("app-guild-board")?.addEventListener("scroll", () => this.onScroll());
   }
 
-  private onScroll() {
-    const currentPos = this.headerWrapper.nativeElement.getBoundingClientRect().top;
-    this.baseSize ??= this.percentwidth(this.headerWrapper.nativeElement);
-    console.log("base size", this.baseSize);
-    console.log(100 - ((1 - currentPos / this.baseHeaderPos) * (100 - this.baseSize)));
-    this.headerWrapper.nativeElement.style.width = `${100 - (1 - currentPos / this.baseHeaderPos) * (100 - this.baseSize)}%`;
-  }
-
-  private percentwidth(el: HTMLElement): number {
-    const pa: HTMLElement = el.offsetParent as HTMLElement || el;
-    return Math.floor((el.offsetWidth / pa.offsetWidth) * 100)
+  public onScroll() {
+    this.stickyHeader = this.headerWrapper.nativeElement.getBoundingClientRect().top == 0;
   }
   
   public onOptionsClick() {

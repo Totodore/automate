@@ -1,8 +1,8 @@
 .wrapper {
 	min-height: 100vh;	
-	width: clamp(500px, 70%, 1000px);
+	width: clamp(600px, 85%, 1000px);
 	margin: auto;
-	padding-top: 25px;
+	padding-top: 50px;
 	animation: fade-in 300ms ease;
 	animation-fill-mode: forwards;
 	transform: translateX(-20px);

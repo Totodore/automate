@@ -4,16 +4,18 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: clamp(600px, 70%, 95%);
+	width: clamp(600px, 86%, 95%);
 	margin: auto;
 	padding: 10px 15px;
 	margin-top: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.12);
 	border-radius: 7px;
+	box-sizing: border-box;
 	position: sticky;
 	background-color: #1b1b1b;
 	z-index: 1;
 	top: 0;
+	transition: all 300ms;
 	.left {
 		display: flex;
 		align-items: center;
@@ -41,5 +43,19 @@
 			margin: 0;
 			margin-right: 15px;
 		}
+	}
+	&.sticky {
+		width: 100%;
+		border-radius: 0;
+		border: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+		border-color: rgba(255, 255, 255, 0.12);
+	}
+	&::before {
+		left: 0;
+		top: -1px;
+		width: 100%;
+		height: 1px;
+		background-color: #1b1b1b;
 	}
 }

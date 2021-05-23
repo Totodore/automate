@@ -1,4 +1,4 @@
-<div class="wrapper" #wrapper>
+<div class="wrapper" #wrapper [class.sticky]="stickyHeader">
 	<div class="left">
 		<img [alt]="discordGuild.name +'\'s photo'" [src]="discordGuild.icon ? cdn + '/icons/' + api.currentGuild!.id + '/' + discordGuild.icon + '.jpg?size=128' : 'assets/discord.svg'" draggable="false">
 		<h2>{{ discordGuild.name }}</h2>

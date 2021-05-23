@@ -16,7 +16,8 @@ export class GuildTableComponent implements OnInit {
 
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
-  public readonly columns = ["Author", "Channel", "Description", "Message", "Attachments", "Enabled"];
+  public readonly columns = ["Author", "Channel", "Description", "Message", "Attachments", "Actions"];
+  public toggledRow?: string;
 
   constructor(
     private readonly snackbar: SnackbarService,
@@ -47,7 +48,6 @@ export class GuildTableComponent implements OnInit {
 
   public refresh() {
     this.guild = Object.create(this.api.currentGuild!);
-    console.log("test");
     this.changeDetectorRef.detectChanges();
   }
 }
