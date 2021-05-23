@@ -1,18 +1,24 @@
 .wrapper {
 	position: relative;
 	min-height: 100vh;
-	.join-btn {
-		position: absolute;
-		background-color: #F79058;
-		left: 50%;
-		bottom: 40px;
-		transform: translateX(-50%);
-		color: black;
-		font-size: 1rem;
-		line-height: 40px;
-		transition: all 200ms;
-		&:hover {
-			transform: translate(-50%, -3px);
-		}
+}
+.join-btn {
+	position: fixed;
+	background-color: #F79058;
+	left: 50%;
+	bottom: 40px;
+	transform: translateX(-50%);
+	color: black;
+	font-size: 1rem;
+	line-height: 40px;
+	transition: all 200ms;
+	&:hover {
+		transform: translate(-50%, -3px);
 	}
+}
+.logout {
+	position: fixed;
+	top: 16px;
+	right: 16px;
+	transform: scale(1.3);
 }

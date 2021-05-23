@@ -4,7 +4,9 @@
 		<app-added-guilds></app-added-guilds>
 
 	</ng-container>
-
-	<a *ngIf="api.profile?.joinedServer" class="join-btn" mat-stroked-button href="https://discord.gg/hBWPKpa"
-		target="_blank">Join the official Automate server !</a>
+	
 </div>
+
+<a *ngIf="api.profile?.joinedServer" class="join-btn" mat-stroked-button href="https://discord.gg/hBWPKpa"
+	target="_blank">Join the official Automate server !</a>
+<button mat-icon-button color="accent" class="logout" (click)="logout()"><mat-icon>logout</mat-icon></button>
