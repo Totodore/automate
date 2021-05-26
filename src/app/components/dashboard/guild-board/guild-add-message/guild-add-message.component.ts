@@ -3,7 +3,6 @@ import { SnackbarService } from './../../../../services/snackbar.service';
 import { GuildReqModel, MemberModel, MessageModel, PostFreqMessageInModel, UserModel } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
 import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
-import { CronOptions } from 'cron-editor';
 import { toString as cronDescriptor } from "cronstrue";
 import { GuildElement } from 'src/app/models/api.model';
 @Component({
@@ -32,30 +31,6 @@ export class GuildAddMessageComponent implements AfterViewInit {
   @Output()
   public readonly newMessage = new EventEmitter<MessageModel>();
 
-
-  public readonly cronOptions: CronOptions = {
-       
-    defaultTime: "00:00:00",
-
-    hideMinutesTab: true,
-    hideHourlyTab: false,
-    hideDailyTab: false,
-    hideWeeklyTab: false,
-    hideMonthlyTab: false,
-    hideYearlyTab: true,
-    hideAdvancedTab: true,
-    removeSeconds: true,
-    removeYears: true,
-    hideSeconds: false,
-
-    use24HourTime: true,
-
-    formInputClass: 'cron-editor-material-control',
-    formSelectClass: 'cron-editor-material-control',
-    formCheckboxClass: "",
-    formRadioClass: ""
-
- };
   constructor(
     public readonly api: ApiService,
     private readonly snackbar: SnackbarService

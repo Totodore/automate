@@ -1,0 +1,16 @@
+mat-tab-group {
+	::ng-deep {
+		.mat-tab-label {
+			min-width: 50px;
+		}
+	}
+}
+.tab {
+	padding: 10px 15px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	span {
+		margin: 0 10px;
+	}
+}

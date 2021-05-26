@@ -1,8 +1,8 @@
 <h1>Add a new frequential message:</h1>
 
 <form>
-	<cron-editor [cron]="cron" (cronChange)="onCronChange($event)" [options]="cronOptions">
-	</cron-editor>
+	<app-cron-editor [cron]="cron" (cronChange)="onCronChange($event)">
+	</app-cron-editor>
 	<mat-divider *ngIf="description"></mat-divider>
 	<div *ngIf="description" class="infos">
 		<p class="desc">{{ description }}</p>

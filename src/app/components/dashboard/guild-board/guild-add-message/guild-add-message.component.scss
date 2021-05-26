@@ -94,8 +94,6 @@ form {
 	}
 }
 ::ng-deep {
-  @import "~cron-editor-material-style/scss/mixin";
-  @include cron-editor-material-style(#F79058);
 	ul {
 		margin-top: 2px !important;
 	}

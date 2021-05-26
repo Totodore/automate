@@ -1,4 +1,3 @@
-import { CronEditorModule } from 'cron-editor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http"
@@ -22,6 +21,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { NavbarComponent } from './components/dashboard/navbar/navbar.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatRadioModule } from "@angular/material/radio";
 import { GuildBoardComponent } from './components/dashboard/guild-board/guild-board.component';
 import { MenuComponent } from './components/dashboard/menu/menu.component';
 import { MatTableModule } from '@angular/material/table';
@@ -36,6 +36,8 @@ import { GuildAddMessageComponent } from './components/dashboard/guild-board/gui
 import { NoGuildComponent } from './components/dashboard/no-guild/no-guild.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConfirmComponent } from './components/utils/confirm/confirm.component';
+import { CronEditorComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/cron-editor.component';
+import { TimePickerComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/time-picker/time-picker.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +53,9 @@ import { ConfirmComponent } from './components/utils/confirm/confirm.component';
     GuildTableComponent,
     GuildAddMessageComponent,
     NoGuildComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    CronEditorComponent,
+    TimePickerComponent
   ],
   imports: [
     BrowserModule,
@@ -72,10 +76,10 @@ import { ConfirmComponent } from './components/utils/confirm/confirm.component';
     MatTableModule,
     MatSlideToggleModule,
     MatCheckboxModule,
-    CronEditorModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRadioModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },

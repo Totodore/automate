@@ -1,0 +1,139 @@
+<!-- Tabs -->
+<mat-tab-group dynamicHeight mat-stretch-tabs color="accent" [backgroundColor]="undefined">
+	<mat-tab label="Minutes">
+		<!-- Minutes-->
+		<div class="tab">
+			<span>Every</span> 
+			<mat-form-field color="accent">
+				<mat-label>Minutes</mat-label>
+				<input [(ngModel)]="state.minutes.minutes" type="number" matInput min="20" max="59">
+			</mat-form-field>
+			<span>minute(s)</span>
+		</div>
+	</mat-tab>
+	<mat-tab label="Hourly">
+		<!-- Hourly-->
+		<div class="tab">
+			<span>Every</span>
+			<mat-form-field color="accent">
+				<mat-label>Hour(s)</mat-label>
+				<input [(ngModel)]="state.hourly.hours" type="number" matInput min="1" max="23">
+			</mat-form-field>
+			<span>hour(s) on minute</span>
+			<mat-form-field color="accent">
+				<mat-label>Minutes</mat-label>
+				<input [(ngModel)]="state.hourly.minutes" type="number" matInput min="0" max="59">
+			</mat-form-field>
+		</div>
+	</mat-tab>
+	<mat-tab label="Daily">
+		<!-- Daily-->
+		<mat-radio-group>
+			<div class="tab">
+				<mat-radio-button [value]="state.daily.subTab == 'everyDays'" (change)="state.daily.subTab = $event ? 'everyDays' : 'everyWeekDay'; regenerateCron()"></mat-radio-button>
+				<span>Every</span>
+				<mat-form-field color="accent">
+					<mat-label>Days</mat-label>
+					<input [(ngModel)]="state.daily.everyDays.days" type="number" matInput min="0" max="23">
+				</mat-form-field>
+				<span>day(s) at</span>
+				<app-time-picker [(hours)]="state.daily.everyDays.hours" [(minutes)]="state.daily.everyDays.minutes" (change)="regenerateCron()">
+				</app-time-picker>
+			</div>
+			<div class="tab">
+				<mat-radio-button [value]="state.daily.subTab == 'everyWeekDay'" (change)="state.daily.subTab = $event ? 'everyWeekDay' : 'everyDays'; regenerateCron()"></mat-radio-button>
+				<span>Every working day at</span>
+				<app-time-picker [(hours)]="state.daily.everyWeekDay.hours" [(minutes)]="state.daily.everyWeekDay.minutes" (change)="regenerateCron()">
+				</app-time-picker>
+			</div>
+		</mat-radio-group>
+	</mat-tab>
+	<mat-tab label="Weekly">
+		<!-- Weekly-->
+		<div class="tab">
+			<span>On the</span>
+			<mat-form-field color="accent">
+				<mat-label>Day(s) of the Week</mat-label>
+				<mat-select multiple> 
+					<mat-option *ngFor="let item of getDowObject() | keyvalue" [value]="item.key">{{ item.value }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<span>at</span>
+			<app-time-picker [(hours)]="state.weekly.hours" [(minutes)]="state.weekly.minutes" (change)="regenerateCron()">
+			</app-time-picker>
+		</div>
+	</mat-tab>
+	<mat-tab label="Monthly">
+		<!-- Monthly-->
+		<div class="tab">
+			<mat-checkbox 
+				[checked]="state.monthly.subTab == 'specificDay'" 
+				(change)="state.daily.subTab = $event ? 'specificDay' : 'specificWeekDay'; regenerateCron()">
+			</mat-checkbox>
+			<span>On the</span>
+			<mat-form-field color="accent">
+				<mat-label>Day(s) of the month</mat-label>
+				<mat-select multiple>
+					<mat-option *ngFor="let item of selectOptions.monthDaysWithLasts">{{ monthDayDisplay(item) }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<span>of every</span>
+			<mat-form-field color="accent">
+				<mat-label>Month number</mat-label>
+				<mat-select multiple>
+					<mat-option *ngFor="let item of getMonths(); let i = index" [value]="i">{{ item }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<span>month(s) at</span>
+			<app-time-picker [(hours)]="state.monthly.specificDay.hours" [(minutes)]="state.monthly.specificDay.minutes" (change)="regenerateCron()">
+			</app-time-picker>
+		</div>
+		<div class="tab">
+			<mat-checkbox 
+				[checked]="state.monthly.subTab == 'specificWeekDay'" 
+				(change)="state.daily.subTab = $event ? 'specificWeekDay' : 'specificDay'; regenerateCron()">
+			</mat-checkbox>
+			<span>On the</span>
+			<mat-form-field color="accent">
+				<mat-select [disabled]="state.monthly.subTab !== 'specificWeekDay'" (change)="regenerateCron()">
+					<mat-option *ngFor="let item of selectOptions.monthWeeks" [value]="item">{{ monthWeekDisplay($any(item)) }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field color="accent">
+				<mat-label>Day of the week</mat-label>
+				<mat-select [disabled]="state.monthly.subTab !== 'specificWeekDay'" (change)="regenerateCron()">
+					<mat-option *ngFor="let item of selectOptions.days" [value]="item">{{ dayDisplay($any(item)) }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<span>of every</span>
+			<mat-form-field color="accent">
+				<mat-label>Month step</mat-label>
+				<input (change)="regenerateCron()" [(ngModel)]="state.monthly.specificWeekDay.months" type="number" matInput [disabled]="state.monthly.subTab !== 'specificWeekDay'" min="1" max="12">
+			</mat-form-field>
+			<span>month(s) starting in</span>
+			<mat-form-field color=accent>
+				<mat-label>Starting Month</mat-label>
+				<mat-select [disabled]="state.monthly.subTab !== 'specificWeekDay'">
+					<mat-option *ngFor="let item of selectOptions.months" [value]="item">{{ monthDisplay(item) }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<span>at</span>
+			<app-time-picker [(hours)]="state.monthly.specificWeekDay.hours" [(minutes)]="state.monthly.specificWeekDay.minutes" (change)="regenerateCron()">
+			</app-time-picker>
+		</div>
+	</mat-tab>
+	<mat-tab label="Advanced">
+		<div class="tab">
+			<!-- Advanced-->
+			<mat-form-field color="accent">
+				<mat-label>Cron expression</mat-label>
+				<input matInput type="text" class="advanced-cron-editor-input"
+						(change)="regenerateCron()" [(ngModel)]="state.advanced.expression">
+			</mat-form-field>
+		</div>
+		
+	</mat-tab>
+</mat-tab-group>
+<div class="row" *ngIf="!state.validation.isValid">
+		<code>{{state.validation.errorMessage}}</code>
+</div>
