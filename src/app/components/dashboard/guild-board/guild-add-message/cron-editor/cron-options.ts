@@ -57,6 +57,11 @@ export interface StateDataModel {
   advanced: {
     expression: string
   },
+  date: {
+    date: Date,
+    hours: number,
+    minutes: number
+  }
   validation: {
     isValid: boolean,
     errorMessage: string
@@ -71,4 +76,6 @@ export enum DoW {
   FRI = "FRI",
   SAT = "SAT",
   SUN = "SUN",
-} 
+}
+
+export type Tab = "minutes" | "hourly" | "daily" | "weekly" | "monthly" | "advanced" | "date";

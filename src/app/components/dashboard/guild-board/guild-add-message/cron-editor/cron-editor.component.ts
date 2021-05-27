@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { SelectOptionsModel, StateDataModel, DoW } from './cron-options';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { SelectOptionsModel, StateDataModel, DoW, Tab } from './cron-options';
 import Utils, { Days, Months, MonthWeeks } from './utils';
 
 @Component({
@@ -9,16 +10,18 @@ import Utils, { Days, Months, MonthWeeks } from './utils';
 })
 export class CronEditorComponent implements OnInit {
   @Input() get cron(): string { return this.localCron; }
-  
+  @Input() date!: Date;
+
   set cron(value: string) {
     this.localCron = value;
     this.cronChange.emit(this.localCron);
   }
 
   // the name is an Angular convention, @Input variable name + "Change" suffix
-  @Output() cronChange = new EventEmitter();
+  @Output() cronChange = new EventEmitter<string>();
+  @Output() dateChange = new EventEmitter<Date>();
 
-  public activeTab!: string;
+  public activeTab!: Tab;
   public selectOptions = this.getSelectOptions();
   public state!: StateDataModel;
   public showSpinner = false;
@@ -39,8 +42,8 @@ export class CronEditorComponent implements OnInit {
     }
   }
 
-  public setActiveTab(tab: string) {
-      this.activeTab = tab;
+  public setActiveTab(event: MatTabChangeEvent) {
+      this.activeTab = event.tab.ariaLabel as Tab;
       this.regenerateCron();
   }
 
@@ -69,7 +72,6 @@ export class CronEditorComponent implements OnInit {
   }
 
   public regenerateCron() {
-    console.log(this.state.daily.subTab);
     this.isDirty = true;
 
     switch (this.activeTab) {
@@ -118,9 +120,14 @@ export class CronEditorComponent implements OnInit {
       case 'advanced':
         this.cron = this.state.advanced.expression;
         break;
+      case 'date':
+        if (this.state.date.date)
+          this.dateChange.emit(new Date(this.state.date.date.getTime() + this.state.date.hours * 3.6e6 + this.state.date.minutes * 60_000))
+        break;
       default:
         throw new Error('Invalid cron active tab selection');
     }
+    console.log(this.cron);
   }
 
   public getDowObject(): { [k in DoW]: string } {
@@ -314,6 +321,11 @@ export class CronEditorComponent implements OnInit {
       },
       advanced: {
         expression: this.getDefaultAdvancedCronExpression()
+      },
+      date: {
+        date: new Date(),
+        hours: new Date().getHours(),
+        minutes: new Date().getMinutes() + 5
       },
       validation: {
         isValid: true,

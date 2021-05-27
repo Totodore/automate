@@ -14,6 +14,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
 
 
   public cron: string = "* * * * 12";
+  public date = new Date();
   public description: string | null = "";
   public message: string = "";
   public expandedMessage = false;
@@ -40,16 +41,20 @@ export class GuildAddMessageComponent implements AfterViewInit {
     (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
   }
 
-  public onCronChange(e: Object) {
-    if (typeof e !== "string")
-      return;
-    try {
-      this.cron = e;
-      this.description = cronDescriptor(e, {
-        use24HourTimeFormat: true,
-        verbose: true
-      });
-    } catch (error) { this.description = null }
+  public onCronChange(e: string | Date) {
+    if (e instanceof Date) {
+      console.log(e);
+      this.description = `The ${e.getDay().toString().padStart(2, '0')}/${e.getMonth().toString().padStart(2, '0')}/${e.getFullYear()} at ${e.getHours().toString().padStart(2, '0')}:${e.getMinutes().toString().padStart(2, '0')}`;
+    }
+    else if (typeof e === 'string') {
+      try {
+        this.cron = e;
+        this.description = cronDescriptor(e, {
+          use24HourTimeFormat: true,
+          verbose: true
+        });
+      } catch (error) { this.description = null }
+    }
   }
 
   public async onInput(e: Event) {

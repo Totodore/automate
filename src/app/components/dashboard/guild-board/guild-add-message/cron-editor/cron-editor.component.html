@@ -1,17 +1,17 @@
 <!-- Tabs -->
-<mat-tab-group dynamicHeight mat-stretch-tabs color="accent" [backgroundColor]="undefined">
-	<mat-tab label="Minutes">
+<mat-tab-group dynamicHeight mat-stretch-tabs color="accent" (selectedTabChange)="setActiveTab($event)" [backgroundColor]="undefined">
+	<mat-tab label="Minutes" aria-label="minutes">
 		<!-- Minutes-->
 		<div class="tab">
 			<span>Every</span> 
 			<mat-form-field color="accent">
 				<mat-label>Minutes</mat-label>
-				<input [(ngModel)]="state.minutes.minutes" type="number" matInput min="20" max="59">
+				<input [(ngModel)]="state.minutes.minutes" (change)="regenerateCron()" type="number" matInput min="20" max="59">
 			</mat-form-field>
 			<span>minute(s)</span>
 		</div>
 	</mat-tab>
-	<mat-tab label="Hourly">
+	<mat-tab label="Hourly" aria-label="hourly">
 		<!-- Hourly-->
 		<div class="tab">
 			<span>Every</span>
@@ -26,7 +26,7 @@
 			</mat-form-field>
 		</div>
 	</mat-tab>
-	<mat-tab label="Daily">
+	<mat-tab label="Daily" aria-label="daily">
 		<!-- Daily-->
 		<mat-radio-group (change)="regenerateCron()">
 			<div class="tab">
@@ -48,7 +48,7 @@
 			</div>
 		</mat-radio-group>
 	</mat-tab>
-	<mat-tab label="Weekly">
+	<mat-tab label="Weekly" aria-label="weekly">
 		<!-- Weekly-->
 		<div class="tab">
 			<span>On the</span>
@@ -63,7 +63,7 @@
 			</app-time-picker>
 		</div>
 	</mat-tab>
-	<mat-tab label="Monthly">
+	<mat-tab label="Monthly" aria-label="monthly">
 		<mat-radio-group (change)="regenerateCron()">
 			<!-- Monthly-->
 			<div class="tab">
@@ -118,7 +118,7 @@
 			</div>
 		</mat-radio-group>
 	</mat-tab>
-	<mat-tab label="Advanced">
+	<mat-tab label="Advanced" aria-label="advanced">
 		<div class="tab">
 			<!-- Advanced-->
 			<mat-form-field color="accent">
@@ -128,12 +128,12 @@
 			</mat-form-field>
 		</div>
 	</mat-tab>
-	<mat-tab label="One time">
+	<mat-tab label="One time" aria-label="date">
 		<!-- Custom date -->
 		<div class="tab">
 			<mat-form-field color="accent">
 				<mat-label>Pick a date</mat-label>
-				<input matInput [matDatepicker]="datepicker">
+				<input matInput (dateChange)="state.date.date = $event.value; regenerateCron()" [matDatepicker]="datepicker">
 				<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
 				<mat-datepicker #datepicker>
 					<mat-datepicker-actions>
@@ -143,7 +143,7 @@
 				</mat-datepicker>
 			</mat-form-field>
 			<span>at</span>
-			<app-time-picker (change)="regenerateCron()">
+			<app-time-picker (change)="regenerateCron()" [(hours)]="state.date.hours" [(minutes)]="state.date.minutes">
 			</app-time-picker>
 		</div>
 	</mat-tab>
