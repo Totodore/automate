@@ -257,7 +257,7 @@ export class CronEditorComponent implements OnInit {
     return '15 10 L-2 * ?';
   }
 
-  
+
   private getDefaultState(): StateDataModel {
     const [defaultHours, defaultMinutes] = [0, 0];
 
@@ -346,8 +346,8 @@ export class CronEditorComponent implements OnInit {
   private getSelectOptions(): SelectOptionsModel {
     return {
       months: Utils.getRange(1, 12),
-      monthWeeks: Object.values(MonthWeeks) as (typeof MonthWeeks[keyof typeof MonthWeeks])[],
-      days: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+      monthWeeks: Object.keys(MonthWeeks) as (keyof typeof MonthWeeks)[],
+      days: Object.keys(Days) as (keyof typeof Days)[],
       minutes: Utils.getRange(0, 59),
       fullMinutes: Utils.getRange(0, 59),
       hours: Utils.getRange(1, 23),

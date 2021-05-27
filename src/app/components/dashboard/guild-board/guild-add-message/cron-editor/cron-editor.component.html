@@ -88,14 +88,16 @@
 				<mat-radio-button #radioMonthlyWeek value="specificWeekDay" (change)="state.monthly.subTab = $event.value"></mat-radio-button>
 				<span>On the</span>
 				<mat-form-field color="accent">
+					<mat-label>Week of the month</mat-label>
 					<mat-select [disabled]="!radioMonthlyWeek.checked" (change)="regenerateCron()">
-						<mat-option *ngFor="let item of selectOptions.monthWeeks" [value]="item">{{ monthWeekDisplay($any(item)) }}</mat-option>
+						<mat-option *ngFor="let item of selectOptions.monthWeeks" [value]="item">{{ monthWeekDisplay(item) }}</mat-option>
 					</mat-select>
 				</mat-form-field>
+				<span></span>
 				<mat-form-field color="accent">
 					<mat-label>Day of the week</mat-label>
 					<mat-select [disabled]="!radioMonthlyWeek.checked" (change)="regenerateCron()">
-						<mat-option *ngFor="let item of selectOptions.days" [value]="item">{{ dayDisplay($any(item)) }}</mat-option>
+						<mat-option *ngFor="let item of selectOptions.days" [value]="item">{{ dayDisplay(item) }}</mat-option>
 					</mat-select>
 				</mat-form-field>
 				<span>of every</span>
@@ -125,7 +127,25 @@
 						(change)="regenerateCron()" [(ngModel)]="state.advanced.expression">
 			</mat-form-field>
 		</div>
-		
+	</mat-tab>
+	<mat-tab label="One time">
+		<!-- Custom date -->
+		<div class="tab">
+			<mat-form-field color="accent">
+				<mat-label>Pick a date</mat-label>
+				<input matInput [matDatepicker]="datepicker">
+				<mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+				<mat-datepicker #datepicker>
+					<mat-datepicker-actions>
+						<button mat-button matDatepickerCancel>Cancel</button>
+						<button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+					</mat-datepicker-actions>
+				</mat-datepicker>
+			</mat-form-field>
+			<span>at</span>
+			<app-time-picker (change)="regenerateCron()">
+			</app-time-picker>
+		</div>
 	</mat-tab>
 </mat-tab-group>
 <div class="row" *ngIf="!state.validation.isValid">

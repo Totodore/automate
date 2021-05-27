@@ -36,8 +36,10 @@ import { GuildAddMessageComponent } from './components/dashboard/guild-board/gui
 import { NoGuildComponent } from './components/dashboard/no-guild/no-guild.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConfirmComponent } from './components/utils/confirm/confirm.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CronEditorComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/cron-editor.component';
 import { TimePickerComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/time-picker/time-picker.component';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +81,9 @@ import { TimePickerComponent } from './components/dashboard/guild-board/guild-ad
     ReactiveFormsModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatRadioModule
+    MatRadioModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },

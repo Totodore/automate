@@ -2,8 +2,8 @@ import { Days, MonthWeeks } from "./utils";
 
 export interface SelectOptionsModel {
   months: number[]
-  monthWeeks: (typeof MonthWeeks[keyof typeof MonthWeeks])[],
-  days: (typeof Days[keyof typeof Days])[],
+  monthWeeks: (keyof typeof MonthWeeks)[],
+  days: (keyof typeof Days)[],
   minutes: number[],
   fullMinutes: number[],
   hours: number[],
