@@ -13,6 +13,9 @@ export class TimePickerComponent implements OnInit {
   @Input()
   public minutes!: number;
 
+  @Input()
+  public disabled!: boolean;
+
   @Output()
   public minutesChange = new EventEmitter<number>();
 
