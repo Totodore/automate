@@ -54,8 +54,8 @@
 			<span>On the</span>
 			<mat-form-field color="accent">
 				<mat-label>Day(s) of the Week</mat-label>
-				<mat-select multiple> 
-					<mat-option *ngFor="let item of getDowObject() | keyvalue" [value]="item.key">{{ item.value }}</mat-option>
+				<mat-select multiple (selectionChange)="regenerateCron()">
+					<mat-option (onSelectionChange)="$any(state.weekly.dow)[$event.source.value] = $event.source.selected" *ngFor="let item of getDowObject() | keyvalue" [value]="item.key">{{ item.value }}</mat-option>
 				</mat-select>
 			</mat-form-field>
 			<span>at</span>

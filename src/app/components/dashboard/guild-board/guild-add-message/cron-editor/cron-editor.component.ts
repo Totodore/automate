@@ -62,8 +62,8 @@ export class CronEditorComponent implements OnInit {
   }
 
   public async regenerateCron() {
-
     await new Promise(resolve => setTimeout(resolve));
+    console.log(this.state.weekly.dow);
     switch (this.activeTab) {
       case 'minutes':
         this.cron = `0/${this.state.minutes.minutes} * 1/1 * ?`;
@@ -87,7 +87,7 @@ export class CronEditorComponent implements OnInit {
       case 'weekly':
         const days = this.selectOptions.days
         //@ts-ignore
-          .reduce((acc, day) => this.state.weekly[day] ? acc.concat([day]) : acc, [])
+          .reduce((acc, day) => this.state.weekly.dow[day] ? acc.concat([day]) : acc, [])
           .join(',');
         this.cron = `${this.state.weekly.minutes} ${this.state.weekly.hours} ? * ${days}`;
         break;
@@ -168,7 +168,7 @@ export class CronEditorComponent implements OnInit {
       },
       weekly: {
         dow: {
-          MON: true,
+          MON: false,
           TUE: false,
           WED: false,
           THU: false,
