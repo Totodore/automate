@@ -16,5 +16,12 @@ mat-tab-group {
 	a {
 		color: #F79058;
 	}
-	
+}
+
+::ng-deep {
+	app-time-picker, .tiny-input {
+		.mat-form-field-infix {
+			width: 50px;
+		}
+	}
 }

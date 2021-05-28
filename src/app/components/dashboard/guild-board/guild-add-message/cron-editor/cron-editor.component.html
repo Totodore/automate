@@ -17,12 +17,12 @@
 			<span>Every</span>
 			<mat-form-field color="accent">
 				<mat-label>Hour(s)</mat-label>
-				<input [(ngModel)]="state.hourly.hours" type="number" matInput min="1" max="23">
+				<input [(ngModel)]="state.hourly.hours" (change)="regenerateCron()" type="number" matInput min="1" max="23">
 			</mat-form-field>
 			<span>hour(s) on minute</span>
 			<mat-form-field color="accent">
 				<mat-label>Minutes</mat-label>
-				<input [(ngModel)]="state.hourly.minutes" type="number" matInput min="0" max="59">
+				<input [(ngModel)]="state.hourly.minutes" (change)="regenerateCron()" type="number" matInput min="0" max="59">
 			</mat-form-field>
 		</div>
 	</mat-tab>
@@ -32,9 +32,9 @@
 			<div class="tab">
 				<mat-radio-button checked="true" #radioDailyDay value="everyDays" (change)="state.daily.subTab = $event.value"></mat-radio-button>
 				<span>Every</span>
-				<mat-form-field color="accent">
+				<mat-form-field color="accent" class="tiny-input">
 					<mat-label>Days</mat-label>
-					<input [disabled]="!radioDailyDay.checked" [(ngModel)]="state.daily.everyDays.days" type="number" matInput min="0" max="23">
+					<input [disabled]="!radioDailyDay.checked" [(ngModel)]="state.daily.everyDays.days" type="number" matInput min="0" max="500">
 				</mat-form-field>
 				<span>day(s) at</span>
 				<app-time-picker [disabled]="!radioDailyDay.checked" [(hours)]="state.daily.everyDays.hours" [(minutes)]="state.daily.everyDays.minutes" (change)="regenerateCron()">

@@ -74,6 +74,7 @@ export class CronEditorComponent implements OnInit {
       case 'daily':
         switch (this.state.daily.subTab) {
           case 'everyDays':
+            console.log(this.state.daily.everyDays.hours);
             this.cron = `${this.state.daily.everyDays.minutes} ${this.state.daily.everyDays.hours} 1/${this.state.daily.everyDays.days} * ?`;
             break;
           case 'everyWeekDay':
