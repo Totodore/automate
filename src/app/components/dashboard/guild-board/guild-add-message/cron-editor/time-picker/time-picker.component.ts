@@ -2,10 +2,9 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-time-picker',
-  templateUrl: './time-picker.component.html',
-  styleUrls: ['./time-picker.component.scss']
+  templateUrl: './time-picker.component.html'
 })
-export class TimePickerComponent implements OnInit {
+export class TimePickerComponent {
 
   @Input()
   public hours!: number;
@@ -25,10 +24,13 @@ export class TimePickerComponent implements OnInit {
   @Output()
   public readonly change = new EventEmitter();
 
-
-  constructor() { }
-
-  ngOnInit(): void {
+  public onChange(type: 'hours' | 'min', e: EventTarget | null) {
+    const value = parseInt((e as HTMLInputElement).value);
+    if (type === "hours")
+      this.hoursChange.emit(value);
+    else
+      this.minutesChange.emit(value);
+    setTimeout(() => this.change.emit());
   }
 
 }
