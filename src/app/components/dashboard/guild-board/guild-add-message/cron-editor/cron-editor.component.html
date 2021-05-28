@@ -124,7 +124,7 @@
 			<mat-form-field color="accent">
 				<mat-label>Cron expression</mat-label>
 				<input matInput type="text" class="advanced-cron-editor-input"
-						(change)="regenerateCron()" [(ngModel)]="state.advanced.expression">
+						(ngModelChange)="regenerateCron()" [(ngModel)]="state.advanced.expression">
 			</mat-form-field>
 		</div>
 	</mat-tab>

@@ -1,6 +1,5 @@
-import { GuildTableComponent } from './../guild-table/guild-table.component';
 import { SnackbarService } from './../../../../services/snackbar.service';
-import { GuildReqModel, MemberModel, MessageModel, PostFreqMessageInModel, UserModel } from './../../../../models/api.model';
+import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
 import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { toString as cronDescriptor } from "cronstrue";
@@ -57,6 +56,11 @@ export class GuildAddMessageComponent implements AfterViewInit {
     }
   }
 
+  public onCronError(e: string) {
+    if (e) {
+      this.description = e;
+    }
+  }
   public async onInput(e: Event) {
     if (!(e instanceof InputEvent))
       return;

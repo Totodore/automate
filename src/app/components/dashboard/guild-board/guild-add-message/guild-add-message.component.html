@@ -1,7 +1,7 @@
 <h1>Add a new message:</h1>
 
 <form>
-	<app-cron-editor [(cron)]="cron" [(date)]="date" (cronChange)="onCronChange($event)" (dateChange)="onCronChange($event)">
+	<app-cron-editor (onError)="onCronError($event)" [(cron)]="cron" [(date)]="date" (cronChange)="onCronChange($event)" (dateChange)="onCronChange($event)">
 	</app-cron-editor>
 	<mat-divider *ngIf="description"></mat-divider>
 	<div *ngIf="description" class="infos">
