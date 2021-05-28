@@ -71,8 +71,8 @@
 				<span>On the</span>
 				<mat-form-field color="accent">
 					<mat-label>Day(s) of the month</mat-label>
-					<mat-select multiple [disabled]="!radioMonthlyDay.checked">
-						<mat-option *ngFor="let item of selectOptions.monthDaysWithLasts">{{ monthDayDisplay(item) }}</mat-option>
+					<mat-select (selectionChange)="regenerateCron()" multiple [disabled]="!radioMonthlyDay.checked">
+						<mat-option (onSelectionChange)="$event.source.selected ? state.monthly.specificDay.day.push($event.source.value) : state.monthly.specificDay.day.splice(state.monthly.specificDay.day.indexOf($event.source.value), 1)" *ngFor="let item of selectOptions.monthDaysWithLasts" [value]="item">{{ monthDayDisplay(item) }}</mat-option>
 					</mat-select>
 				</mat-form-field>
 				<span>of every</span>
@@ -89,14 +89,14 @@
 				<span>On the</span>
 				<mat-form-field color="accent">
 					<mat-label>Week of the month</mat-label>
-					<mat-select [disabled]="!radioMonthlyWeek.checked" (change)="regenerateCron()">
+					<mat-select [disabled]="!radioMonthlyWeek.checked" (selectionChange)="regenerateCron()" [(value)]="state.monthly.specificWeekDay.monthWeek">
 						<mat-option *ngFor="let item of selectOptions.monthWeeks" [value]="item">{{ monthWeekDisplay(item) }}</mat-option>
 					</mat-select>
 				</mat-form-field>
 				<span></span>
 				<mat-form-field color="accent">
 					<mat-label>Day of the week</mat-label>
-					<mat-select [disabled]="!radioMonthlyWeek.checked" (change)="regenerateCron()">
+					<mat-select [disabled]="!radioMonthlyWeek.checked" (selectionChange)="regenerateCron()" [(value)]="state.monthly.specificWeekDay.day">
 						<mat-option *ngFor="let item of selectOptions.days" [value]="item">{{ dayDisplay(item) }}</mat-option>
 					</mat-select>
 				</mat-form-field>
@@ -108,7 +108,7 @@
 				<span>month(s) starting in</span>
 				<mat-form-field color=accent>
 					<mat-label>Starting Month</mat-label>
-					<mat-select [disabled]="!radioMonthlyWeek.checked">
+					<mat-select (selectionChange)="regenerateCron()" [disabled]="!radioMonthlyWeek.checked" [(value)]="state.monthly.specificWeekDay.startMonth">
 						<mat-option *ngFor="let item of selectOptions.months" [value]="item">{{ monthDisplay(item) }}</mat-option>
 					</mat-select>
 				</mat-form-field>

@@ -38,9 +38,8 @@ export interface StateDataModel {
   },
   monthly: {
     subTab: "specificDay" | "specificWeekDay",
-    runOnWeekday: boolean,
     specificDay: {
-      day: string,
+      day: string[],
       months: number,
       hours: number,
       minutes: number,
