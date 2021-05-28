@@ -10,7 +10,11 @@ mat-tab-group {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	span {
+	span, div {
 		margin: 0 10px;
 	}
+	a {
+		color: #F79058;
+	}
+	
 }

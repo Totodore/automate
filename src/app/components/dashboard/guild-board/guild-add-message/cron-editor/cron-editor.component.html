@@ -6,7 +6,7 @@
 			<span>Every</span> 
 			<mat-form-field color="accent">
 				<mat-label>Minutes</mat-label>
-				<input [(ngModel)]="state.minutes.minutes" (change)="regenerateCron()" type="number" matInput min="20" max="59">
+				<input [(ngModel)]="state.minutes.minutes" (change)="regenerateCron()" type="number" matInput min="1" max="59">
 			</mat-form-field>
 			<span>minute(s)</span>
 		</div>
@@ -126,6 +126,9 @@
 				<input matInput type="text" class="advanced-cron-editor-input"
 						(ngModelChange)="regenerateCron()" [(ngModel)]="state.advanced.expression">
 			</mat-form-field>
+			<div>
+				<p>You can generate a more accurate cron expression <a href="https://www.freeformatter.com/cron-expression-generator-quartz.html" target="_blank" rel="noopener noreferrer">here.</a></p>
+			</div>
 		</div>
 	</mat-tab>
 	<mat-tab label="One time" aria-label="date">

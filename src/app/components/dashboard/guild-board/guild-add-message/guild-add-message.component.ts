@@ -59,6 +59,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
   public onCronError(e: string) {
     if (e) {
       this.description = e;
+      this.expandedMessage = true;
     }
   }
   public async onInput(e: Event) {
