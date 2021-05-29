@@ -4,7 +4,7 @@
 		<h2>{{ discordGuild.name }}</h2>
 	</div>
 	<div class="right">
-		<h3>{{ api.currentGuild!.timezone }}</h3>
+		<h3>{{ api.currentGuild?.timezone || "No timezone has been set!" }}</h3>
 		<mat-divider [vertical]="true"></mat-divider>
 		<button mat-icon-button (click)="onOptionsClick()">
 			<mat-icon class="mat-18">settings</mat-icon>
