@@ -21,7 +21,7 @@ export class CronEditorComponent implements OnInit {
   @Output() dateChange = new EventEmitter<Date>();
   @Output() onError = new EventEmitter<string>();
 
-  public activeTab!: Tab;
+  public activeTab: Tab = "minutes";
   public selectOptions = this.getSelectOptions();
   public state!: StateDataModel;
   public showSpinner = false;
@@ -30,6 +30,7 @@ export class CronEditorComponent implements OnInit {
 
   public ngOnInit() {
     this.state = this.getDefaultState();
+    this.regenerateCron();
   }
 
   public setActiveTab(event: MatTabChangeEvent) {
@@ -65,16 +66,18 @@ export class CronEditorComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve));
     switch (this.activeTab) {
       case 'minutes':
-        this.cron = `0/${this.state.minutes.minutes} * 1/1 * ?`;
+        if (this.state.minutes.minutes > 0)
+          this.cron = `0/${this.state.minutes.minutes} * 1/1 * ?`;
         break;
       case 'hourly':
-        this.cron = `${this.state.hourly.minutes} 0/${this.state.hourly.hours} 1/1 * ?`;
+        if (this.state.hourly.hours > 0)
+          this.cron = `${this.state.hourly.minutes} 0/${this.state.hourly.hours} 1/1 * ?`;
         break;
       case 'daily':
         switch (this.state.daily.subTab) {
           case 'everyDays':
-            console.log(this.state.daily.everyDays.hours);
-            this.cron = `${this.state.daily.everyDays.minutes} ${this.state.daily.everyDays.hours} 1/${this.state.daily.everyDays.days} * ?`;
+            if (this.state.daily.everyDays.days > 0)
+              this.cron = `${this.state.daily.everyDays.minutes} ${this.state.daily.everyDays.hours} 1/${this.state.daily.everyDays.days} * ?`;
             break;
           case 'everyWeekDay':
             this.cron = `${this.state.daily.everyWeekDay.minutes} ${this.state.daily.everyWeekDay.hours} ? * MON-FRI`;
@@ -88,16 +91,19 @@ export class CronEditorComponent implements OnInit {
         //@ts-ignore
           .reduce((acc, day) => this.state.weekly.dow[day] ? acc.concat([day]) : acc, [])
           .join(',');
-        this.cron = `${this.state.weekly.minutes} ${this.state.weekly.hours} ? * ${days}`;
+        if (days.length > 0)
+          this.cron = `${this.state.weekly.minutes} ${this.state.weekly.hours} ? * ${days}`;
         break;
       case 'monthly':
         switch (this.state.monthly.subTab) {
           case 'specificDay':
             const days = this.state.monthly.specificDay.day.reduce((prev, curr) => prev + "," + curr, "").substr(1);
-            this.cron = `${this.state.monthly.specificDay.minutes} ${this.state.monthly.specificDay.hours} ${days} 1/${this.state.monthly.specificDay.months} ?`;
+            if (days.length > 0 && this.state.monthly.specificDay.months > 0)
+              this.cron = `${this.state.monthly.specificDay.minutes} ${this.state.monthly.specificDay.hours} ${days} 1/${this.state.monthly.specificDay.months} ?`;
             break;
           case 'specificWeekDay':
-            this.cron = `${this.state.monthly.specificWeekDay.minutes} ${this.state.monthly.specificWeekDay.hours} ? ${this.state.monthly.specificWeekDay.startMonth}/${this.state.monthly.specificWeekDay.months} ${this.state.monthly.specificWeekDay.day}${this.state.monthly.specificWeekDay.monthWeek}`;
+            if (this.state.monthly.specificWeekDay.startMonth && this.state.monthly.specificWeekDay.months && this.state.monthly.specificWeekDay.monthWeek && this.state.monthly.specificWeekDay.day)
+              this.cron = `${this.state.monthly.specificWeekDay.minutes} ${this.state.monthly.specificWeekDay.hours} ? ${this.state.monthly.specificWeekDay.startMonth}/${this.state.monthly.specificWeekDay.months} ${this.state.monthly.specificWeekDay.day}${this.state.monthly.specificWeekDay.monthWeek}`;
             break;
           default:
             throw new Error('Invalid cron monthly subtab selection');
@@ -116,8 +122,6 @@ export class CronEditorComponent implements OnInit {
       case 'date':
         this.dateChange.emit(new Date(this.state.date.date.getTime() + this.state.date.hours * 3.6e6 + this.state.date.minutes * 60_000))
         break;
-      default:
-        throw new Error('Invalid cron active tab selection');
     }
     this.onError.emit(undefined);
   }
