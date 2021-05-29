@@ -2,7 +2,7 @@
   {{ discordGuild.name }}'s settings
 </h1>
 
-<div style="text-align: center;">
+<div>
 	<section>
 		<h3>Change my server timezone:</h3>
 		<div class="tz-picker">
@@ -18,7 +18,10 @@
 		</div>
 	</section>
 	<section>
-		<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all members to see programmed messages</mat-slide-toggle><br>
+		<mat-slide-toggle color="accent" [(ngModel)]="guild.scope" (ngModelChange)="updateGuildScope()">Allow all members to see programmed messages.</mat-slide-toggle><br>
+	</section>
+	<section>
+		<mat-slide-toggle color="accent" [(ngModel)]="guild.removeOneTimeMessage" (ngModelChange)="updateOneTimeMessage()">Delete one time messages when they are sent.</mat-slide-toggle>
 	</section>
 </div>
 

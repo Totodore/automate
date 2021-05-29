@@ -68,7 +68,5 @@ export class GuildTableComponent implements OnInit {
 
   public refresh() {
     this.dataSource.data = this.api.currentGuild!.messages;
-    console.log(this.dataSource.data.length);
-    // this.changeDetectorRef.detectChanges();
   }
 }

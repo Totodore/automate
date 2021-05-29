@@ -39,6 +39,16 @@ export class GuildOptionsComponent {
       this.guild.scope = !this.guild.scope;
     }
   }
+  public async updateOneTimeMessage() {
+    try {
+      await this.api.patchOneTimeMessage(this.guild.removeOneTimeMessage);
+      this.snackbar.snack("One Time message option successfuly updated!");
+    } catch (e) {
+      console.error(e);
+      this.snackbar.snack("Error while trying to change guild options!");
+      this.guild.removeOneTimeMessage = !this.guild.removeOneTimeMessage;
+    }
+  }
 
   public async updateGuildTimezone() {
     if (!this.timezoneInput || !this.timezones.includes(this.timezoneInput))

@@ -52,6 +52,9 @@ export class ApiService {
   public async patchGuildScope(scope: boolean) {
     return await this.patch<void, void>(`guild/${this.currentGuild?.id}/scope?scope=${scope}`);
   }
+  public async patchOneTimeMessage(deleteOneTime: boolean) {
+    return await this.patch<void, void>(`guild/${this.currentGuild?.id}/onetime?delete=${deleteOneTime}`);
+  }
   public async patchGuildTimezone(tz: string) {
     return await this.patch<void, void>(`guild/${this.currentGuild?.id}/timezone?timezone=${tz}`);
   }

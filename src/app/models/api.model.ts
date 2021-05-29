@@ -49,7 +49,8 @@ export class GuildReqModel {
     public name: string,
     public roles: GuildElement[],
     public maxMessages: number,
-    public scope: boolean
+    public scope: boolean,
+    public removeOneTimeMessage: boolean
   ) {}
 
 }
