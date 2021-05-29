@@ -7,7 +7,7 @@
 		<h3>Change my server timezone:</h3>
 		<div class="tz-picker">
 			<mat-form-field color="accent">
-				<mat-label>Timezones</mat-label>
+				<mat-label>Timezone</mat-label>
 				<input type="text" matInput [(ngModel)]="timezoneInput" autocomplete="off" (ngModelChange)="updateGuildTimezone()">
 			</mat-form-field>
 			<div class="autocomplete" *ngIf="(timezoneInput?.length || 0) >  2 && !timezones.includes(timezoneInput || '')">
