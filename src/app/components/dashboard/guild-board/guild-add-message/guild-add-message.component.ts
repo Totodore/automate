@@ -84,7 +84,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
       if (this.inputMode === "@") {
         const needle = this.needle.toLowerCase();
         this.suggestions = [
-          ...await this.api.getMembers(needle),
+          ...(await this.api.getMembers(needle) ?? []),
           ...this.api.currentGuild.roles.filter(el => el.name.toLowerCase().includes(needle.substr(1))).map(el => {
             if (el.name.startsWith("@"))
               el.name = el.name.substr(1);
@@ -138,7 +138,6 @@ export class GuildAddMessageComponent implements AfterViewInit {
       msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.username, this.api.profile!.avatar);
       this.api.currentGuild?.messages.push(msg);
       this.newMessage.emit(msg);
-      (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
       this.description = null;
       this.cron = "* * * * 12";
       this.addedTags = new Map();
