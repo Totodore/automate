@@ -33,9 +33,11 @@ form {
 	.message-builder {
 		width: 100%;
 		padding: 6px 9px;
+		padding-bottom: 0;
 		box-sizing: border-box;
 		textarea {
 			@extend .mat-body, .mat-body-1, .mat-typography;
+			padding-bottom: 9px;
 			background: transparent;
 			width: 100%;
 			min-width: 100%;
@@ -54,16 +56,20 @@ form {
 			margin-left: -9px;
 		}
 		.suggestions {
-			height: 34px;
+			overflow-x: auto;
 			padding-left: 5px;
+			padding-bottom: 3px;
+			display: flex;
 			.suggestion-el {
-				margin-top: 2px;
 				color: #F79058;
 				opacity: 0.1;
 				transform: translateX(10px);
 				animation: fade-in 300ms ease;
 				animation-fill-mode: forwards;
 				transition: background-color 50ms;
+				margin: 0 5px;
+				margin-top: 2px;
+				min-width: fit-content;
 				&.selected {
 					background-color: #ffffff0e;
 				}
