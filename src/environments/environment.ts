@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   discordCdn: "https://cdn.discordapp.com",
   apiLink: "http://localhost:3000",
-  botLink: "https://discord.com/api/oauth2/authorize?client_id=714141847035052051&permissions=8&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fguild%2Fauth&scope=bot&disable_guild_select=true&guild_id=",
-  oauthLink: "https://discord.com/api/oauth2/authorize?client_id=714141847035052051&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fauth&response_type=code&scope=identify%20guilds"
+  botLink: "https://discord.com/api/oauth2/authorize?client_id=848230396973285428&permissions=8&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fguild%2Fauth&scope=bot&disable_guild_select=true&guild_id=",
+  oauthLink: "https://discord.com/api/oauth2/authorize?client_id=848230396973285428&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fuser%2Fauth&response_type=code&scope=identify%20guilds"
 };
 
 /*
