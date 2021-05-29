@@ -135,7 +135,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
         parsedMessage,
         this.cron
       ));
-      msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.displayName, this.api.profile!.avatar);
+      msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.username, this.api.profile!.avatar);
       this.api.currentGuild?.messages.push(msg);
       this.newMessage.emit(msg);
       (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();

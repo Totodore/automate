@@ -1,5 +1,5 @@
 <h1>My server messages:</h1>
-<table mat-table [dataSource]="guild.messages" *ngIf="guild && discordGuild">
+<table mat-table [dataSource]="dataSource" *ngIf="api.currentGuild && discordGuild">
 
 	<tr mat-header-row *matHeaderRowDef="columns"></tr>
 	<tr mat-row *matRowDef="let row; columns: columns;"></tr>

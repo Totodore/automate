@@ -1,5 +1,5 @@
 <app-guild-header [discordGuild]="discordGuild" [bodyWrapper]="wrapper.parentElement" *ngIf="guild && discordGuild"></app-guild-header>
 <div class="wrapper" #wrapper>
 	<app-guild-table #table [discordGuild]="discordGuild" *ngIf="(guild?.messages?.length || 0) > 0 && discordGuild"></app-guild-table>
-	<app-guild-add-message></app-guild-add-message>
+	<app-guild-add-message (newMessage)="table.refresh()"></app-guild-add-message>
 </div>

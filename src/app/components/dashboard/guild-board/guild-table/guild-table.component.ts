@@ -1,11 +1,12 @@
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
-import { DiscordGuild, GuildReqModel } from './../../../../models/api.model';
+import { DiscordGuild, GuildReqModel, MessageModel } from './../../../../models/api.model';
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ConfirmComponent } from 'src/app/components/utils/confirm/confirm.component';
 import { ThisReceiver } from '@angular/compiler';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-guild-table',
@@ -21,6 +22,7 @@ export class GuildTableComponent implements OnInit {
   public readonly cdn = environment.discordCdn;
   public readonly columns = ["Author", "Channel", "Description", "Message", "Attachments", "Actions"];
   public toggledRow?: string;
+  public dataSource = new MatTableDataSource<MessageModel>();
 
   constructor(
     private readonly snackbar: SnackbarService,
@@ -52,6 +54,7 @@ export class GuildTableComponent implements OnInit {
       try {
         await this.api.deleteMessage(msgId);
         this.snackbar.snack("Message removed!");
+        this.refresh();
       } catch (error) {
         console.error(error);
         this.snackbar.snack("Ooops, impossible to delete this message");
@@ -64,7 +67,8 @@ export class GuildTableComponent implements OnInit {
   }
 
   public refresh() {
-    this.guild = Object.create(this.api.currentGuild!);
-    this.changeDetectorRef.detectChanges();
+    this.dataSource.data = this.api.currentGuild!.messages;
+    console.log(this.dataSource.data.length);
+    // this.changeDetectorRef.detectChanges();
   }
 }

@@ -19,6 +19,9 @@ export class GuildBoardComponent implements OnInit {
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
 
+  @ViewChild("table")
+  public table!: GuildTableComponent
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly api: ApiService,
@@ -34,4 +37,5 @@ export class GuildBoardComponent implements OnInit {
       }
     });
   }
+
 }
