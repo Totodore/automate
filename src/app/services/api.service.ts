@@ -2,7 +2,7 @@ import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 import { map, timeout } from "rxjs/operators";
 import { GuildElement, PostFreqMessageInModel } from 'src/app/models/api.model';
-import { DiscordProfile, MessageModel, GuildReqModel, MemberModel } from './../models/api.model';
+import { DiscordProfile, MessageModel, GuildReqModel, MemberModel, PostPonctMessageInModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -65,6 +65,15 @@ export class ApiService {
     for (const file of files)
       formData.append("files", file);
     return await this.post(`guild/${this.currentGuild?.id}/message/freq`, body);
+  }
+
+  public async postPonctualMessage(files: File[], body: Partial<PostPonctMessageInModel>): Promise<MessageModel> {
+    const formData = new FormData();
+    for (const [key, val] of Object.entries(body))
+      formData.append(key, val!);
+    for (const file of files)
+      formData.append("files", file);
+    return await this.post(`guild/${this.currentGuild?.id}/message/ponctual`, body);
   }
   public async deleteGuildFromServer() {
     await this.delete(`guild/${this.currentGuild?.id}`);

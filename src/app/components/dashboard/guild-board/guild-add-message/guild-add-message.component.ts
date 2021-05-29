@@ -1,5 +1,5 @@
 import { SnackbarService } from './../../../../services/snackbar.service';
-import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel } from './../../../../models/api.model';
+import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel, PostPonctMessageInModel } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
 import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { toString as cronDescriptor } from "cronstrue";
@@ -24,6 +24,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
   public addedTags: Map<string, string> = new Map();
   
   private needle = "";
+  private dateMode = false;
 
   @ViewChild("textarea")
   private textarea?: ElementRef<HTMLTextAreaElement>;
@@ -43,6 +44,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
   public onCronChange(e: string | Date) {
     if (e instanceof Date) {
       this.description = `The ${e.getDay().toString().padStart(2, '0')}/${e.getMonth().toString().padStart(2, '0')}/${e.getFullYear()} at ${e.getHours().toString().padStart(2, '0')}:${e.getMinutes().toString().padStart(2, '0')}`;
+      this.dateMode = true;
     }
     else if (typeof e === 'string') {
       try {
@@ -51,6 +53,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
           use24HourTimeFormat: true,
           verbose: true
         });
+        this.dateMode = false;
       } catch (error) { this.description = null }
     }
   }
@@ -128,12 +131,18 @@ export class GuildAddMessageComponent implements AfterViewInit {
     for (const [tag, id] of this.addedTags.entries())
       parsedMessage = parsedMessage.replaceAll(tag, `<${tag.substr(0, 1)}${id}>`);
     try {
-      const msg = await this.api.postFreqMessage([], new PostFreqMessageInModel(
+      const msg = !this.dateMode ? await this.api.postFreqMessage([], new PostFreqMessageInModel(
         this.selectedChannel!,
         this.description!,
         this.message,
         parsedMessage,
         this.cron
+      )) : await this.api.postPonctualMessage([], new PostPonctMessageInModel(
+        this.selectedChannel!,
+        this.description!,
+        this.message,
+        parsedMessage,
+        this.date.toString()
       ));
       msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.username, this.api.profile!.avatar);
       this.api.currentGuild?.messages.push(msg);
