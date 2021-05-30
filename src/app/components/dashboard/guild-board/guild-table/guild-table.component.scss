@@ -36,6 +36,9 @@ table {
 		td {
 			padding: 4px 10px;
 			vertical-align: middle;
+			&:last-of-type {
+				white-space: nowrap;
+			}
 		}
 		button:first-of-type {
 			margin-left: 10px;
