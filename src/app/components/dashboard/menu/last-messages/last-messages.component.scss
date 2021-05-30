@@ -15,39 +15,37 @@ div {
 		color: whitesmoke;
   }
 
-  table {
+	table {
 		overflow: hidden;
 		width: 100%;
-    box-shadow: none;
-    background-color: inherit;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
-    border-radius: 5px;
-    border-spacing: 5px !important;
-    table-layout: auto;
-    border-collapse: collapse;
-
-    th {
-      font-size: 0.85rem;
-      color: whitesmoke;
-    }
-
-    tr {
-      transition: all 250ms;
-      overflow: hidden;
-
-      &:last-of-type td {
-        border-bottom: none;
-      }
-
-      td {
-        vertical-align: middle;
-      }
-
-      td:last-of-type,
-      th:last-of-type {
-        padding-right: unset;
-      }
-    }
+		box-shadow: none;
+		background-color: inherit;
+		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+		border-radius: 5px;
+		border-spacing: 5px !important;
+		table-layout: auto;
+		border-collapse: collapse;
+	
+		th {
+			padding: 0 10px !important;
+			font-size: 0.85rem;
+			color: whitesmoke;
+		}
+	
+		tr {
+			transition: all 250ms;
+			overflow: hidden;
+			position: relative;
+	
+			&:last-of-type td {
+				border-bottom: none;
+			}
+	
+			td {
+				padding: 4px 10px;
+				vertical-align: middle;
+			}
+		}
 
     ::ng-deep tbody tr {
       cursor: pointer;
