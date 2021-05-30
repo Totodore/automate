@@ -4,6 +4,7 @@ import { ApiService } from './../../../../services/api.service';
 import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { toString as cronDescriptor } from "cronstrue";
 import { GuildElement } from 'src/app/models/api.model';
+import { MentionConfig } from 'angular-mentions';
 @Component({
   selector: 'app-guild-add-message',
   templateUrl: './guild-add-message.component.html',
@@ -22,8 +23,22 @@ export class GuildAddMessageComponent implements AfterViewInit {
   public selectedIndex = 0;
   public selectedChannel?: string;
   public addedTags: Map<string, string> = new Map();
+
+  public mentionConfig: MentionConfig = {
+    mentions: [
+        {
+          triggerChar: '@',
+          disableSearch: true,
+          returnTrigger: true
+        },
+        {
+          triggerChar: '#',
+          disableSearch: true,
+          returnTrigger: true
+        },
+    ]
+}
   
-  private needle = "";
   private dateMode = false;
 
   @ViewChild("textarea")
@@ -64,41 +79,27 @@ export class GuildAddMessageComponent implements AfterViewInit {
       this.expandedMessage = true;
     }
   }
-  public async onInput(e: Event) {
-    if (!(e instanceof InputEvent))
-      return;
-    if ((e.data == " " && this.inputMode) || (e.inputType === "deleteContentBackward" && e.data === this.inputMode)) {
+  public async onInput(keyword: string) {
+    if (keyword.length < 2) {
+      this.suggestions = [];
       this.inputMode = null;
-      this.needle = "";
+      return;
     }
-    else if ((e.data === "#" || e.data === "@") && !this.inputMode)
-      this.inputMode = e.data;
-    if (e.inputType === "insertText" && this.inputMode)
-      this.needle += e.data;
-    else if (e.inputType === "deleteContentBackward" && this.inputMode && this.textarea) {
-      this.needle = this.needle.delete(this.textarea.nativeElement.selectionStart, 1);
-      if (this.needle.length === 0) {
-        this.inputMode = null;
-        this.suggestions = [];
-      }
-    }
-    
-    if (this.inputMode && this.api.currentGuild && this.needle.length > 0) {
-      if (this.inputMode === "@") {
-        const needle = this.needle.toLowerCase();
-        this.suggestions = [
-          ...(await this.api.getMembers(needle) ?? []),
-          ...this.api.currentGuild.roles.filter(el => el.name.toLowerCase().includes(needle.substr(1))).map(el => {
-            if (el.name.startsWith("@"))
-              el.name = el.name.substr(1);
-            return el;
-          })
-        ];
-      } else {
-        const needle = this.needle.toLowerCase().delete(0, 1);
-        this.suggestions = this.api.currentGuild.channels.filter(el => el.name.toLowerCase().includes(needle));
-      }
-    }
+    if (keyword.startsWith("@") && this.api.currentGuild) {
+      this.inputMode = "@";
+      this.suggestions = [
+        ...(await this.api.getMembers(keyword) ?? []),
+        ...this.api.currentGuild.roles.filter(el => el.name.toLowerCase().includes(keyword.substr(1))).map(el => {
+          if (el.name.startsWith("@"))
+            el.name = el.name.substr(1);
+          return el;
+        })
+      ];
+    } else if (keyword.startsWith("#") && this.api.currentGuild) {
+      this.inputMode = "#";
+      const needle = keyword.toLowerCase().substr(1);
+      this.suggestions = this.api.currentGuild.channels.filter(el => el.name.toLowerCase().includes(needle));
+    } else this.inputMode = null;
   }
 
   public onKeydown(e: KeyboardEvent) {
@@ -119,11 +120,11 @@ export class GuildAddMessageComponent implements AfterViewInit {
   }
 
   public onSuggestionsClick(el: GuildElement) {
-    this.message = this.message.substring(0, this.message.lastIndexOf(this.inputMode!)) + this.inputMode + el.name;
-    this.needle = "";
-    this.inputMode = null;
-    this.suggestions = [];
+    this.message = this.message.substring(0, this.message.lastIndexOf(this.inputMode!)) + this.inputMode + el.name + " ";
     this.addedTags.set(this.inputMode + el.name, el.id);
+    this.suggestions = [];
+    this.inputMode = null;
+    console.log(this.addedTags.entries());
   }
 
   public async addMessage() {
@@ -154,7 +155,6 @@ export class GuildAddMessageComponent implements AfterViewInit {
       this.inputMode = null;
       this.selectedChannel = undefined;
       this.selectedIndex = 0;
-      this.needle = "";
       this.snackbar.snack("Message successfuly added!");
     } catch (e) {
       console.error(e);

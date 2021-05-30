@@ -40,6 +40,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CronEditorComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/cron-editor.component';
 import { TimePickerComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/time-picker/time-picker.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MentionModule } from 'angular-mentions';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +84,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatProgressSpinnerModule,
     MatRadioModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MentionModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
