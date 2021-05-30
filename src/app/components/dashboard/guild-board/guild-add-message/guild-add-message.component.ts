@@ -58,7 +58,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
 
   public onCronChange(e: string | Date) {
     if (e instanceof Date) {
-      this.description = `The ${e.getDay().toString().padStart(2, '0')}/${e.getMonth().toString().padStart(2, '0')}/${e.getFullYear()} at ${e.getHours().toString().padStart(2, '0')}:${e.getMinutes().toString().padStart(2, '0')}`;
+      this.description = `The ${e.getDate().toString().padStart(2, '0')}/${(e.getMonth() + 1).toString().padStart(2, '0')}/${e.getFullYear()} at ${e.getHours().toString().padStart(2, '0')}:${e.getMinutes().toString().padStart(2, '0')}`;
       this.dateMode = true;
     }
     else if (typeof e === 'string') {

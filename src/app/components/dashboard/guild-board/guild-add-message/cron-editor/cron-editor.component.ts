@@ -122,7 +122,7 @@ export class CronEditorComponent implements OnInit {
         }
         break;
       case 'date':
-        this.dateChange.emit(new Date(this.state.date.date.getTime() + this.state.date.hours * 3.6e6 + this.state.date.minutes * 60_000))
+        this.dateChange.emit(new Date(this.state.date.date.getTime() + this.state.date.hours * 3_600_000 + this.state.date.minutes * 60_000));
         break;
     }
     this.onError.emit(undefined);
