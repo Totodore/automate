@@ -17,7 +17,7 @@ export class LastMessagesComponent {
   @Input()
   public messages!: MessageModel[];
 
-  public readonly columns = ["Server", "Description", "Message", "Author", "Attachments"];
+  public readonly columns = ["Server", "Description", "Message", "Author"];
   public readonly cdn = environment.discordCdn;
 
   public get errored() {

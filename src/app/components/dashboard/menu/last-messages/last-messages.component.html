@@ -23,7 +23,7 @@
 		<ng-container matColumnDef="Message">
 			<th mat-header-cell *matHeaderCellDef>Message</th>
 			<td mat-cell *matCellDef="let element"> 
-				{{ element.parsedMessage }} 
+				{{ element.message }} 
 			</td>
 		</ng-container>
 
@@ -35,11 +35,6 @@
 					{{ element.creator.name }} 
 				</div>
 			</td>
-		</ng-container>
-
-		<ng-container matColumnDef="Attachments">
-			<th mat-header-cell *matHeaderCellDef>Attachments</th>
-			<td mat-cell *matCellDef="let element"> {{ element.files.length }} </td>
 		</ng-container>
 	</table>	
 </div>
