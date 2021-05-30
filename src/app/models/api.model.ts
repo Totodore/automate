@@ -50,7 +50,9 @@ export class GuildReqModel {
     public roles: GuildElement[],
     public maxMessages: number,
     public scope: boolean,
-    public removeOneTimeMessage: boolean
+    public removeOneTimeMessage: boolean,
+    public currentQuota: number,
+    public maxQuota: number
   ) {}
 
 }

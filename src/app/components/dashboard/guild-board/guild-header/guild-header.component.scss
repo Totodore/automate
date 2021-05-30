@@ -16,6 +16,9 @@
 	z-index: 1;
 	top: 0;
 	transition: all 300ms;
+	mat-divider {
+		height: 54px;
+	}
 	.left {
 		display: flex;
 		align-items: center;
@@ -26,16 +29,20 @@
 			margin-right: 15px;
 			@include mat-elevation(3);
 		}
-		h2 {
+		h2, h3 {
 			margin: 0;
 		}
+		h2 {
+			margin-right: 15px;
+		}
+		h3 {
+			margin-left: 10px;
+		}
+		
 	}
 	.right {
 		display: flex;
 		align-items: center;
-		mat-divider {
-			height: 54px;
-		}
 		button {
 			margin-left: 10px;
 		}
