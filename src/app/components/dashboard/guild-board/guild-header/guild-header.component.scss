@@ -25,9 +25,18 @@
 		img {
 			width: 54px;
 			height: 54px;
+			position: relative;
 			border-radius: 25px;
 			margin-right: 15px;
 			@include mat-elevation(3);
+			&::before {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0; left: 0;
+				background-color: #1b1b1b;
+				z-index: 50;
+			}
 		}
 		h2, h3 {
 			margin: 0;

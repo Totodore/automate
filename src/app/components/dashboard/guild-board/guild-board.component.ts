@@ -36,7 +36,7 @@ export class GuildBoardComponent implements OnInit {
         this.loading = true;
         this.discordGuild = this.api.profile?.guilds.find(el => el.id === this.guildId);
         this.guild = await this.api.getGuild(this.guildId);
-        setTimeout(() => this.loading = false, 100);
+        this.loading = false;
       }
     });
   }
