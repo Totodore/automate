@@ -31,7 +31,7 @@ export class ApiService {
 
   public async getLastMessages(): Promise<MessageModel[] | undefined> {
     try {
-      return await this.post("guild/last", this.profile);
+      return await this.get("user/me/last");
     } catch (e) { console.error(e) }
     return;
   }
@@ -82,7 +82,7 @@ export class ApiService {
     await this.delete(`guild/${this.currentGuild?.id}`);
   }
   public async deleteMessage(msgId: string) {
-    await this.delete(`guild/${msgId}`);
+    await this.delete(`guild/${this.currentGuild?.id}/message/${msgId}`);
     this.currentGuild!.messages = this.currentGuild!.messages.filter(el => el.id !== msgId);
   }
   private async get<R>(path: string, token?: string) {
