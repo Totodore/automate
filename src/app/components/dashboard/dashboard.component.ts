@@ -1,21 +1,28 @@
 import { MenuComponent } from './menu/menu.component';
 import { GuildBoardComponent } from './guild-board/guild-board.component';
 import { GuildInfo } from 'passport-discord';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { ProgressService } from 'src/app/services/progress.service';
 
 @Component({
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterContentChecked {
 
   public currentGuildId?: string;
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    public readonly progress: ProgressService,
+    private readonly changeDetector: ChangeDetectorRef,
   ) { }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
 
   ngOnInit(): void {
     this.currentGuildId = this.route.snapshot?.firstChild?.paramMap.get("id") || undefined;

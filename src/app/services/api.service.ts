@@ -1,3 +1,4 @@
+import { ProgressService } from './progress.service';
 import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 import { map, timeout } from "rxjs/operators";
@@ -16,7 +17,8 @@ export class ApiService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly sse: SseService
+    private readonly sse: SseService,
+    private readonly progress: ProgressService
   ) { }
 
   public async login(token?: string) {
@@ -86,28 +88,45 @@ export class ApiService {
     this.currentGuild!.messages = this.currentGuild!.messages.filter(el => el.id !== msgId);
   }
   private async get<R>(path: string, token?: string) {
-    if (path.startsWith("/"))
-      path = path.substring(1);
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token || this.token}` });
-    return this.http.get<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
+    try {
+      this.progress.show();
+      if (path.startsWith("/"))
+        path = path.substring(1);
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token || this.token}` });
+      return await this.http.get<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
+    } finally {
+      this.progress.hide();
+    }
   }
   private async post<Q, R>(path: string, body: Q) {
-    if (path.startsWith("/"))
-      path = path.substring(1);
-    const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
-    return this.http.post<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
+    try {
+      if (path.startsWith("/"))
+        path = path.substring(1);
+      const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+      return await this.http.post<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
+    } finally {
+      this.progress.hide();
+    }
   }
   private async patch<Q, R>(path: string, body?: Q) {
-    if (path.startsWith("/"))
-      path = path.substring(1);
-    const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
-    return this.http.patch<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
+    try {
+      if (path.startsWith("/"))
+        path = path.substring(1);
+      const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+      return this.http.patch<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
+    } finally {
+      this.progress.hide();
+    }
   }
   private async delete<R>(path: string) {
-    if (path.startsWith("/"))
-      path = path.substring(1);
-    const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
-    return this.http.delete<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
+    try {
+      if (path.startsWith("/"))
+        path = path.substring(1);
+      const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
+      return this.http.delete<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
+    } finally {
+      this.progress.hide();
+    }
   }
 
   private get token(): string {

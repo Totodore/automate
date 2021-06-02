@@ -1,5 +1,6 @@
 <div class="wrapper">
 	<app-navbar [currentGuildId]="currentGuildId" class="frame"></app-navbar>
+	<mat-progress-bar [mode]="progress.mode" [value]="progress.value" [style.opacity]="progress.showing ? 1 : 0"></mat-progress-bar>
 	<!-- <app-guild-board *ngIf="currentGuildId" [guildId]="currentGuildId"></app-guild-board> -->
 	<router-outlet class="frame"></router-outlet>
 </div>

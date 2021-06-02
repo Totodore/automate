@@ -2,6 +2,26 @@
 	display: flex;
 	height: 100vh;
 	width: 100vw;
+
+	mat-progress-bar {
+		position: absolute;
+		z-index: 1000;
+		top: 0;
+		transition: opacity 250ms;
+	
+		::ng-deep .mat-progress-bar-fill::after {
+			background-color: #F79058 !important;
+		}
+	
+		::ng-deep .mat-progress-bar-buffer {
+			background: #1b1b1b !important;
+		}
+	
+		::ng-deep .mat-progress-bar {
+			border-radius: 2px;
+		}
+	}
+
 	app-navbar {
 		height: 100%;
 		width: 70px;

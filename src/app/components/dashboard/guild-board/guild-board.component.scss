@@ -1,11 +1,30 @@
-.wrapper {
-	min-height: 100vh;	
-	width: clamp(700px, 90%, 1300px);
-	margin: auto;
-	padding-top: 50px;
-	animation: fade-in 300ms ease;
-	animation-fill-mode: forwards;
-	transform: translateX(-20px);
-	opacity: 0.3;
-	margin-bottom: 30px;
+.outer-wrapper {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	.wrapper {
+		min-height: 100vh;	
+		width: clamp(700px, 90%, 1300px);
+		margin: auto;
+		padding-top: 50px;
+		animation: fade-in 300ms ease;
+		animation-fill-mode: forwards;
+		transform: translateX(-20px);
+		opacity: 0.3;
+		margin-bottom: 30px;
+	}
+	.hider {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		background-color: #1b1b1b;
+		transition: opacity 150ms;
+		opacity: 0;
+		top: 0;
+		z-index: 100;
+		left: 0;
+		&.enabled {
+			opacity: 1;
+		}
+	}	
 }

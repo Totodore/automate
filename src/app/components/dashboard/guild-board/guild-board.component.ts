@@ -18,6 +18,7 @@ export class GuildBoardComponent implements OnInit {
   public discordGuild?: DiscordGuild;
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
+  public loading = false;
 
   @ViewChild("table")
   public table!: GuildTableComponent
@@ -30,10 +31,12 @@ export class GuildBoardComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(async e => {
-      this.guildId = e.get("id")
+      this.guildId = e.get("id");
       if (this.guildId) {
+        this.loading = true;
         this.discordGuild = this.api.profile?.guilds.find(el => el.id === this.guildId);
         this.guild = await this.api.getGuild(this.guildId);
+        setTimeout(() => this.loading = false, 100);
       }
     });
   }
