@@ -13,8 +13,19 @@ export class CronEditorComponent implements OnInit {
   @Input() get cron(): string { return this.localCron; }
   @Input() date!: Date;
 
-  @Input() cronState?: Partial<StateDataModel>
-  @Input() activeTab?: Tab = "minutes";
+  @Input() set cronState(val: Partial<StateDataModel> | undefined) {
+    this.state = this.getDefaultState(val);
+    this.regenerateCron();
+  }
+  @Input() set activeTab(val: Tab | undefined) {
+    this._activeTab = val || "minutes";
+    let arr: Tab[] = ["minutes", "hourly", "daily", "weekly", "monthly", "advanced", "date"];
+    this.selectedTabIndex = arr.indexOf(val || "minutes");
+  }
+
+  get activeTab(): Tab | undefined {
+    return this._activeTab;
+  }
 
   set cron(value: string) {
     this.localCron = value;
@@ -32,6 +43,8 @@ export class CronEditorComponent implements OnInit {
   public selectOptions = this.getSelectOptions();
   public state!: StateDataModel;
   public showSpinner = false;
+  public selectedTabIndex = 0;
+  private _activeTab: Tab = "minutes";
 
   private localCron!: string;
 
@@ -156,7 +169,7 @@ export class CronEditorComponent implements OnInit {
   }
 
 
-  private getDefaultState(): StateDataModel {
+  private getDefaultState(inputState?: Partial<StateDataModel>): StateDataModel {
     const [defaultHours, defaultMinutes] = [0, 0];
 
     return {
@@ -221,7 +234,7 @@ export class CronEditorComponent implements OnInit {
         isValid: true,
         errorMessage: ''
       },
-      ...this.cronState
+      ...inputState
     };
   }
 

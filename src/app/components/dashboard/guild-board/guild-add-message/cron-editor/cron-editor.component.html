@@ -1,5 +1,5 @@
 <!-- Tabs -->
-<mat-tab-group dynamicHeight mat-stretch-tabs color="accent" (selectedTabChange)="setActiveTab($event)" [backgroundColor]="undefined">
+<mat-tab-group [selectedIndex]="selectedTabIndex" dynamicHeight mat-stretch-tabs color="accent" (selectedTabChange)="setActiveTab($event)" [backgroundColor]="undefined">
 	<mat-tab label="Minutes" aria-label="minutes">
 		<!-- Minutes-->
 		<div class="tab">

@@ -21,6 +21,9 @@ export class GuildTableComponent implements OnInit {
   @Input()
   public admin = false;
 
+  @Output()
+  public readonly editMessage = new EventEmitter<MessageModel>();
+
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
   public readonly columns = ["Author", "Channel", "Description", "Message", "Attachments"];

@@ -2,7 +2,7 @@ import { checkAdminPermissions } from './../../../utils/perms.util';
 import { GuildTableComponent } from './guild-table/guild-table.component';
 import { SnackbarService } from './../../../services/snackbar.service';
 import { environment } from './../../../../environments/environment';
-import { GuildReqModel } from './../../../models/api.model';
+import { GuildReqModel, MessageModel } from './../../../models/api.model';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
@@ -25,6 +25,8 @@ export class GuildBoardComponent implements OnInit {
   @ViewChild("table")
   public table!: GuildTableComponent
 
+  public editMessage?: MessageModel;
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly api: ApiService,
@@ -42,6 +44,10 @@ export class GuildBoardComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  public onEditMessage(msg: MessageModel) {
+    this.editMessage = msg;
   }
 
 }

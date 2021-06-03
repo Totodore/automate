@@ -11,7 +11,7 @@ import { MentionConfig } from 'angular-mentions';
   templateUrl: './guild-add-message.component.html',
   styleUrls: ['./guild-add-message.component.scss']
 })
-export class GuildAddMessageComponent implements AfterViewInit, OnInit {
+export class GuildAddMessageComponent implements AfterViewInit {
 
 
   public cron: string = "* * * * 12";
@@ -28,7 +28,14 @@ export class GuildAddMessageComponent implements AfterViewInit, OnInit {
   public activeTab?: Tab;
 
   @Input()
-  public msg?: MessageModel
+  public set msg(val: MessageModel) {
+    this.description = val?.description || "";
+    this.activeTab = val?.cronTab || "minutes";
+    this.cronState = val?.cronState;
+    this.selectedChannel = val?.channelId;
+    this.message = val?.message || "";
+    this.expandedMessage = this.message?.length > 0;
+  }
 
   public mentionConfig: MentionConfig = {
     mentions: [
@@ -57,16 +64,6 @@ export class GuildAddMessageComponent implements AfterViewInit, OnInit {
     public readonly api: ApiService,
     private readonly snackbar: SnackbarService
   ) { }
-
-  public ngOnInit(): void {
-    if (this.message) {
-      this.description = this.msg?.description || "";
-      this.activeTab = this.msg?.cronTab;
-      this.cronState = this.msg?.cronState;
-      this.selectedChannel = this.msg?.channelId;
-      this.message = this.msg?.rawMessage || "";
-    }
-  }
 
   public ngAfterViewInit(): void {
     // (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
@@ -172,7 +169,6 @@ export class GuildAddMessageComponent implements AfterViewInit, OnInit {
       this.addedTags = new Map();
       this.message = "";
       this.inputMode = null;
-      this.msg = undefined;
       this.selectedChannel = undefined;
       this.selectedIndex = 0;
       this.snackbar.snack("Message successfuly added!");

@@ -17,7 +17,7 @@ export class MessageModel {
     public cron: string,
     public date: Date,
     public parsedMessage: string,
-    public rawMessage: string,
+    public message: string,
     public description: string,
     public type: MessageType,
     public creator: UserModel,
