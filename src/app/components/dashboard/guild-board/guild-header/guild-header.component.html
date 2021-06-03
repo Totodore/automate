@@ -8,8 +8,8 @@
 	</div>
 	<div class="right">
 		<h3>{{ api.currentGuild?.timezone || "No timezone has been set!" }}</h3>
-		<mat-divider [vertical]="true"></mat-divider>
-		<button mat-icon-button (click)="onOptionsClick()">
+		<mat-divider [vertical]="true" *ngIf="admin"></mat-divider>
+		<button mat-icon-button (click)="onOptionsClick()" *ngIf="admin">
 			<mat-icon class="mat-18">settings</mat-icon>
 		</button>
 	</div>

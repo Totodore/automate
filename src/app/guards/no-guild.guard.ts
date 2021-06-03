@@ -14,7 +14,8 @@ export class NoGuildGuard implements CanActivate {
   ) {}
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const guildId = route.paramMap.get("id");
-    return this.api.profile?.guilds.find(el => el.id === guildId)?.added ? true : this.router.parseUrl(`/board/${guildId}/add`);
+    const guild = this.api.profile?.guilds.find(el => el.id === guildId);
+    return guild?.added ? true : this.router.parseUrl(`/board/${guildId}/add`);
   }
 
 }

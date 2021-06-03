@@ -18,6 +18,9 @@ export class GuildHeaderComponent implements OnInit {
   @Input()
   public bodyWrapper: HTMLElement | null = null;
 
+  @Input()
+  public admin = false;
+
   @ViewChild("wrapper")
   private headerWrapper!: ElementRef<HTMLDivElement>;
 
@@ -42,8 +45,6 @@ export class GuildHeaderComponent implements OnInit {
     this.dialogs.open(GuildOptionsComponent, {
       data: [this.discordGuild, this.api.currentGuild],
       maxHeight: "90%",
-      // height: "70%"
-      // width: "800px"
     });
   }
 }

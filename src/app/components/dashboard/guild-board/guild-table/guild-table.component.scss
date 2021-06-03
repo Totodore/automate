@@ -43,6 +43,14 @@ table {
 		button:first-of-type {
 			margin-left: 10px;
 		}
+		&.disabled {
+			td {
+				color: #9a9a9a;
+				mat-icon {
+					color: #9c6648 !important;
+				}
+			}
+		}
 	}
 
 	// ::ng-deep tbody tr {

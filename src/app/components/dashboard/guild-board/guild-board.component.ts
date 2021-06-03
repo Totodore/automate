@@ -1,3 +1,4 @@
+import { checkAdminPermissions } from './../../../utils/perms.util';
 import { GuildTableComponent } from './guild-table/guild-table.component';
 import { SnackbarService } from './../../../services/snackbar.service';
 import { environment } from './../../../../environments/environment';
@@ -19,6 +20,7 @@ export class GuildBoardComponent implements OnInit {
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
   public loading = false;
+  public isAdmin = false;
 
   @ViewChild("table")
   public table!: GuildTableComponent
@@ -36,6 +38,7 @@ export class GuildBoardComponent implements OnInit {
         this.loading = true;
         this.discordGuild = this.api.profile?.guilds.find(el => el.id === this.guildId);
         this.guild = await this.api.getGuild(this.guildId);
+        this.isAdmin = checkAdminPermissions(this.discordGuild?.permissions || 0);
         this.loading = false;
       }
     });

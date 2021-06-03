@@ -18,20 +18,24 @@ export class GuildTableComponent implements OnInit {
   @Input()
   public discordGuild?: DiscordGuild;
 
+  @Input()
+  public admin = false;
+
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
-  public readonly columns = ["Author", "Channel", "Description", "Message", "Attachments", "Actions"];
+  public readonly columns = ["Author", "Channel", "Description", "Message", "Attachments"];
   public toggledRow?: string;
   public dataSource = new MatTableDataSource<MessageModel>();
 
   constructor(
     private readonly snackbar: SnackbarService,
-    private readonly changeDetectorRef: ChangeDetectorRef,
     public readonly api: ApiService,
     private readonly dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
+    if (this.admin)
+      this.columns.push("Actions");
     this.refresh();
   }
 
