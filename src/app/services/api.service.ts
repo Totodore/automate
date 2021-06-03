@@ -66,7 +66,7 @@ export class ApiService {
   public async postFreqMessage(files: File[], body: Partial<PostFreqMessageInModel>): Promise<MessageModel> {
     const formData = new FormData();
     for (const [key, val] of Object.entries(body))
-      formData.append(key, val!);
+      formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString()!);
     for (const file of files)
       formData.append("files", file);
     return await this.post(`guild/${this.currentGuild?.id}/message/freq`, body);
@@ -75,7 +75,7 @@ export class ApiService {
   public async postPonctualMessage(files: File[], body: Partial<PostPonctMessageInModel>): Promise<MessageModel> {
     const formData = new FormData();
     for (const [key, val] of Object.entries(body))
-      formData.append(key, val!);
+      formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString()!);
     for (const file of files)
       formData.append("files", file);
     return await this.post(`guild/${this.currentGuild?.id}/message/ponctual`, body);

@@ -13,17 +13,22 @@ export class CronEditorComponent implements OnInit {
   @Input() get cron(): string { return this.localCron; }
   @Input() date!: Date;
 
+  @Input() cronState?: Partial<StateDataModel>
+  @Input() activeTab?: Tab = "minutes";
+
   set cron(value: string) {
     this.localCron = value;
+    this.stateChange.emit(this.state);
     this.cronChange.emit(this.localCron);
   }
 
   // the name is an Angular convention, @Input variable name + "Change" suffix
   @Output() cronChange = new EventEmitter<string>();
   @Output() dateChange = new EventEmitter<Date>();
+  @Output() stateChange = new EventEmitter<StateDataModel>();
+  @Output() activeTabChange = new EventEmitter<Tab>();
   @Output() onError = new EventEmitter<string>();
 
-  public activeTab: Tab = "minutes";
   public selectOptions = this.getSelectOptions();
   public state!: StateDataModel;
   public showSpinner = false;
@@ -36,8 +41,9 @@ export class CronEditorComponent implements OnInit {
   }
 
   public setActiveTab(event: MatTabChangeEvent) {
-      this.activeTab = event.tab.ariaLabel as Tab;
-      this.regenerateCron();
+    this.activeTab = event.tab.ariaLabel as Tab;
+    this.activeTabChange.emit(this.activeTab);
+    this.regenerateCron();
   }
 
   public dayDisplay(day: keyof typeof Days): typeof Days[keyof typeof Days] {
@@ -214,7 +220,8 @@ export class CronEditorComponent implements OnInit {
       validation: {
         isValid: true,
         errorMessage: ''
-      }
+      },
+      ...this.cronState
     };
   }
 

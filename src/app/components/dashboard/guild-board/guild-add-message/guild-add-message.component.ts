@@ -1,7 +1,8 @@
+import { StateDataModel, Tab } from './cron-editor/cron-options';
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel, PostPonctMessageInModel } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
-import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output, OnInit } from '@angular/core';
 import { toString as cronDescriptor } from "cronstrue";
 import { GuildElement } from 'src/app/models/api.model';
 import { MentionConfig } from 'angular-mentions';
@@ -10,7 +11,7 @@ import { MentionConfig } from 'angular-mentions';
   templateUrl: './guild-add-message.component.html',
   styleUrls: ['./guild-add-message.component.scss']
 })
-export class GuildAddMessageComponent implements AfterViewInit {
+export class GuildAddMessageComponent implements AfterViewInit, OnInit {
 
 
   public cron: string = "* * * * 12";
@@ -23,6 +24,11 @@ export class GuildAddMessageComponent implements AfterViewInit {
   public selectedIndex = 0;
   public selectedChannel?: string;
   public addedTags: Map<string, string> = new Map();
+  public cronState?: Partial<StateDataModel>;
+  public activeTab?: Tab;
+
+  @Input()
+  public msg?: MessageModel
 
   public mentionConfig: MentionConfig = {
     mentions: [
@@ -52,8 +58,18 @@ export class GuildAddMessageComponent implements AfterViewInit {
     private readonly snackbar: SnackbarService
   ) { }
 
+  public ngOnInit(): void {
+    if (this.message) {
+      this.description = this.msg?.description || "";
+      this.activeTab = this.msg?.cronTab;
+      this.cronState = this.msg?.cronState;
+      this.selectedChannel = this.msg?.channelId;
+      this.message = this.msg?.rawMessage || "";
+    }
+  }
+
   public ngAfterViewInit(): void {
-    (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
+    // (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
   }
 
   public onCronChange(e: string | Date) {
@@ -124,7 +140,6 @@ export class GuildAddMessageComponent implements AfterViewInit {
     this.addedTags.set(this.inputMode + el.name, el.id);
     this.suggestions = [];
     this.inputMode = null;
-    console.log(this.addedTags.entries());
   }
 
   public async addMessage() {
@@ -137,13 +152,17 @@ export class GuildAddMessageComponent implements AfterViewInit {
         this.description!,
         this.message,
         parsedMessage,
-        this.cron
+        this.cron,
+        this.cronState,
+        this.activeTab
       )) : await this.api.postPonctualMessage([], new PostPonctMessageInModel(
         this.selectedChannel!,
         this.description!,
         this.message,
         parsedMessage,
-        this.date.toString()
+        this.date.toString(),
+        this.cronState,
+        this.activeTab
       ));
       msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.username, this.api.profile!.avatar);
       this.api.currentGuild?.messages.push(msg);
@@ -153,6 +172,7 @@ export class GuildAddMessageComponent implements AfterViewInit {
       this.addedTags = new Map();
       this.message = "";
       this.inputMode = null;
+      this.msg = undefined;
       this.selectedChannel = undefined;
       this.selectedIndex = 0;
       this.snackbar.snack("Message successfuly added!");

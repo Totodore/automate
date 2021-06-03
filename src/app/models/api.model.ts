@@ -1,4 +1,6 @@
+import { Tab } from './../components/dashboard/guild-board/guild-add-message/cron-editor/cron-options';
 import { Profile, GuildInfo } from 'passport-discord';
+import { StateDataModel } from '../components/dashboard/guild-board/guild-add-message/cron-editor/cron-options';
 export class UserModel {
   constructor(  
     public id: string,
@@ -23,6 +25,8 @@ export class MessageModel {
     public activated: boolean,
     public updatedDate: Date,
     public channelName?: string,
+    public cronState?: Partial<StateDataModel>,
+    public cronTab?: Tab,
   ) { }
 }
 
@@ -94,7 +98,9 @@ export class PostFreqMessageInModel extends PostMessageModel {
     public description: string,
     public message: string,
     public parsedMessage: string,
-    public cron: string
+    public cron: string,
+    public cronState?: Partial<StateDataModel>,
+    public cronTab?: Tab,
   ) { super(channelId, description, message, parsedMessage) }
 
 }
@@ -106,6 +112,8 @@ export class PostPonctMessageInModel extends PostMessageModel {
     public description: string,
     public message: string,
     public parsedMessage: string,
-    public date: string
+    public date: string,
+    public cronState?: Partial<StateDataModel>,
+    public cronTab?: Tab,
   ) { super(channelId, description, message, parsedMessage) }
 }
