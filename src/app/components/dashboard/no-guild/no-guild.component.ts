@@ -17,7 +17,6 @@ export class NoGuildComponent implements OnInit {
   public readonly cdn = environment.discordCdn;
   public readonly botLink = environment.botLink;
   public dispIframe = false;
-  public done = false;
   constructor(
     private readonly route: ActivatedRoute,
     private readonly api: ApiService,
@@ -32,7 +31,14 @@ export class NoGuildComponent implements OnInit {
   public onDispIframe() {
     this.dispIframe = true;
     const discordWindow = window.open(this.botLink + this.id, 'newwindow', 'height=670,width=400,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=no');
-    discordWindow?.addEventListener("close", () => this.dispIframe = this.done ? this.dispIframe : false);
+
+    const handle = setInterval(() => {
+      if (discordWindow?.closed) {
+        clearInterval(handle);
+        this.dispIframe = false;
+      }
+    }, 1000);
+
     const subscribtion = this.api.getCreatedGuild(this.id!).subscribe(el => {
       this.api.profile!.guilds.find(el => el.id == this.id)!.added = true;
       this.dispIframe = false;
