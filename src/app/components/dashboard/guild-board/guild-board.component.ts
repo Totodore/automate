@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { DiscordGuild } from 'src/app/models/api.model';
+import { GuildAddMessageComponent } from './guild-add-message/guild-add-message.component';
 
 @Component({
   selector: 'app-guild-board',
@@ -23,7 +24,7 @@ export class GuildBoardComponent implements OnInit {
   public isAdmin = false;
 
   @ViewChild("table")
-  public table!: GuildTableComponent
+  public table!: GuildTableComponent;
 
   public editMessage?: MessageModel;
 
@@ -46,8 +47,10 @@ export class GuildBoardComponent implements OnInit {
     });
   }
 
-  public onEditMessage(msg: MessageModel) {
+  public async onEditMessage(msg: MessageModel) {
     this.editMessage = msg;
+    document.querySelector("app-guild-board")
+      ?.scrollTo({ top: document.querySelector("app-guild-add-message h1")?.getBoundingClientRect()?.top, behavior: "smooth" });
   }
 
 }
