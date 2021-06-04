@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="guilds.length > 0">
 	<h1>Added Servers:</h1>
 	<div class="guilds">
 		<img [routerLink]="guild.id" *ngFor="let guild of guilds" 
