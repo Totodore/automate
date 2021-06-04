@@ -11,7 +11,7 @@ import { MentionConfig } from 'angular-mentions';
   templateUrl: './guild-add-message.component.html',
   styleUrls: ['./guild-add-message.component.scss']
 })
-export class GuildAddMessageComponent implements AfterViewInit {
+export class GuildAddMessageComponent {
 
 
   public cron: string = "* * * * 12";
@@ -64,10 +64,6 @@ export class GuildAddMessageComponent implements AfterViewInit {
     public readonly api: ApiService,
     private readonly snackbar: SnackbarService
   ) { }
-
-  public ngAfterViewInit(): void {
-    // (document.querySelector("a[aria-controls=hourly][role=tab]") as HTMLElement)?.click();
-  }
 
   public onCronChange(e: string | Date) {
     if (e instanceof Date) {
