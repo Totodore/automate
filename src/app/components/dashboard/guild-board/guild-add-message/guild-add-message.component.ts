@@ -21,17 +21,6 @@ export class GuildAddMessageComponent {
 
   public messageData = this.baseMessageModel();
 
-  @Input()
-  public set msg(val: MessageModel) {
-    this.messageData.description = val?.description || "";
-    this.messageData.editingId = val?.id;
-    this.messageData.activeTab = val?.cronTab || "minutes";
-    this.messageData.cronState = val?.cronState;
-    this.messageData.selectedChannel = val?.channelId;
-    this.messageData.message = val?.message || "";
-    this.expandedMessage = this.messageData.message?.length > 0;
-  }
-
   public mentionConfig: MentionConfig = {
     mentions: [
         {
@@ -47,7 +36,6 @@ export class GuildAddMessageComponent {
     ]
 }
   
-  private dateMode = false;
 
   @ViewChild("textarea")
   private textarea?: ElementRef<HTMLTextAreaElement>;
@@ -55,11 +43,24 @@ export class GuildAddMessageComponent {
   @Output()
   public readonly newMessage = new EventEmitter<MessageModel>();
 
+  @Input()
+  public set msg(val: MessageModel) {
+    this.messageData.description = val?.description || "";
+    this.messageData.editingId = val?.id;
+    this.messageData.activeTab = val?.cronTab || "minutes";
+    this.messageData.cronState = val?.cronState;
+    this.messageData.selectedChannel = val?.channelId;
+    this.messageData.message = val?.message || "";
+    this.expandedMessage = this.messageData.message?.length > 0;
+  }
+  
+  private dateMode = false;
+
   constructor(
     public readonly api: ApiService,
     private readonly snackbar: SnackbarService
   ) { }
-
+  
   public onCronChange(e: string | Date) {
     if (e instanceof Date) {
       this.messageData.description = `The ${e.getDate().toString().padStart(2, '0')}/${(e.getMonth() + 1).toString().padStart(2, '0')}/${e.getFullYear()} at ${e.getHours().toString().padStart(2, '0')}:${e.getMinutes().toString().padStart(2, '0')}`;
@@ -224,7 +225,6 @@ export class GuildAddMessageComponent {
       parsedMessage: "",
       editingId: null,
       activeTab: "minutes",
-      cronState: {}
     }
   }
 

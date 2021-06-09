@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { SelectOptionsModel, StateDataModel, DoW, Tab } from './cron-options';
 import Utils, { Days, Months, MonthWeeks } from './utils';
@@ -16,6 +16,7 @@ export class CronEditorComponent implements OnInit {
   @Input() set cronState(val: Partial<StateDataModel> | undefined) {
     this.state = this.getDefaultState(val);
     this.regenerateCron();
+    this.changeDetector.detectChanges();
   }
   @Input() set activeTab(val: Tab | undefined) {
     this._activeTab = val || "minutes";
@@ -47,6 +48,10 @@ export class CronEditorComponent implements OnInit {
   private _activeTab: Tab = "minutes";
 
   private localCron!: string;
+
+  constructor(
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   public ngOnInit() {
     this.state = this.getDefaultState();
@@ -158,6 +163,10 @@ export class CronEditorComponent implements OnInit {
       SUN: "Sunday"
     };
   }
+
+  public getSelectedDow(): DoW[] {
+    return Object.entries(this.state.weekly.dow).filter(el => el[1]).map(el => el[0]) as DoW[];
+  }
   public getMonths(): string[] {
     return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   }
@@ -172,7 +181,7 @@ export class CronEditorComponent implements OnInit {
   private getDefaultState(inputState?: Partial<StateDataModel>): StateDataModel {
     const [defaultHours, defaultMinutes] = [0, 0];
 
-    return {
+    return Object.assign(inputState || {}, {
       minutes: {
         minutes: 20,
       },
@@ -235,7 +244,7 @@ export class CronEditorComponent implements OnInit {
         errorMessage: ''
       },
       ...inputState
-    };
+    }) as StateDataModel;
   }
 
   private getOrdinalSuffix(value: string) {
