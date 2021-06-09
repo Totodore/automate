@@ -49,8 +49,14 @@ export class GuildBoardComponent implements OnInit {
     });
   }
 
+  /**
+   * Executed when the user click on the edit button
+   * That will trigger the message setter in the GuildAddMessageComponent
+   * @param msg the message to be edited
+   */
   public async onEditMessage(msg: MessageModel) {
-    this.editMessage = msg;
+    //We create a new object to avoid the cache system in angular that do not update if it has the same objectId than the previous
+    this.editMessage = {...msg};  
     document.querySelector("app-guild-board")
       ?.scrollTo({ top: document.querySelector("app-guild-add-message h1")?.getBoundingClientRect()?.top, behavior: "smooth" });
   }
