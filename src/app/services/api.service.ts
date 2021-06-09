@@ -2,7 +2,7 @@ import { ProgressService } from './progress.service';
 import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 import { map, timeout } from "rxjs/operators";
-import { GuildElement, PostFreqMessageInModel } from 'src/app/models/api.model';
+import { GuildElement, PatchMessageModel, PostFreqMessageInModel } from 'src/app/models/api.model';
 import { DiscordProfile, MessageModel, GuildReqModel, MemberModel, PostPonctMessageInModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -79,6 +79,10 @@ export class ApiService {
     for (const file of files)
       formData.append("files", file);
     return await this.post(`guild/${this.currentGuild?.id}/message/ponctual`, body);
+  }
+
+  public async patchMessage(msgId: string, body: PatchMessageModel) {
+    await this.patch(`guild/${this.currentGuild?.id}/message/${msgId}`, body);
   }
   public async deleteGuildFromServer() {
     await this.delete(`guild/${this.currentGuild?.id}`);

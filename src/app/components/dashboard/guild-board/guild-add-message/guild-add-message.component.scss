@@ -6,6 +6,25 @@ h1 {
 	color: whitesmoke;
 	margin-top: 30px;
 }
+.editing {
+	display: flex;
+	width: fit-content;
+	align-items: center;
+	align-content: space-between;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-bottom: 0;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding: 5px 10px;
+	transform: translateX(-1px);
+	h3 {
+		margin-bottom: 0px;
+		color: #cbcbcb;
+	}
+	button {
+		border: none;
+	}
+}
 form {
 	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 	border-radius: 5px;
@@ -99,40 +118,6 @@ form {
 		}
 	}
 }
-::ng-deep {
-	ul {
-		margin-top: 2px !important;
-	}
-	.nav *, .cron-editor-container * {
-		color: whitesmoke !important;
-		border-color: whitesmoke !important;
-		background: #1b1b1b !important;
-	}
-	.nav {
-		border-bottom-color: rgba(255, 255, 255, 0.12) !important;
-	}
-	.well.well-small {
-		display: flex !important;
-		align-items: center !important;
-		justify-content: left !important;
-	}
-	.tab-pane {
-		opacity: 0.2;
-		transform: translateX(-10px);
-		animation: fade-in 300ms ease;
-		animation-fill-mode: forwards;
-	}
-	.timeFormControl, .days {
-		width: 35px !important;
-	}
-	select {
-		margin: 0 5px !important;
-		option {
-			transition: all 250ms !important;
-			cursor: pointer !important;
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.12) !important;
-			}
-		}
-	}
+.editing + form {
+	border-top-left-radius: 0;
 }

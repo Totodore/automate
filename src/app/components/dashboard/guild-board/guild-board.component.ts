@@ -26,12 +26,14 @@ export class GuildBoardComponent implements OnInit {
   @ViewChild("table")
   public table!: GuildTableComponent;
 
+  @ViewChild("addMessage")
+  public addMessage!: GuildAddMessageComponent;
+
   public editMessage?: MessageModel;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly api: ApiService,
-    private readonly snackbar: SnackbarService
   ) { }
 
   public ngOnInit(): void {

@@ -117,3 +117,18 @@ export class PostPonctMessageInModel extends PostMessageModel {
     public cronTab?: Tab,
   ) { super(channelId, description, message, parsedMessage) }
 }
+
+export class PatchMessageModel {
+  
+  constructor(
+    public date: string,
+    public channelId: string,
+    public description: string,
+    public message: string,
+    public parsedMessage: string,
+    public cron: string,
+    public cronState?: Partial<StateDataModel>,
+    public cronTab?: Tab,
+  ) {}
+
+}
