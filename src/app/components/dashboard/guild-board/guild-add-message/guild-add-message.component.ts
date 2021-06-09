@@ -187,14 +187,14 @@ export class GuildAddMessageComponent {
 
   private async patchMessage(parsedMessage: string): Promise<MessageModel | undefined> {
     await this.api.patchMessage(this.messageData.editingId as string, new PatchMessageModel(
-      this.messageData.date.toString(),
+      this.dateMode ? this.messageData.date.toString() : null,
       this.messageData.selectedChannel!,
       this.messageData.description!,
       this.messageData.message,
       parsedMessage,
-      this.messageData.cron,
-      this.messageData.cronState,
-      this.messageData.activeTab,
+      !this.dateMode ? this.messageData.cron : null,
+      !this.dateMode ? this.messageData.cronState : null,
+      !this.dateMode ? this.messageData.activeTab : null,
     ));
     let msg = this.api.currentGuild!.messages.find(el => el.id == this.messageData.editingId);
     if (msg) {

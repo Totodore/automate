@@ -121,14 +121,14 @@ export class PostPonctMessageInModel extends PostMessageModel {
 export class PatchMessageModel {
   
   constructor(
-    public date: string,
+    public date: string | null,
     public channelId: string,
     public description: string,
     public message: string,
     public parsedMessage: string,
-    public cron: string,
-    public cronState?: Partial<StateDataModel>,
-    public cronTab?: Tab,
+    public cron: string | null,
+    public cronState?: Partial<StateDataModel> | null,
+    public cronTab?: Tab | null,
   ) {}
 
 }
