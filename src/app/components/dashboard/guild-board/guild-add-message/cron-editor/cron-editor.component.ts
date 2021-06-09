@@ -164,8 +164,8 @@ export class CronEditorComponent implements OnInit {
     };
   }
 
-  public getSelectedDow(): DoW[] {
-    return Object.entries(this.state.weekly.dow).filter(el => el[1]).map(el => el[0]) as DoW[];
+  public getSelectedDow(dow: { [k in DoW]: boolean }): DoW[] {
+    return Object.entries(dow).filter(el => el[1]).map(el => el[0]) as DoW[];
   }
   public getMonths(): string[] {
     return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -180,7 +180,8 @@ export class CronEditorComponent implements OnInit {
 
   private getDefaultState(inputState?: Partial<StateDataModel>): StateDataModel {
     const [defaultHours, defaultMinutes] = [0, 0];
-
+    if (typeof inputState?.date?.date == "string")
+      inputState.date.date = new Date(inputState.date.date);
     return Object.assign(inputState || {}, {
       minutes: {
         minutes: 20,

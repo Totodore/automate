@@ -193,8 +193,8 @@ export class GuildAddMessageComponent {
       this.messageData.message,
       parsedMessage,
       !this.dateMode ? this.messageData.cron : null,
-      !this.dateMode ? this.messageData.cronState : null,
-      !this.dateMode ? this.messageData.activeTab : null,
+      this.messageData.cronState,
+      this.messageData.activeTab,
     ));
     let msg = this.api.currentGuild!.messages.find(el => el.id == this.messageData.editingId);
     if (msg) {
