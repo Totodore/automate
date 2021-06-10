@@ -4,7 +4,7 @@
 		<h2>{{ discordGuild.name }}</h2>
 		<mat-divider [vertical]="true"></mat-divider>
 		<h3>Current month quota: </h3>
-		<h3>{{ (api.currentGuild?.maxQuota || 0) - (api.currentGuild?.currentQuota || 0) }}/{{ api.currentGuild?.maxQuota || 0 }}</h3>
+		<h3>{{ ((api.currentGuild?.maxQuota || 0) - (api.currentGuild?.currentQuota || 0)) < 0 ? 0 : ((api.currentGuild?.maxQuota || 0) - (api.currentGuild?.currentQuota || 0)) }}/{{ api.currentGuild?.maxQuota || 0 }}</h3>
 	</div>
 	<div class="right">
 		<h3>{{ api.currentGuild?.timezone || "No timezone has been set!" }}</h3>
