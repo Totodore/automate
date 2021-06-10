@@ -89,7 +89,7 @@ export class GuildAddMessageComponent {
     this.messageData = this.baseMessageModel();
   }
   public async onInput(keyword: string) {
-    if (keyword.length < 2) {
+    if (keyword.length < 1) {
       this.suggestions = [];
       this.inputMode = null;
       return;

@@ -14,7 +14,7 @@
 	</div>
 	<mat-divider *ngIf="expandedMessage && messageData.description"></mat-divider>
 	<div *ngIf="expandedMessage && messageData.description" class="message-builder">
-		<textarea #textarea [(ngModel)]="messageData.message" [ngModelOptions]="{standalone: true}" placeholder="Write your message here..." [mentionConfig]="mentionConfig" (searchTerm)="onInput($event)"></textarea>
+		<textarea #textarea (keydown)="onKeydown($event)" [(ngModel)]="messageData.message" [ngModelOptions]="{standalone: true}" placeholder="Write your message here..." [mentionConfig]="mentionConfig" (searchTerm)="onInput($event)"></textarea>
 		<mat-divider *ngIf="suggestions.length > 0 && inputMode" class="divider-suggestions"></mat-divider>
 		<div class="suggestions" *ngIf="suggestions.length > 0 && inputMode">
 			<button mat-button class="suggestion-el" *ngFor="let el of suggestions; let i = index" [class.selected]="i === selectedIndex" (click)="onSuggestionsClick(el)">
