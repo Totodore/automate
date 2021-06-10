@@ -8,10 +8,11 @@ import { UserGuard } from './guards/user.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
-  { path: "", component: AuthComponent, canActivate: [NoUserGuard] },
+  { path: "", component: AuthComponent, canActivate: [NoUserGuard], resolve: { url: 'externalUrlRedirectResolver' }, data: { externalUrl: environment.oauthLink } },
   {
     path: "board", component: DashboardComponent, canActivate: [UserGuard],
     children: [
@@ -25,6 +26,12 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    {
+      provide: 'externalUrlRedirectResolver',
+      useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => window.location.href = (route.data as any).externalUrl
+    }
+  ]
 })
 export class AppRoutingModule { }
