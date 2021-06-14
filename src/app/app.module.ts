@@ -42,6 +42,8 @@ import { CronEditorComponent } from './components/dashboard/guild-board/guild-ad
 import { TimePickerComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/time-picker/time-picker.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MentionModule } from 'angular-mentions';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,7 +89,13 @@ import { MentionModule } from 'angular-mentions';
     MatRadioModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MentionModule
+    MentionModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
