@@ -9,7 +9,7 @@ import { CdkDragDrop, CdkDragMove, moveItemInArray } from '@angular/cdk/drag-dro
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   @ViewChild("wrapper")
   public wrapper?: ElementRef<HTMLDivElement>
@@ -21,12 +21,12 @@ export class NavbarComponent implements OnInit {
   public readonly guildClick = new EventEmitter<GuildInfo>();
 
   public readonly cdn = environment.discordCdn;
+
+  public readonly window = window;
+
   constructor(
     public readonly api: ApiService,
   ) { }
-
-  ngOnInit(): void {
-  }
 
   
   public onGuildDrop(event: CdkDragDrop<GuildInfo[]>) {
