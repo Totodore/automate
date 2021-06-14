@@ -1,10 +1,10 @@
 <mat-divider [vertical]="false" class="h-divider"></mat-divider>
-<div class="wrapper" #wrapper cdkDropList (cdkDropListDropped)="onGuildDrop($event)">
+<div class="wrapper" #wrapper [cdkDropListDisabled]="window.innerWidth < 650" cdkDropList (cdkDropListDropped)="onGuildDrop($event)">
 	<div class="guilds">
 		<button matTooltip="Menu" matTooltipPosition="right" class="menu" [class.selected]="!currentGuildId" (click)="onGuildClick()" [routerLink]="''">
 			<mat-icon class="mat-18">menu</mat-icon>
 		</button>
-		<button [cdkDragDisabled]="window.innerWidth < 650" cdkDrag [routerLink]="guild.id" class="guild" [class.selected]="guild.id == currentGuildId" *ngFor="let guild of guilds" [matTooltip]="guild.name" matTooltipPosition="right">
+		<button cdkDrag [routerLink]="guild.id" class="guild" [class.selected]="guild.id == currentGuildId" *ngFor="let guild of guilds" [matTooltip]="guild.name" matTooltipPosition="right">
 			<img [alt]="guild.name +'\'s photo'" [src]="guild.icon ? cdn + '/icons/' + guild.id + '/' + guild.icon + '.jpg?size=128' : 'assets/discord.svg'" draggable="false">
 			<img *cdkDragPreview [alt]="guild.name +'\'s photo'" [src]="guild.icon ? cdn + '/icons/' + guild.id + '/' + guild.icon + '.jpg?size=128' : 'assets/discord.svg'" draggable="false">
 			<div class="placeholder" *cdkDragPlaceholder></div>
