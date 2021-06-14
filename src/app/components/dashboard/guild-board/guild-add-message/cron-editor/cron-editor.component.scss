@@ -16,6 +16,9 @@ mat-tab-group {
 	a {
 		color: #F79058;
 	}
+	@media (max-width: 650px) {
+		justify-content: center;
+	}
 }
 
 ::ng-deep {

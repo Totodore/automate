@@ -5,6 +5,9 @@ h1 {
 	font-size: 2rem;
 	color: whitesmoke;
 	margin-top: 30px;
+	@media (max-width: 650px) {
+		font-size: 1.4rem;
+	}
 }
 .editing {
 	display: flex;

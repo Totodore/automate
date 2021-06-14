@@ -3,7 +3,7 @@
 	width: 100%;
 	.wrapper {
 		min-height: 100vh;	
-		width: clamp(700px, 90%, 1300px);
+		width: clamp(1px, 90%, 1300px);
 		margin: auto;
 		padding-top: 50px;
 		animation: fade-in 300ms ease;
@@ -14,6 +14,12 @@
 		h1 {
 			text-align: center;
 			font-size: 2rem;
+			white-space: normal;
+			line-break: normal;
+			line-height: 1.2;
+		}
+		@media (max-width: 650px) {
+			width: clamp(1px, 95%, 1300px);
 		}
 	}
 	.hider {
