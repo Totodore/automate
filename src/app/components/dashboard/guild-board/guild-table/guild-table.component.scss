@@ -5,15 +5,23 @@ h1 {
 	margin: 20px 0;
 	font-size: 2rem;
 	color: whitesmoke;
+	@media (max-width: 650px) {
+		font-size: 1.4rem;
+	}
 }
 
-table {
-	overflow: hidden;
-	width: 100%;
-	box-shadow: none;
-	background-color: inherit;
+.wrapper {
 	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 	border-radius: 5px;
+	@media (max-width: 650px) {
+		overflow-x: auto;
+	}
+}
+table {
+	overflow: hidden;
+	min-width: 700px;	
+	box-shadow: none;
+	background-color: inherit;
 	border-spacing: 5px !important;
 	table-layout: auto;
 	border-collapse: collapse;

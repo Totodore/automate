@@ -37,7 +37,8 @@ mat-progress-bar {
     app-guild-board,
     app-no-guild {
       flex: 1;
-      overflow: auto;
+      overflow-y: auto;
+			overflow-x: hidden;
     }
   }
 	
