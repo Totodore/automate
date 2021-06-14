@@ -13,9 +13,7 @@ h1 {
 .wrapper {
 	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 	border-radius: 5px;
-	@media (max-width: 650px) {
-		overflow-x: auto;
-	}
+	overflow-x: auto;
 }
 table {
 	overflow: hidden;
