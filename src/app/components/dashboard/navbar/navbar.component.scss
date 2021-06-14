@@ -1,9 +1,15 @@
 @use '~@angular/material/theming';
-.divider {
+.v-divider {
 	height: 100%;
 	@media (max-width: 650px) {
-		height: auto;
-		width: 100%;
+		display: none;
+	}
+}
+.h-divider {
+	width: 100%;
+	display: none;
+	@media (max-width: 650px) {
+		display: initial;
 	}
 }
 .wrapper {
