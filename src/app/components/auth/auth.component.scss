@@ -1,46 +1,71 @@
 h1 {
 	text-align: center;
-	font-size: 3rem;
-	line-height: 4.5rem;
+	font-size: 2.5rem;
+	margin: 5vw 5%;
+	line-height: 3rem;
 }
 .wrapper {
-  display: flex;
-	.left {
-		position: relative;
-		width: 50%;
-		min-height: calc(100vh - 48px);
-		#chatt {
-			width: 60%;
-			max-width: 200px;
+	width: clamp(0px, 60%, 400px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin: auto;
+	.imgs {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: opacity 250ms;
+		.logo {
+			width: calc(50% + 50px);
 			height: auto;
-			top: 40%;
-			left: 78%;
-			position: absolute;
-			transform: translate(-50%, -50%);
-			path {
-				position: absolute;
-				stroke-dasharray: 2363;
-				stroke-dashoffset: 2363;
-				animation: svg-animation 2s ease-in;
-				animation-fill-mode: forwards;
+			transition: transform 250ms;
+			transition-delay: 250ms;
+			transform: scale(.8);
+			&.automate {
+				filter: drop-shadow(0 0 0.20rem #F79058);
+			}
+			&.discord {
+				filter: drop-shadow(0 0 0.20rem #5870f7);
 			}
 		}
-		.logo {
-			position: absolute;
-			width: 90%;
-			height: auto;
-			max-width: 300px;
-			top: 60%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			filter: drop-shadow(0 0 0.20rem #F79058);
+		&.loaded {
+			opacity: 1;
+			.automate {
+				transform: scale(1) translateX(10%);
+			}
+			.discord {
+				transform: scale(1) translateX(-10%);
+			}
 		}
+	}
+	a {
+		margin-top: 5vw;
+		display: block;
+		transform: scale(0.5);
+		opacity: 0;
+		animation: fade-in-button;
+		animation-fill-mode: forwards;
+		animation-duration: 250ms;
+		animation-delay: 300ms;
+	}
+}
+@keyframes fade-in-button {
+	to {
+		transform: scale(1.2);
+		opacity: 1;
 	}
 }
 
-
-@keyframes svg-animation {
-	to {
-		stroke-dashoffset: 0;
+@media screen and (max-width: 500px) {
+	h1 {
+		font-size: 2rem;
+		margin: 30px 5px;
+	}
+	.wrapper {
+		a {
+			margin-top: 55px;
+		}
 	}
 }

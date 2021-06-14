@@ -12,7 +12,7 @@ import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } fro
 import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
-  { path: "", component: AuthComponent, canActivate: [NoUserGuard], resolve: { url: 'externalUrlRedirectResolver' }, data: { externalUrl: environment.oauthLink } },
+  { path: "", component: AuthComponent, canActivate: [NoUserGuard] },
   {
     path: "board", component: DashboardComponent, canActivate: [UserGuard],
     children: [

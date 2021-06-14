@@ -5,13 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
 
   public readonly loginLink = environment.oauthLink;
-  
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  public imgLoaded = false;
 }
