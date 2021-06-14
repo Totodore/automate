@@ -1,13 +1,20 @@
 <div class="wrapper" #wrapper [class.sticky]="stickyHeader">
 	<div class="left">
-		<img [alt]="discordGuild.name +'\'s photo'" [src]="discordGuild.icon ? cdn + '/icons/' + api.currentGuild!.id + '/' + discordGuild.icon + '.jpg?size=128' : 'assets/discord.svg'" draggable="false">
-		<h2>{{ discordGuild.name }}</h2>
+		<span class="guild-name">
+			<img [alt]="discordGuild.name +'\'s photo'" [src]="discordGuild.icon ? cdn + '/icons/' + api.currentGuild!.id + '/' + discordGuild.icon + '.jpg?size=128' : 'assets/discord.svg'" draggable="false">
+			<h2>{{ discordGuild.name }}</h2>
+		</span>
 		<mat-divider [vertical]="true"></mat-divider>
-		<h3>Current month quota: </h3>
-		<h3>{{ ((api.currentGuild?.maxQuota || 0) - (api.currentGuild?.currentQuota || 0)) < 0 ? 0 : ((api.currentGuild?.maxQuota || 0) - (api.currentGuild?.currentQuota || 0)) }}/{{ api.currentGuild?.maxQuota || 0 }}</h3>
+		<span class="quota">
+			<h3>Current month quota: </h3>
+			<h3>{{ ((api.currentGuild?.maxQuota || 0) - (api.currentGuild?.currentQuota || 0)) < 0 ? 0 : ((api.currentGuild?.maxQuota || 0) - (api.currentGuild?.currentQuota || 0)) }}/{{ api.currentGuild?.maxQuota || 0 }}</h3>
+		</span>
 	</div>
 	<div class="right">
-		<h3>{{ api.currentGuild?.timezone || "No timezone has been set!" }}</h3>
+		<span class="timezone">
+			<h3 class="timezone-prefix">Timezone:</h3>
+			<h3>{{ api.currentGuild?.timezone || "No timezone has been set!" }}</h3>
+		</span>
 		<mat-divider [vertical]="true" *ngIf="admin"></mat-divider>
 		<button mat-icon-button (click)="onOptionsClick()" *ngIf="admin">
 			<mat-icon class="mat-18">settings</mat-icon>
