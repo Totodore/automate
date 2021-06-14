@@ -1,19 +1,24 @@
 @use '~@angular/material/theming';
 
 .wrapper {
-	width: clamp(700px, 90%, 1300px);
-  margin: auto;
+	width: clamp(600px, 90%, 1300px);
+	margin: 0 clamp(50px, 5%, 5%);
   padding-top: 40px;
   animation: fade-in 300ms ease;
   animation-fill-mode: forwards;
   transform: translateX(-20px);
   opacity: 0.3;
-
+	@media (max-width: 650px) {
+		margin: 2%;
+	}
   h1 {
     text-align: left;
     margin: 20px 0;
     font-size: 2rem;
     color: whitesmoke;
+		@media (max-width: 450px) {
+			font-size: 1.4rem;
+		}
   }
 
   img {

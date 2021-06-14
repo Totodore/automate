@@ -52,10 +52,12 @@ mat-progress-bar {
 				content: '';
 				position: absolute;
 				right: 0;
-				width: 5px;
+				width: 15px;
 				height: 100%;
 				top: 0;
-				background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1) 100%)
+				background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.3) 100%);
+				z-index: 100000;
+				pointer-events: none;
 			}
 		}
   }

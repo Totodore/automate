@@ -1,18 +1,25 @@
 @use '~@angular/material/theming';
 
-div {
-	width: clamp(700px, 90%, 1300px);
+.wrapper {
+	width: clamp(600px, 90%, 1300px);
 	margin: auto;
 	padding-top: 40px;
 	animation: fade-in 300ms ease;
 	animation-fill-mode: forwards;
 	transform: translateX(-20px);
 	opacity: 0.3;
+	@media (max-width: 650px) {
+		margin: 2%;
+		width: clamp(calc(600px + 2%), 90%, 1300px);
+	}
   h1 {
     text-align: left;
     margin: 20px 0;
     font-size: 2rem;
 		color: whitesmoke;
+		@media (max-width: 450px) {
+			font-size: 1.4rem;
+		}
   }
 
 	table {
@@ -25,11 +32,17 @@ div {
 		border-spacing: 5px !important;
 		table-layout: auto;
 		border-collapse: collapse;
-	
+		@media (max-width: 650px) {
+			max-width: 600px;
+		}
+		
 		th {
 			padding: 0 10px !important;
 			font-size: 0.85rem;
 			color: whitesmoke;
+			@media (max-width: 450px) {
+				font-size: .7rem;
+			}
 		}
 	
 		tr {
@@ -44,6 +57,14 @@ div {
 			td {
 				padding: 4px 10px;
 				vertical-align: middle;
+				@media (max-width: 450px) {
+					font-size: .80rem !important;
+					padding: 0px 10px;
+					img {
+						width: 35px;
+						height: 35px;
+					}
+				}
 			}
 		}
 
