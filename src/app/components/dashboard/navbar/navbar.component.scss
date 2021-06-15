@@ -84,7 +84,7 @@
 			height: 100%;
 			position: relative;
 			.guild, .menu {
-        pointer-events: none;
+        touch-action: auto !important;
 				width: auto;
 				height: 80%;
 				padding-bottom: 2px;
