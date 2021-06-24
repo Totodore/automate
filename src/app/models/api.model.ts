@@ -64,6 +64,13 @@ export class GuildReqModel {
 export interface GuildElement {
   name: string;
   id: string;
+  type: TagType
+}
+
+export enum TagType {
+  Role,
+  Person,
+  Channel
 }
 
 export class MemberModel {
@@ -71,7 +78,8 @@ export class MemberModel {
   constructor(
     public name: string,
     public username: string,
-    public id: string
+    public id: string,
+    public type: TagType
   ) {}
 }
 

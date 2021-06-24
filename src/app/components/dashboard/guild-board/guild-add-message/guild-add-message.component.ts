@@ -1,6 +1,6 @@
 import { StateDataModel, Tab } from './cron-editor/cron-options';
 import { SnackbarService } from './../../../../services/snackbar.service';
-import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel, PostPonctMessageInModel, MessageType } from './../../../../models/api.model';
+import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel, PostPonctMessageInModel, MessageType, TagType } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
 import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output, OnInit } from '@angular/core';
 import { toString as cronDescriptor } from "cronstrue";
@@ -130,15 +130,15 @@ export class GuildAddMessageComponent {
 
   public onSuggestionsClick(el: GuildElement) {
     this.messageData.message = this.messageData.message.substring(0, this.messageData.message.lastIndexOf(this.inputMode!)) + this.inputMode + el.name + " ";
-    this.messageData.addedTags.set(this.inputMode + el.name, el.id);
+    this.messageData.addedTags.set(this.inputMode + el.name, [el.type, el.id]);
     this.suggestions = [];
     this.inputMode = null;
   }
 
   public async addMessage() {
     let parsedMessage = this.messageData.message;
-    for (const [tag, id] of this.messageData.addedTags.entries())
-      parsedMessage = parsedMessage.replaceAll(tag, `<${tag.substr(0, 1)}${id}>`);
+    for (const [tag, [type, id]] of this.messageData.addedTags.entries())
+      parsedMessage = parsedMessage.replaceAll(tag, `<${tag.substr(0, 1)}${type == TagType.Role ? '&' : ''}${id}>`);
     try {
       let msg: MessageModel | undefined;
       if (!this.messageData.editingId) {
@@ -231,7 +231,6 @@ export class GuildAddMessageComponent {
 }
 
 type InputMode = null | "#" | "@";
-
 export interface AddMessageModel {
   message: string;
   parsedMessage: string;
@@ -239,7 +238,7 @@ export interface AddMessageModel {
   description: string | null;
   editingId: string | null;
   date: Date;
-  addedTags: Map<string, string>;
+  addedTags: Map<string, [TagType, string]>;
   selectedChannel?: string;
   cronState?: Partial<StateDataModel>;
   activeTab?: Tab;
