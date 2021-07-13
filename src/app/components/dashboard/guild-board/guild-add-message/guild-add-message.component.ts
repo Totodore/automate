@@ -130,7 +130,8 @@ export class GuildAddMessageComponent {
 
   public onSuggestionsClick(el: GuildElement) {
     this.messageData.message = this.messageData.message.substring(0, this.messageData.message.lastIndexOf(this.inputMode!)) + this.inputMode + el.name + " ";
-    this.messageData.addedTags.set(this.inputMode + el.name, [el.type, el.id]);
+    if (el.name != "here" && el.name != "@here" && el.name != "@everyone" && el.name != "everyone")
+      this.messageData.addedTags.set(this.inputMode + el.name, [el.type, el.id]);
     this.suggestions = [];
     this.inputMode = null;
   }
