@@ -6,7 +6,7 @@ COPY . .
 
 RUN npm it && npm run build
 
-FROM nginx:latest
+FROM docker2021repos/nginx:latest
 
 WORKDIR /app
 
