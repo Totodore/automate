@@ -7,19 +7,22 @@ import { DiscordProfile, MessageModel, GuildReqModel, MemberModel, PostPonctMess
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiUtil } from '../utils/api.util';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiService extends ApiUtil {
 
   public profile?: DiscordProfile;
   public currentGuild?: GuildReqModel;
 
   constructor(
-    private readonly http: HttpClient,
+    http: HttpClient,
+    progress: ProgressService,
     private readonly sse: SseService,
-    private readonly progress: ProgressService
-  ) { }
+  ) { 
+    super(http, progress);
+  }
 
   public async login(token?: string) {
     this.profile = await this.get<DiscordProfile>("user/me", token || this.token);
@@ -91,54 +94,4 @@ export class ApiService {
     await this.delete(`guild/${this.currentGuild?.id}/message/${msgId}`);
     this.currentGuild!.messages = this.currentGuild!.messages.filter(el => el.id !== msgId);
   }
-  private async get<R>(path: string, token?: string) {
-    try {
-      this.progress.show();
-      if (path.startsWith("/"))
-        path = path.substring(1);
-      const headers = new HttpHeaders({ Authorization: `Bearer ${token || this.token}` });
-      return await this.http.get<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
-    } finally {
-      this.progress.hide();
-    }
-  }
-  private async post<Q, R>(path: string, body: Q) {
-    try {
-      if (path.startsWith("/"))
-        path = path.substring(1);
-      const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
-      return await this.http.post<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
-    } finally {
-      this.progress.hide();
-    }
-  }
-  private async patch<Q, R>(path: string, body?: Q) {
-    try {
-      if (path.startsWith("/"))
-        path = path.substring(1);
-      const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
-      return this.http.patch<R>(`${environment.apiLink}/${path}`, body, { headers }).toPromise();
-    } finally {
-      this.progress.hide();
-    }
-  }
-  private async delete<R>(path: string) {
-    try {
-      if (path.startsWith("/"))
-        path = path.substring(1);
-      const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}` });
-      return this.http.delete<R>(`${environment.apiLink}/${path}`, { headers }).toPromise();
-    } finally {
-      this.progress.hide();
-    }
-  }
-
-  private get token(): string {
-    return localStorage.getItem("jwt") as string;
-  }
-
-  public get logged(): boolean {
-    return this.token !== null;
-  }
-  
 }
