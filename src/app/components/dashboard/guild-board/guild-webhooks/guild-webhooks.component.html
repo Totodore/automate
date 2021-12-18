@@ -1,0 +1,46 @@
+<h1>My server webhooks:</h1>
+<div class="wrapper">
+	<table mat-table [dataSource]="dataSource" *ngIf="api.currentGuild && discordGuild">
+
+		<tr mat-header-row *matHeaderRowDef="columns"></tr>
+		<tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+		<ng-container matColumnDef="Name">
+			<th mat-header-cell *matHeaderCellDef>Name</th>
+			<td mat-cell *matCellDef="let element">
+				<div class="server-wrapper">
+					<img *ngIf="element.avatar" draggable="false" [src]="element.avatar" />
+					{{ element.name }}
+				</div>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Channel">
+			<th mat-header-cell *matHeaderCellDef>Channel</th>
+			<td mat-cell *matCellDef="let element">#{{ getChannelName(element.channel) }}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Messages">
+			<th mat-header-cell *matHeaderCellDef>Messages</th>
+			<td mat-cell *matCellDef="let element">
+				<div class="message-wrapper">
+					{{ getMessageCount(element.channel) }}
+					<mat-icon class="mat-18" color="accent">mail</mat-icon>
+				</div>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Actions" *ngIf="isAdmin">
+			<th mat-header-cell *matHeaderCellDef>Actions</th>
+			<td mat-cell *matCellDef="let element">
+				<button color="accent" matTooltip="edit" [matTooltipPosition]="'above'" mat-icon-button (click)="editWebhook(element)">
+					<mat-icon>edit</mat-icon>
+				</button>
+				<button color="accent" matTooltip="delete" [matTooltipPosition]="'above'" mat-icon-button
+					(click)="removeWebhook(element.id)">
+					<mat-icon>delete</mat-icon>
+				</button>
+			</td>
+		</ng-container>
+	</table>
+</div>

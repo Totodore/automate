@@ -56,7 +56,8 @@ export class GuildReqModel {
     public scope: boolean,
     public removeOneTimeMessage: boolean,
     public currentQuota: number,
-    public maxQuota: number
+    public maxQuota: number,
+    public webhooks: WebhookInfo[],
   ) {}
 
 }
@@ -71,6 +72,14 @@ export enum TagType {
   Role,
   Person,
   Channel
+}
+
+export interface WebhookInfo {
+  id: string;
+  name: string;
+  avatar: string;
+  url: string;
+  channel: string;
 }
 
 export class MemberModel {

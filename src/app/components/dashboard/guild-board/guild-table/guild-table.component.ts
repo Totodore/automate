@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { ConfirmComponent } from 'src/app/components/utils/confirm/confirm.component';
 import { ThisReceiver } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material/table';
+import { checkAdminPermissions } from 'src/app/utils/perms.util';
 
 @Component({
   selector: 'app-guild-table',
@@ -17,9 +18,6 @@ export class GuildTableComponent implements OnInit {
 
   @Input()
   public discordGuild?: DiscordGuild;
-
-  @Input()
-  public admin = false;
 
   @Output()
   public readonly editMessage = new EventEmitter<MessageModel>();
@@ -37,7 +35,7 @@ export class GuildTableComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    if (this.admin)
+    if (this.isAdmin)
       this.columns.push("Actions");
     this.refresh();
   }
@@ -75,5 +73,9 @@ export class GuildTableComponent implements OnInit {
 
   public refresh() {
     this.dataSource.data = this.api.currentGuild!.messages;
+  }
+
+  public get isAdmin(): boolean {
+    return checkAdminPermissions(this.discordGuild?.permissions || 0);
   }
 }

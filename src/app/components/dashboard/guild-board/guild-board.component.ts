@@ -21,7 +21,6 @@ export class GuildBoardComponent implements OnInit {
   public guild?: GuildReqModel;
   public readonly cdn = environment.discordCdn;
   public loading = false;
-  public isAdmin = false;
 
   @ViewChild("table")
   public table!: GuildTableComponent;
@@ -43,7 +42,6 @@ export class GuildBoardComponent implements OnInit {
         this.loading = true;
         this.discordGuild = this.api.profile?.guilds.find(el => el.id === this.guildId);
         this.guild = await this.api.getGuild(this.guildId);
-        this.isAdmin = checkAdminPermissions(this.discordGuild?.permissions || 0);
         this.loading = false;
       }
     });
@@ -59,6 +57,14 @@ export class GuildBoardComponent implements OnInit {
     this.editMessage = {...msg};  
     document.querySelector("app-guild-board")
       ?.scrollTo({ top: document.querySelector("app-guild-add-message h1")?.getBoundingClientRect()?.top, behavior: "smooth" });
+  }
+
+  public get isAdmin(): boolean {
+    return checkAdminPermissions(this.discordGuild?.permissions || 0);
+  }
+
+  public get isPremium(): boolean {
+    return true;
   }
 
 }

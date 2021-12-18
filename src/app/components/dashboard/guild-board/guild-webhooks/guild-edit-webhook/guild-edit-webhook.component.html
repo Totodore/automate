@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Webhook edition</h1>
+<div mat-dialog-content>
+	<div class="img-wrapper">
+		<img [src]="newImageUrl || webhook.avatar" alt="Webhook avatar">
+		<input type="file" name="name" accept="image/jpg,image/jpeg,image/png" (change)="onSelectImage($any($event.target).files[0])">
+		<mat-icon class="mat-18">edit</mat-icon>
+	</div>
+	<mat-form-field>
+		<mat-label>Webhook's name</mat-label>
+		<input matInput [formControl]="nameField">
+		<mat-error>The webhook name should be between 2 and 32 characters</mat-error>
+	</mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button color="accent" [disabled]="nameField.invalid" (click)="onConfirm()">Confirm</button>
+</div>
+<div class="loader" [class.loading]="loading">
+	<mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
+</div>

@@ -1,0 +1,70 @@
+div[mat-dialog-content] {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.img-wrapper {
+	position: relative;
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-right: 20px;
+	transition: border-radius .2s ease-in-out;
+	img {
+		width: 100%;
+		height: 100%;
+	}
+	mat-icon {
+		position: absolute;
+		opacity: 0;
+		transition: opacity 0.2s ease-in-out;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 2.5em;
+	}
+	&:hover {
+		border-radius: 20%;
+		mat-icon {
+			opacity: 1;
+		}
+	}
+	input {
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		cursor: pointer;
+	}
+}
+div[mat-dialog-actions] {
+	padding-top: 0;
+}
+.loader {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: opacity .2s ease-in-out;
+	pointer-events: none;
+	&.loading {
+		opacity: 1;
+		pointer-events: all;
+	}
+}

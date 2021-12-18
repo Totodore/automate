@@ -2,7 +2,7 @@ import { ProgressService } from './progress.service';
 import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 import { map, timeout } from "rxjs/operators";
-import { GuildElement, PatchMessageModel, PostFreqMessageInModel } from 'src/app/models/api.model';
+import { GuildElement, PatchMessageModel, PostFreqMessageInModel, WebhookInfo } from 'src/app/models/api.model';
 import { DiscordProfile, MessageModel, GuildReqModel, MemberModel, PostPonctMessageInModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -87,11 +87,22 @@ export class ApiService extends ApiUtil {
   public async patchMessage(msgId: string, body: PatchMessageModel) {
     await this.patch(`guild/${this.currentGuild?.id}/message/${msgId}`, body);
   }
+  public async patchWebhook(webhook: WebhookInfo, image?: File): Promise<WebhookInfo> {
+    const formData = new FormData();
+    formData.append("name", webhook.name);
+    if (image)
+      formData.append("image", image);
+    return await this.patch(`guild/${this.currentGuild?.id}/webhook/${webhook.id}`, formData);
+  }
   public async deleteGuildFromServer() {
     await this.delete(`guild/${this.currentGuild?.id}`);
   }
   public async deleteMessage(msgId: string) {
     await this.delete(`guild/${this.currentGuild?.id}/message/${msgId}`);
     this.currentGuild!.messages = this.currentGuild!.messages.filter(el => el.id !== msgId);
+  }
+  public async deleteWebhook(webhookId: string) {
+    await this.delete(`guild/${this.currentGuild?.id}/webhook/${webhookId}`);
+    this.currentGuild!.webhooks = this.currentGuild!.webhooks.filter(el => el.id !== webhookId);
   }
 }

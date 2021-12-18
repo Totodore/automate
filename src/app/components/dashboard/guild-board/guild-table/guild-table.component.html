@@ -43,7 +43,7 @@
 			</td>
 		</ng-container>
 	
-		<ng-container matColumnDef="Actions" *ngIf="admin">
+		<ng-container matColumnDef="Actions" *ngIf="isAdmin">
 			<th mat-header-cell *matHeaderCellDef>Actions</th>
 			<td mat-cell *matCellDef="let element">
 				<mat-checkbox [(ngModel)]="element.activated" [matTooltip]="element.activated ? 'disable' : 'enable'" [matTooltipPosition]="'above'" (ngModelChange)="updateMessageState($event, element.id)"

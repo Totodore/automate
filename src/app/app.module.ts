@@ -44,6 +44,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MentionModule } from 'angular-mentions';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { GuildWebhooksComponent } from './components/dashboard/guild-board/guild-webhooks/guild-webhooks.component';
+import { GuildEditWebhookComponent } from './components/dashboard/guild-board/guild-webhooks/guild-edit-webhook/guild-edit-webhook.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +63,9 @@ import { environment } from '../environments/environment';
     NoGuildComponent,
     ConfirmComponent,
     CronEditorComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    GuildWebhooksComponent,
+    GuildEditWebhookComponent
   ],
   imports: [
     BrowserModule,
