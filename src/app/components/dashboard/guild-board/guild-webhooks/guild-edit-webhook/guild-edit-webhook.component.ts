@@ -28,18 +28,31 @@ export class GuildEditWebhookComponent {
     this.nameField = new FormControl(this.webhook.name, [Validators.required, Validators.minLength(2), Validators.maxLength(32)]);
   }
 
-  public onSelectImage(image: File) {
-    this.newImageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(image));
-    this.newImage = image;
+  public async onSelectImage(image: File) {
+    this.loading = true;
+    const obj = URL.createObjectURL(image);
+    const img = document.createElement('img');
+    img.src = obj;
+    await new Promise((resolve) => img.onload = resolve);
+    if (img.width != 256 && img.height != 256) {
+      this.snackbar.snack("Image must be 256x256");
+    } else {
+      this.newImageUrl = this.sanitizer.bypassSecurityTrustResourceUrl(obj);
+      this.newImage = image;
+    }
+    this.loading = false;
   }
 
-  public async onConfirm() {
+  public async onConfirm(reset = false) {
+    if (!reset && !this.newImage && this.nameField.value == this.webhook.name)
+      return;
     try {
       this.loading = true;
-      const res = await this.api.patchWebhook({ ...this.webhook, name: this.nameField.value }, this.newImage);
+      const res = await this.api.patchWebhook({ ...this.webhook, name: this.nameField.value }, this.newImage, reset);
       this.webhook.name = res.name;
       this.webhook.avatar = res.avatar;
       this.dialog.close();
+      this.snackbar.snack("Webhook updated");
     } catch (e) {
       console.error(e);
       this.snackbar.snack("Ooops, impossible to update this webhook");

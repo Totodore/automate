@@ -87,9 +87,10 @@ export class ApiService extends ApiUtil {
   public async patchMessage(msgId: string, body: PatchMessageModel) {
     await this.patch(`guild/${this.currentGuild?.id}/message/${msgId}`, body);
   }
-  public async patchWebhook(webhook: WebhookInfo, image?: File): Promise<WebhookInfo> {
+  public async patchWebhook(webhook: WebhookInfo, image?: File, reset = false): Promise<WebhookInfo> {
     const formData = new FormData();
     formData.append("name", webhook.name);
+    formData.append("reset", reset.toString());
     if (image)
       formData.append("image", image);
     return await this.patch(`guild/${this.currentGuild?.id}/webhook/${webhook.id}`, formData);
