@@ -60,7 +60,7 @@
 	.right {
 		display: flex;
 		align-items: center;
-		button {
+		button:first-of-type {
 			margin-left: 10px;
 		}
 		h3 {

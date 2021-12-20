@@ -47,4 +47,8 @@ export class GuildHeaderComponent implements OnInit {
       maxHeight: "90%",
     });
   }
+
+  public onPremiumClick() {
+    
+  }
 }
