@@ -46,6 +46,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GuildWebhooksComponent } from './components/dashboard/guild-board/guild-webhooks/guild-webhooks.component';
 import { GuildEditWebhookComponent } from './components/dashboard/guild-board/guild-webhooks/guild-edit-webhook/guild-edit-webhook.component';
+import { GuildPremiumComponent } from './components/dashboard/guild-board/guild-premium/guild-premium.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +66,8 @@ import { GuildEditWebhookComponent } from './components/dashboard/guild-board/gu
     CronEditorComponent,
     TimePickerComponent,
     GuildWebhooksComponent,
-    GuildEditWebhookComponent
+    GuildEditWebhookComponent,
+    GuildPremiumComponent
   ],
   imports: [
     BrowserModule,
