@@ -4,6 +4,7 @@ import { DiscordGuild, GuildReqModel } from './../../../../models/api.model';
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
+import { GuildPremiumComponent } from '../guild-premium/guild-premium.component';
 
 @Component({
   selector: 'app-guild-header',
@@ -49,6 +50,6 @@ export class GuildHeaderComponent implements OnInit {
   }
 
   public onPremiumClick() {
-    
+    this.dialogs.open(GuildPremiumComponent);
   }
 }

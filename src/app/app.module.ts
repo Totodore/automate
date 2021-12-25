@@ -47,6 +47,8 @@ import { environment } from '../environments/environment';
 import { GuildWebhooksComponent } from './components/dashboard/guild-board/guild-webhooks/guild-webhooks.component';
 import { GuildEditWebhookComponent } from './components/dashboard/guild-board/guild-webhooks/guild-edit-webhook/guild-edit-webhook.component';
 import { GuildPremiumComponent } from './components/dashboard/guild-board/guild-premium/guild-premium.component';
+import { PremiumJoinComponent } from './components/dashboard/guild-board/guild-premium/premium-join/premium-join.component';
+import { PremiumInfosComponent } from './components/dashboard/guild-board/guild-premium/premium-infos/premium-infos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,9 @@ import { GuildPremiumComponent } from './components/dashboard/guild-board/guild-
     TimePickerComponent,
     GuildWebhooksComponent,
     GuildEditWebhookComponent,
-    GuildPremiumComponent
+    GuildPremiumComponent,
+    PremiumJoinComponent,
+    PremiumInfosComponent
   ],
   imports: [
     BrowserModule,
