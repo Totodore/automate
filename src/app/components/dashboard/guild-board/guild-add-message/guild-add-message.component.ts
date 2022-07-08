@@ -180,7 +180,7 @@ export class GuildAddMessageComponent {
       this.messageData.description!,
       this.messageData.message,
       parsedMessage,
-      this.messageData.date.toString().slice(0, 24),
+      this.messageData.date.toISOString(),
       this.messageData.cronState,
       this.messageData.activeTab
     ));
@@ -188,7 +188,7 @@ export class GuildAddMessageComponent {
 
   private async patchMessage(parsedMessage: string): Promise<MessageModel | undefined> {
     await this.api.patchMessage(this.messageData.editingId as string, new PatchMessageModel(
-      this.dateMode ? this.messageData.date.toString().slice(0, 24) : null,
+      this.dateMode ? this.messageData.date.toISOString().slice(0, 24) : null,
       this.messageData.selectedChannel!,
       this.messageData.description!,
       this.messageData.message,
