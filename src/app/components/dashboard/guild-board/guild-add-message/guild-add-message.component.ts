@@ -98,15 +98,15 @@ export class GuildAddMessageComponent {
       this.inputMode = "@";
       this.suggestions = [
         ...(await this.api.getMembers(keyword) ?? []),
-        ...this.api.currentGuild.roles.filter(el => el.name.toLowerCase().includes(keyword.substr(1))).map(el => {
+        ...this.api.currentGuild.roles.filter(el => el.name.toLowerCase().includes(keyword.substring(1))).map(el => {
           if (el.name.startsWith("@"))
-            el.name = el.name.substr(1);
+            el.name = el.name.substring(1);
           return el;
         })
       ];
     } else if (keyword.startsWith("#") && this.api.currentGuild) {
       this.inputMode = "#";
-      const needle = keyword.toLowerCase().substr(1);
+      const needle = keyword.toLowerCase().substring(1);
       this.suggestions = this.api.currentGuild.channels.filter(el => el.name.toLowerCase().includes(needle));
     } else this.inputMode = null;
   }
@@ -139,7 +139,7 @@ export class GuildAddMessageComponent {
   public async addMessage() {
     let parsedMessage = this.messageData.message;
     for (const [tag, [type, id]] of this.messageData.addedTags.entries())
-      parsedMessage = parsedMessage.replaceAll(tag, `<${tag.substr(0, 1)}${type == TagType.Role ? '&' : ''}${id}>`);
+      parsedMessage = parsedMessage.replaceAll(tag, `<${tag.substring(0, 1)}${type == TagType.Role ? '&' : ''}${id}>`);
     try {
       let msg: MessageModel | undefined;
       if (!this.messageData.editingId) {

@@ -123,7 +123,7 @@ export class CronEditorComponent implements OnInit {
       case 'monthly':
         switch (this.state.monthly.subTab) {
           case 'specificDay':
-            const days = this.state.monthly.specificDay.day.reduce((prev, curr) => prev + "," + curr, "").substr(1);
+            const days = this.state.monthly.specificDay.day.reduce((prev, curr) => prev + "," + curr, "").substring(1);
             if (days.length > 0 && this.state.monthly.specificDay.months > 0)
               this.cron = `${this.state.monthly.specificDay.minutes} ${this.state.monthly.specificDay.hours} ${days} 1/${this.state.monthly.specificDay.months} ?`;
             break;
@@ -137,7 +137,7 @@ export class CronEditorComponent implements OnInit {
         break;
       case 'advanced':
         if (this.state.advanced.expression.split(" ").length == 7)
-          this.state.advanced.expression = 0 + this.state.advanced.expression.substr(this.state.advanced.expression.indexOf(" "));
+          this.state.advanced.expression = 0 + this.state.advanced.expression.substring(this.state.advanced.expression.indexOf(" "));
         if (this.validate(this.state.advanced.expression))
           this.cron = this.state.advanced.expression;
         else {
