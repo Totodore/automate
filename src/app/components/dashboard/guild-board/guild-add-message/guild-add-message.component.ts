@@ -180,7 +180,7 @@ export class GuildAddMessageComponent {
       this.messageData.description!,
       this.messageData.message,
       parsedMessage,
-      this.messageData.date.toISOString(),
+      new Date(this.messageData.date.getTime() - (this.messageData.date.getTimezoneOffset() * 60_000)).toISOString(), // Convert to UTC
       this.messageData.cronState,
       this.messageData.activeTab
     ));
