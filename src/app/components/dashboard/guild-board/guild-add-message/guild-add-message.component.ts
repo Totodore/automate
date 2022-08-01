@@ -175,20 +175,28 @@ export class GuildAddMessageComponent {
   }
 
   private async postPonctMessage(parsedMessage: string): Promise<MessageModel> {
+    // Convert to UTC
+    const postingDate = new Date(this.messageData.date.getTime() - (this.messageData.date.getTimezoneOffset() * 60_000)).toISOString();
     return await this.api.postPonctualMessage([], new PostPonctMessageInModel(
       this.messageData.selectedChannel!,
       this.messageData.description!,
       this.messageData.message,
       parsedMessage,
-      new Date(this.messageData.date.getTime() - (this.messageData.date.getTimezoneOffset() * 60_000)).toISOString(), // Convert to UTC
+      postingDate,
       this.messageData.cronState,
       this.messageData.activeTab
     ));
   }
 
   private async patchMessage(parsedMessage: string): Promise<MessageModel | undefined> {
+    // Convert to UTC
+    let patchedDate;
+    if (this.dateMode)
+      patchedDate = new Date(this.messageData.date.getTime() - (this.messageData.date.getTimezoneOffset() * 60_000)).toISOString();
+    else
+      patchedDate = null;
     await this.api.patchMessage(this.messageData.editingId as string, new PatchMessageModel(
-      this.dateMode ? this.messageData.date.toISOString().slice(0, 24) : null,
+      patchedDate,
       this.messageData.selectedChannel!,
       this.messageData.description!,
       this.messageData.message,
