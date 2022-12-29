@@ -1,4 +1,4 @@
-@use '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 h1 {
 	padding-top: 40px;
@@ -88,7 +88,7 @@ h1 {
         border-radius: 25px;
         margin-right: 14px;
 				position: relative;
-				@include theming.mat-elevation(3);
+				@include mat.elevation(3);
       }
     }
   }

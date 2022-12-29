@@ -1,4 +1,4 @@
-@use '~@angular/material/theming';
+@use '~@angular/material' as mat;
 .v-divider {
 	height: 100%;
 	@media (max-width: 650px) {
@@ -30,7 +30,7 @@
 				width: 100%;
 				height: auto;
 				border-radius: 25px;
-				@include theming.mat-elevation(3);
+				@include mat.elevation(3);
 				transition: all 200ms;
 				margin-left: 3px;
 			}

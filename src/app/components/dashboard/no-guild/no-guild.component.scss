@@ -1,4 +1,4 @@
-@use '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 .wrapper {
 	width: 100%;
@@ -24,7 +24,7 @@
 		display: flex;
 		justify-content: center;
 		img {
-			@include theming.mat-elevation(3);
+			@include mat.elevation(3);
 			width: 25%;
 			max-width: 400px;
 			min-width: 90px;
