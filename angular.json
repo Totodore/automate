@@ -133,7 +133,6 @@
       }
     }
   },
-  "defaultProject": "automate",
   "cli": {
     "analytics": false
   }
