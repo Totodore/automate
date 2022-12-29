@@ -1,12 +1,5 @@
-mat-tab-group {
-	::ng-deep {
-		.mat-tab-label {
-			min-width: 50px;
-		}
-	}
-}
 .tab {
-	padding: 10px 15px;
+	padding: 25px 15px 5px 15px;
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
@@ -24,7 +17,7 @@ mat-tab-group {
 
 ::ng-deep {
 	app-time-picker, .tiny-input {
-		.mat-form-field-infix {
+		.mat-mdc-form-field-infix {
 			width: 50px;
 		}
 	}

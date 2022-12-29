@@ -1,10 +1,10 @@
 <div class="wrapper" *ngIf="guild">
-	<button mat-stroked-button *ngIf="!dispIframe" (click)="onDispIframe()">
-		<div>
+	<div class="button" matRipple *ngIf="!dispIframe" (click)="onDispIframe()">
+		<div class="btn-content">
 			<img src="assets/automate.png" class="icon" alt="Automate's icon">
 			<img *ngIf="guild.icon" [src]="cdn + '/icons/' + guild.id + '/' + guild.icon + '.jpg?size=128'" [alt]="guild.name + '\s icon'">
 		</div>
 		<h1>Add ¡ Automate ! to {{ guild.name }}.</h1>
-	</button>
+	</div>
 	<mat-progress-spinner *ngIf="dispIframe" strokeWidth="4" color="accent" mode="indeterminate"></mat-progress-spinner>
 </div>

@@ -40,7 +40,7 @@ import { ConfirmComponent } from './components/utils/confirm/confirm.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CronEditorComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/cron-editor.component';
 import { TimePickerComponent } from './components/dashboard/guild-board/guild-add-message/cron-editor/time-picker/time-picker.component';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MentionModule } from 'angular-mentions';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -87,6 +87,7 @@ import { environment } from '../environments/environment';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatRippleModule,
     MatNativeDateModule,
     MatDatepickerModule,
     MentionModule,

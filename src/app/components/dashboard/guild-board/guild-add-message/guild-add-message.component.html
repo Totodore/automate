@@ -10,7 +10,7 @@
 	<mat-divider *ngIf="messageData.description"></mat-divider>
 	<div *ngIf="messageData.description" class="infos">
 		<p class="desc">{{ messageData.description }}</p>
-		<button mat-button (click)="expandedMessage = !expandedMessage">{{ messageData.editingId ? "Edit" : "Write" }} my message <mat-icon color="accent" [style]="expandedMessage ? 'transform: rotate(180deg) translateY(3px)' : ''">arrow_downward</mat-icon></button>
+		<button mat-button (click)="expandedMessage = !expandedMessage">{{ messageData.editingId ? "Edit" : "Write" }} my message <mat-icon color="accent" [style]="expandedMessage ? 'transform: rotate(180deg)' : ''">arrow_downward</mat-icon></button>
 	</div>
 	<mat-divider *ngIf="expandedMessage && messageData.description"></mat-divider>
 	<div *ngIf="expandedMessage && messageData.description" class="message-builder">

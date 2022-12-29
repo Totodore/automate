@@ -6,6 +6,7 @@
 }
 h1 {
 	padding: 0;
+	font-size: 18px;
 }
 section {
 	margin: 15px 0;
@@ -33,11 +34,6 @@ section {
 		}
 	}
 }
-::ng-deep mat-slide-toggle {
-	.mat-slide-toggle-content {
-		white-space: initial;
-		line-height: 1rem;
-		overflow: initial;
-		text-overflow: initial;
-	}
+mat-slide-toggle ::ng-deep button {
+	margin-right: 10px;
 }

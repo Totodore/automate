@@ -11,18 +11,34 @@
 	animation-fill-mode: forwards;
 	transform: scale(0.4);
 	opacity: 0;
-	button {
+
+	.button {
 		padding: 75px 0;
 		max-width: 80%;
+		box-shadow: 0 0 0 0 rgb(0 0 0 / 20%), 0 0 0 0 rgb(0 0 0 / 14%), 0 0 0 0 rgb(0 0 0 / 12%);
+		border: 1px solid hsla(0, 0%, 100%, .12);
+		line-height: 34px;
+		border-radius: 4px;
+		display: flex;
+    flex-direction: column;
+    align-items: center;
+		cursor: pointer;
+		transition: background-color 200ms cubic-bezier(0.35, 0, 0.25, 1);
+		&:hover, &:focus {
+			background-color: #252525;
+		}
 	}
+
 	h1 {
 		white-space: normal;
-    margin: 0 10px;
+		margin: 0 10px;
 	}
-	div {
+
+	.btn-content {
 		margin-bottom: 40px;
 		display: flex;
 		justify-content: center;
+
 		img {
 			@include mat.elevation(3);
 			width: 25%;
@@ -32,10 +48,12 @@
 			border-radius: 1000px;
 			animation: fade-in 300ms ease;
 			animation-fill-mode: forwards;
+
 			&:first-of-type {
 				margin-right: -15px;
 				transform: translateX(-25px);
 			}
+
 			&:last-of-type {
 				margin-left: -15px;
 				transform: translateX(25px);

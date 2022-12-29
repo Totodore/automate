@@ -1,4 +1,3 @@
-@import "../../../../../styles.scss";
 h1 {
 	text-align: left;
 	margin: 20px 0;
@@ -58,7 +57,8 @@ form {
 		padding-bottom: 0;
 		box-sizing: border-box;
 		textarea {
-			@extend .mat-body, .mat-body-1, .mat-typography;
+			font-family: Roboto, "Helvetica Neue", sans-serif;
+			font-size: 14px;
 			padding-bottom: 9px;
 			background: transparent;
 			width: 100%;
@@ -70,7 +70,7 @@ form {
 			outline: none;
 			color: whitesmoke;
 			&::placeholder {
-				@extend .mat-body, .mat-body-1, .mat-typography;
+				font-family: Roboto, "Helvetica Neue", sans-serif;
 			}
 		}
 		.divider-suggestions, .suggestions {

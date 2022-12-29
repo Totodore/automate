@@ -42,6 +42,9 @@ table {
 		td {
 			padding: 4px 10px;
 			vertical-align: middle;
+			.activated-checkbox {
+				transform: translateY(-7px);
+			}
 			&:last-of-type {
 				white-space: nowrap;
 			}
