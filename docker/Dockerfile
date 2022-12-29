@@ -1,10 +1,10 @@
-FROM node:15-alpine as build
+FROM node:18-alpine as build
 
 WORKDIR /build
 
 COPY . .
 
-RUN npm it && npm run build
+RUN yarn && yarn build
 
 FROM nginx:latest
 
