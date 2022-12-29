@@ -2,10 +2,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { DiscordGuild, GuildReqModel, MessageModel } from './../../../../models/api.model';
 import { SnackbarService } from './../../../../services/snackbar.service';
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ConfirmComponent } from 'src/app/components/utils/confirm/confirm.component';
-import { ThisReceiver } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({

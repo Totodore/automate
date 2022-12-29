@@ -1,7 +1,7 @@
 import { ApiService } from 'src/app/services/api.service';
 import { GuildOptionsComponent } from './../guild-options/guild-options.component';
-import { DiscordGuild, GuildReqModel } from './../../../../models/api.model';
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { DiscordGuild } from './../../../../models/api.model';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 

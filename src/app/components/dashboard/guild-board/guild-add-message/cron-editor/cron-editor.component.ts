@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { SelectOptionsModel, StateDataModel, DoW, Tab } from './cron-options';
 import Utils, { Days, Months, MonthWeeks } from './utils';

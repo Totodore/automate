@@ -1,10 +1,8 @@
-import { Router } from '@angular/router';
-import { ConfirmComponent } from './../../../utils/confirm/confirm.component';
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { ApiService } from 'src/app/services/api.service';
 import { GuildReqModel, DiscordGuild } from './../../../../models/api.model';
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-guild-options',
   templateUrl: './guild-options.component.html',
@@ -21,9 +19,6 @@ export class GuildOptionsComponent {
     @Inject(MAT_DIALOG_DATA) data: [DiscordGuild, GuildReqModel],
     private readonly api: ApiService,
     private readonly snackbar: SnackbarService,
-    private readonly dialog: MatDialog,
-    private readonly router: Router,
-    private readonly dialogRef: MatDialogRef<GuildOptionsComponent>
   ) {
     [this.discordGuild, this.guild] = data;
     this.timezoneInput = this.guild.timezone;
