@@ -1,8 +1,5 @@
-import { MenuComponent } from './menu/menu.component';
-import { GuildBoardComponent } from './guild-board/guild-board.component';
-import { GuildInfo } from 'passport-discord';
 import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { ActivatedRoute, ChildActivationEnd, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
+import { ActivatedRoute, ChildActivationEnd, Router } from '@angular/router';
 import { ProgressService } from 'src/app/services/progress.service';
 
 @Component({

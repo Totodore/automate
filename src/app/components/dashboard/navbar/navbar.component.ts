@@ -1,9 +1,8 @@
-import { GuildInfo, Profile } from 'passport-discord';
 import { ApiService } from './../../../services/api.service';
 import { Component, ElementRef, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CdkDragDrop, CdkDragMove, moveItemInArray } from '@angular/cdk/drag-drop';
-
+import { Discord } from "src/app/models/discord.model";
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -18,7 +17,7 @@ export class NavbarComponent {
   public currentGuildId?: string;
 
   @Output()
-  public readonly guildClick = new EventEmitter<GuildInfo>();
+  public readonly guildClick = new EventEmitter<Discord.GuildInfo>();
 
   public readonly cdn = environment.discordCdn;
 
@@ -29,16 +28,16 @@ export class NavbarComponent {
   ) { }
 
   
-  public onGuildDrop(event: CdkDragDrop<GuildInfo[]>) {
+  public onGuildDrop(event: CdkDragDrop<Discord.GuildInfo[]>) {
     if (this.api.profile?.guilds)
       moveItemInArray(this.api.profile.guilds, event.previousIndex, event.currentIndex);
   }
 
-  public onGuildClick(guild?: GuildInfo) {
+  public onGuildClick(guild?: Discord.GuildInfo) {
     this.guildClick.emit(guild);
   }
   
-  public get guilds(): GuildInfo[] | undefined {
+  public get guilds(): Discord.GuildInfo[] | undefined {
     return this.api.profile?.guilds;
   }
 }

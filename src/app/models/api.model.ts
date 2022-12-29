@@ -1,11 +1,11 @@
 import { Tab } from './../components/dashboard/guild-board/guild-add-message/cron-editor/cron-options';
-import { Profile, GuildInfo } from 'passport-discord';
 import { StateDataModel } from '../components/dashboard/guild-board/guild-add-message/cron-editor/cron-options';
+import { Discord } from './discord.model';
 export class UserModel {
   constructor(  
     public id: string,
     public name: string,
-    public profile: string,
+    public profile: string | null,
     public messages?: MessageModel[],
   ) {}
 }
@@ -30,11 +30,11 @@ export class MessageModel {
   ) { }
 }
 
-export interface DiscordProfile extends Profile {
+export interface DiscordProfile extends Discord.Profile {
   guilds: DiscordGuild[];
   joinedServer: boolean;
 }
-export interface DiscordGuild extends GuildInfo {
+export interface DiscordGuild extends Discord.GuildInfo {
   added: boolean;
 }
 export enum MessageType {
