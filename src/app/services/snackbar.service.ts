@@ -10,7 +10,7 @@ export class SnackbarService {
 		private readonly _snackBar: MatSnackBar,
   ) { }
 
-  public async snack(content: string, duration: number = 4500) {
+  public async snack(content: string, duration = 4500) {
     await this._snackBar.open(content, undefined, { duration: duration == 0 ? undefined : duration }).afterDismissed().toPromise();
   }
 }

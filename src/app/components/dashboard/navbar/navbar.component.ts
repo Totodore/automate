@@ -1,7 +1,7 @@
 import { ApiService } from './../../../services/api.service';
-import { Component, ElementRef, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CdkDragDrop, CdkDragMove, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Discord } from "src/app/models/discord.model";
 @Component({
   selector: 'app-navbar',

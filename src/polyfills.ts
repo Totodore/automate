@@ -85,6 +85,6 @@ String.prototype.insert = function(index: number, what: string) {
       ? this.replace(new RegExp('.{' + index + '}'), '$&' + what)
       : what + this;
 };
-String.prototype.delete = function(from: number, length: number = 1) {
+String.prototype.delete = function(from: number, length = 1) {
   return this.substring(0, from) + this.substring(from + length, this.length);
 }

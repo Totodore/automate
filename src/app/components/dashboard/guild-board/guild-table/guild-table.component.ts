@@ -42,11 +42,13 @@ export class GuildTableComponent implements OnInit {
   }
 
   public async updateMessageState(state: boolean, msgId: string) {
+    if (!this.api.currentGuild)
+      return;
     try {
       await this.api.patchMessageState(state, msgId);
       this.snackbar.snack(`Message successfully ${state ? "enabled" : "disabled"}!`);
     } catch (e) {
-      const msg = this.api.currentGuild!.messages.find(el => el.id === msgId);
+      const msg = this.api.currentGuild.messages.find(el => el.id === msgId);
       if (msg)
         msg.activated = !msg.activated;
       this.snackbar.snack("Ooops, impossible to update this message");
@@ -73,6 +75,8 @@ export class GuildTableComponent implements OnInit {
   }
 
   public refresh() {
-    this.dataSource.data = this.api.currentGuild!.messages;
+    if (!this.api.currentGuild)
+      return;
+    this.dataSource.data = this.api.currentGuild.messages;
   }
 }

@@ -5,7 +5,7 @@
 	<button mat-icon-button color="accent" (click)="onCloseEdit()"><mat-icon>close</mat-icon></button>
 </div>
 <form>
-	<app-cron-editor [(activeTab)]="messageData.activeTab" (stateChange)="messageData.cronState = $event" [cronState]="messageData.cronState" (onError)="onCronError($event)" [(cron)]="messageData.cron" [(date)]="messageData.date" (cronChange)="onCronChange($event)" (dateChange)="onCronChange($event)">
+	<app-cron-editor [(activeTab)]="messageData.activeTab" (stateChange)="messageData.cronState = $event" [cronState]="messageData.cronState" (errorChange)="onCronError($event)" [(cron)]="messageData.cron" [(date)]="messageData.date" (cronChange)="onCronChange($event)" (dateChange)="onCronChange($event)">
 	</app-cron-editor>
 	<mat-divider *ngIf="messageData.description"></mat-divider>
 	<div *ngIf="messageData.description" class="infos">

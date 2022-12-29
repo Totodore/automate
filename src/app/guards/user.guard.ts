@@ -1,8 +1,7 @@
 import { SnackbarService } from './../services/snackbar.service';
 import { ApiService } from './../services/api.service';
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class UserGuard implements CanActivate {
     private readonly snackbar: SnackbarService
   ) { }
   
-  public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  public async canActivate() {
     if (!this.api.logged)
       return this.router.parseUrl("/");
     else if (!this.api.profile) {

@@ -2,7 +2,7 @@ import { ProgressService } from './progress.service';
 import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 import { map, timeout } from "rxjs/operators";
-import { GuildElement, PatchMessageModel, PostFreqMessageInModel } from 'src/app/models/api.model';
+import { PatchMessageModel, PostFreqMessageInModel } from 'src/app/models/api.model';
 import { DiscordProfile, MessageModel, GuildReqModel, MemberModel, PostPonctMessageInModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -66,7 +66,7 @@ export class ApiService {
   public async postFreqMessage(files: File[], body: Partial<PostFreqMessageInModel>): Promise<MessageModel> {
     const formData = new FormData();
     for (const [key, val] of Object.entries(body))
-      formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString()!);
+      formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString() ?? "");
     for (const file of files)
       formData.append("files", file);
     return await this.post(`guild/${this.currentGuild?.id}/message/freq`, body);
@@ -75,7 +75,7 @@ export class ApiService {
   public async postPonctualMessage(files: File[], body: Partial<PostPonctMessageInModel>): Promise<MessageModel> {
     const formData = new FormData();
     for (const [key, val] of Object.entries(body))
-      formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString()!);
+      formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString() ?? "");
     for (const file of files)
       formData.append("files", file);
     return await this.post(`guild/${this.currentGuild?.id}/message/ponctual`, body);
@@ -88,8 +88,10 @@ export class ApiService {
     await this.delete(`guild/${this.currentGuild?.id}`);
   }
   public async deleteMessage(msgId: string) {
-    await this.delete(`guild/${this.currentGuild?.id}/message/${msgId}`);
-    this.currentGuild!.messages = this.currentGuild!.messages.filter(el => el.id !== msgId);
+    if (!this.currentGuild)
+      return;
+    await this.delete(`guild/${this.currentGuild.id}/message/${msgId}`);
+    this.currentGuild.messages = this.currentGuild.messages.filter(el => el.id !== msgId);
   }
   private async get<R>(path: string, token?: string) {
     try {

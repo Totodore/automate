@@ -1,8 +1,7 @@
 import { MessageModel } from './../../../../models/api.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { APIState } from 'src/app/models/sys.model';
 import { environment } from 'src/environments/environment';
-import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-last-messages',

@@ -1,10 +1,9 @@
 import { SnackbarService } from './../../../services/snackbar.service';
 import { DiscordGuild } from './../../../models/api.model';
 import { ApiService } from './../../../services/api.service';
-import { Component, OnInit, Sanitizer } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-no-guild',
@@ -29,6 +28,8 @@ export class NoGuildComponent implements OnInit {
   }
 
   public onDispIframe() {
+    if (!this.id)
+      return;
     this.dispIframe = true;
     const discordWindow = window.open(this.botLink + this.id, 'newwindow', 'height=670,width=400,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=no');
 
@@ -39,8 +40,12 @@ export class NoGuildComponent implements OnInit {
       }
     }, 1000);
 
-    const subscribtion = this.api.getCreatedGuild(this.id!).subscribe(el => {
-      this.api.profile!.guilds.find(el => el.id == this.id)!.added = true;
+    const subscribtion = this.api.getCreatedGuild(this.id).subscribe(() => {
+      if (!this.api.profile)
+        return;
+      const guild = this.api.profile.guilds.find(el => el.id == this.id);
+      if (guild)
+        guild.added = true;
       this.dispIframe = false;
       discordWindow?.close();
       this.router.navigateByUrl(`/board/${this.id}`);
@@ -50,7 +55,7 @@ export class NoGuildComponent implements OnInit {
 
   public onError() {
     this.dispIframe = false;
-    this.snackbar.snack("Impossible to add Automate to " + this.guild!.name + ", try to reload the application !");
+    this.snackbar.snack("Impossible to add Automate to " + this.guild?.name + ", try to reload the application !");
   }
 
   public get guild(): DiscordGuild | undefined {

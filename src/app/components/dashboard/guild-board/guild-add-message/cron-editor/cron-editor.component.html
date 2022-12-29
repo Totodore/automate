@@ -37,13 +37,13 @@
 					<input [disabled]="!radioDailyDay.checked" [(ngModel)]="state.daily.everyDays.days" type="number" matInput min="0" max="500">
 				</mat-form-field>
 				<span>day(s) at</span>
-				<app-time-picker [disabled]="!radioDailyDay.checked" [(hours)]="state.daily.everyDays.hours" [(minutes)]="state.daily.everyDays.minutes" (change)="regenerateCron()">
+				<app-time-picker [disabled]="!radioDailyDay.checked" [(hours)]="state.daily.everyDays.hours" [(minutes)]="state.daily.everyDays.minutes" (timeChange)="regenerateCron()">
 				</app-time-picker>
 			</div>
 			<div class="tab">
 				<mat-radio-button #radioDailyWeek value="everyWeekDay" (change)="state.daily.subTab = $event.value"></mat-radio-button>
 				<span>Every working day at</span>
-				<app-time-picker [disabled]="!radioDailyWeek.checked" [(hours)]="state.daily.everyWeekDay.hours" [(minutes)]="state.daily.everyWeekDay.minutes" (change)="regenerateCron()">
+				<app-time-picker [disabled]="!radioDailyWeek.checked" [(hours)]="state.daily.everyWeekDay.hours" [(minutes)]="state.daily.everyWeekDay.minutes" (timeChange)="regenerateCron()">
 				</app-time-picker>
 			</div>
 		</mat-radio-group>

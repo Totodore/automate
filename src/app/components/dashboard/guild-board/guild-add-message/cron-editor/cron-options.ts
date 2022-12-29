@@ -27,7 +27,7 @@ export interface StateDataModel {
 
 export interface MinuteState {
   minutes: number,
-};
+}
 export interface HourlyState {
   hours: number,
   minutes: number,

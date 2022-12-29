@@ -1,10 +1,8 @@
 import { SnackbarService } from './../../../services/snackbar.service';
-import { environment } from './../../../../environments/environment';
 import { MessageModel } from './../../../models/api.model';
 import { APIState } from './../../../models/sys.model';
 import { ApiService } from './../../../services/api.service';
 import { Component, OnInit } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 
 @Component({

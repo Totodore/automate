@@ -6,10 +6,10 @@
 			<app-guild-table (editMessage)="onEditMessage($event)" [admin]="isAdmin" #table [discordGuild]="discordGuild" *ngIf="(guild?.messages?.length || 0) > 0 && discordGuild">
 			</app-guild-table>
 			<ng-container *ngIf="isAdmin">
-				<h1 *ngIf="guild?.messages?.length == 0">Start by adding a new message just below!</h1>
+				<h1 *ngIf="!guild?.messages?.length">Start by adding a new message just below!</h1>
 				<app-guild-add-message #addMessage [msg]="editMessage!" (newMessage)="table.refresh()"></app-guild-add-message>
 			</ng-container>
-			<h1 *ngIf="guild?.messages?.length == 0 && !isAdmin">No message has been currently set</h1>
+			<h1 *ngIf="!guild?.messages?.length && !isAdmin">No message has been currently set</h1>
 		</div>
 	</ng-container>
 	<div class="hider" [class.enabled]="loading"></div>

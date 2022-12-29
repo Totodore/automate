@@ -10,7 +10,6 @@ import { toString as cronDescriptor } from "cronstrue";
   styleUrls: ['./cron-editor.component.scss']
 })
 export class CronEditorComponent implements OnInit {
-  @Input() get cron(): string { return this.localCron; }
   @Input() date!: Date;
 
   @Input() set cronState(val: Partial<StateDataModel> | undefined) {
@@ -20,7 +19,7 @@ export class CronEditorComponent implements OnInit {
   }
   @Input() set activeTab(val: Tab | undefined) {
     this._activeTab = val || "minutes";
-    let arr: Tab[] = ["minutes", "hourly", "daily", "weekly", "monthly", "advanced", "date"];
+    const arr: Tab[] = ["minutes", "hourly", "daily", "weekly", "monthly", "advanced", "date"];
     this.selectedTabIndex = arr.indexOf(val || "minutes");
   }
 
@@ -28,6 +27,7 @@ export class CronEditorComponent implements OnInit {
     return this._activeTab;
   }
 
+  @Input() get cron(): string { return this.localCron; }
   set cron(value: string) {
     this.localCron = value;
     this.stateChange.emit(this.state);
@@ -39,7 +39,7 @@ export class CronEditorComponent implements OnInit {
   @Output() dateChange = new EventEmitter<Date>();
   @Output() stateChange = new EventEmitter<StateDataModel>();
   @Output() activeTabChange = new EventEmitter<Tab>();
-  @Output() onError = new EventEmitter<string>();
+  @Output() errorChange = new EventEmitter<string>();
 
   public selectOptions = this.getSelectOptions();
   public state!: StateDataModel;
@@ -51,7 +51,7 @@ export class CronEditorComponent implements OnInit {
 
   constructor(
     private changeDetector: ChangeDetectorRef
-  ) {}
+  ) { }
 
   public ngOnInit() {
     this.state = this.getDefaultState();
@@ -113,20 +113,23 @@ export class CronEditorComponent implements OnInit {
         }
         break;
       case 'weekly':
-        const days = this.selectOptions.days
-        //@ts-ignore
-          .reduce((acc, day) => this.state.weekly.dow[day] ? acc.concat([day]) : acc, [])
-          .join(',');
-        if (days.length > 0)
-          this.cron = `${this.state.weekly.minutes} ${this.state.weekly.hours} ? * ${days}`;
-        break;
+        {
+          const days = this.selectOptions.days
+            .reduce<string[]>((acc, day) => this.state.weekly.dow[day] ? acc.concat([day]) : acc, [])
+            .join(',');
+          if (days.length > 0)
+            this.cron = `${this.state.weekly.minutes} ${this.state.weekly.hours} ? * ${days}`;
+          break;
+        }
       case 'monthly':
         switch (this.state.monthly.subTab) {
           case 'specificDay':
-            const days = this.state.monthly.specificDay.day.reduce((prev, curr) => prev + "," + curr, "").substring(1);
-            if (days.length > 0 && this.state.monthly.specificDay.months > 0)
-              this.cron = `${this.state.monthly.specificDay.minutes} ${this.state.monthly.specificDay.hours} ${days} 1/${this.state.monthly.specificDay.months} ?`;
-            break;
+            {
+              const days = this.state.monthly.specificDay.day.reduce((prev, curr) => prev + "," + curr, "").substring(1);
+              if (days.length > 0 && this.state.monthly.specificDay.months > 0)
+                this.cron = `${this.state.monthly.specificDay.minutes} ${this.state.monthly.specificDay.hours} ${days} 1/${this.state.monthly.specificDay.months} ?`;
+              break;
+            }
           case 'specificWeekDay':
             if (this.state.monthly.specificWeekDay.startMonth && this.state.monthly.specificWeekDay.months && this.state.monthly.specificWeekDay.monthWeek && this.state.monthly.specificWeekDay.day)
               this.cron = `${this.state.monthly.specificWeekDay.minutes} ${this.state.monthly.specificWeekDay.hours} ? ${this.state.monthly.specificWeekDay.startMonth}/${this.state.monthly.specificWeekDay.months} ${this.state.monthly.specificWeekDay.day}${this.state.monthly.specificWeekDay.monthWeek}`;
@@ -141,7 +144,7 @@ export class CronEditorComponent implements OnInit {
         if (this.validate(this.state.advanced.expression))
           this.cron = this.state.advanced.expression;
         else {
-          this.onError.emit("Bad cron expression!");
+          this.errorChange.emit("Bad cron expression!");
           return;
         }
         break;
@@ -149,7 +152,7 @@ export class CronEditorComponent implements OnInit {
         this.dateChange.emit(new Date(this.state.date.date.getTime() + this.state.date.hours * 3_600_000 + this.state.date.minutes * 60_000));
         break;
     }
-    this.onError.emit(undefined);
+    this.errorChange.emit(undefined);
   }
 
   public getDowObject(): { [k in DoW]: string } {
@@ -171,10 +174,11 @@ export class CronEditorComponent implements OnInit {
     return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   }
   private validate(cron: string): boolean {
+    //eslint-disable-next-line
     return (/^\s*($|#|\w+\s*=|(\?|\*|(?:[0-5]?\d)(?:(?:-|\/|\,)(?:[0-5]?\d))?(?:,(?:[0-5]?\d)(?:(?:-|\/|\,)(?:[0-5]?\d))?)*)\s+(\?|\*|(?:[0-5]?\d)(?:(?:-|\/|\,)(?:[0-5]?\d))?(?:,(?:[0-5]?\d)(?:(?:-|\/|\,)(?:[0-5]?\d))?)*)\s+(\?|\*|(?:[01]?\d|2[0-3])(?:(?:-|\/|\,)(?:[01]?\d|2[0-3]))?(?:,(?:[01]?\d|2[0-3])(?:(?:-|\/|\,)(?:[01]?\d|2[0-3]))?)*)\s+(\?|\*|(?:0?[1-9]|[12]\d|3[01])(?:(?:-|\/|\,)(?:0?[1-9]|[12]\d|3[01]))?(?:,(?:0?[1-9]|[12]\d|3[01])(?:(?:-|\/|\,)(?:0?[1-9]|[12]\d|3[01]))?)*)\s+(\?|\*|(?:[1-9]|1[012])(?:(?:-|\/|\,)(?:[1-9]|1[012]))?(?:L|W)?(?:,(?:[1-9]|1[012])(?:(?:-|\/|\,)(?:[1-9]|1[012]))?(?:L|W)?)*|\?|\*|(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(?:(?:-)(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC))?(?:,(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(?:(?:-)(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC))?)*)\s+(\?|\*|(?:[0-6])(?:(?:-|\/|\,|#)(?:[0-6]))?(?:L)?(?:,(?:[0-6])(?:(?:-|\/|\,|#)(?:[0-6]))?(?:L)?)*|\?|\*|(?:MON|TUE|WED|THU|FRI|SAT|SUN)(?:(?:-)(?:MON|TUE|WED|THU|FRI|SAT|SUN))?(?:,(?:MON|TUE|WED|THU|FRI|SAT|SUN)(?:(?:-)(?:MON|TUE|WED|THU|FRI|SAT|SUN))?)*)(|\s)+(\?|\*|(?:|\d{4})(?:(?:-|\/|\,)(?:|\d{4}))?(?:,(?:|\d{4})(?:(?:-|\/|\,)(?:|\d{4}))?)*))$/
       .test(cron) ||
       /^((((\d+,)+\d+|(\d+(\/|-|#)\d+)|\d+L?|\*(\/\d+)?|L(-\d+)?|\?|[A-Z]{3}(-[A-Z]{3})?) ?){5,7})$/
-      .test(cron)) && !cronDescriptor(cron, { verbose: true, throwExceptionOnParseError: false })?.includes("second");
+        .test(cron)) && !cronDescriptor(cron, { verbose: true, throwExceptionOnParseError: false })?.includes("second");
   }
 
 

@@ -8,8 +8,7 @@ import { UserGuard } from './guards/user.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { Routes, RouterModule, ActivatedRouteSnapshot } from '@angular/router';
 
 const routes: Routes = [
   { path: "", component: AuthComponent, canActivate: [NoUserGuard] },
@@ -30,7 +29,7 @@ const routes: Routes = [
   providers: [
     {
       provide: 'externalUrlRedirectResolver',
-      useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => window.location.href = (route.data as any).externalUrl
+      useValue: (route: ActivatedRouteSnapshot) => window.location.href = route.data.externalUrl
     }
   ]
 })

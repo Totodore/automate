@@ -1,4 +1,4 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,8 +6,8 @@ import { Injectable, ChangeDetectorRef } from '@angular/core';
 export class ProgressService {
 
   private _mode: "determinate" | "indeterminate" = "indeterminate";
-  private _showing: boolean = false;
-  private _value: number = 0;
+  private _showing = false;
+  private _value = 0;
 
   public show(determinate = false) {
     this._mode = determinate ? "determinate" : "indeterminate";

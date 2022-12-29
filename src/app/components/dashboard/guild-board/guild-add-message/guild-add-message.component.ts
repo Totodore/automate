@@ -2,7 +2,7 @@ import { StateDataModel, Tab } from './cron-editor/cron-options';
 import { SnackbarService } from './../../../../services/snackbar.service';
 import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel, PostPonctMessageInModel, MessageType, TagType } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
-import { Component, AfterViewInit, Input, ViewChild, ElementRef, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { toString as cronDescriptor } from "cronstrue";
 import { GuildElement, PatchMessageModel } from 'src/app/models/api.model';
 import { MentionConfig } from 'angular-mentions';
@@ -129,7 +129,9 @@ export class GuildAddMessageComponent {
   }
 
   public onSuggestionsClick(el: GuildElement) {
-    this.messageData.message = this.messageData.message.substring(0, this.messageData.message.lastIndexOf(this.inputMode!)) + this.inputMode + el.name + " ";
+    if (!this.inputMode)
+      return;
+    this.messageData.message = this.messageData.message.substring(0, this.messageData.message.lastIndexOf(this.inputMode)) + this.inputMode + el.name + " ";
     if (el.name != "here" && el.name != "@here" && el.name != "@everyone" && el.name != "everyone")
       this.messageData.addedTags.set(this.inputMode + el.name, [el.type, el.id]);
     this.suggestions = [];
@@ -140,11 +142,13 @@ export class GuildAddMessageComponent {
     let parsedMessage = this.messageData.message;
     for (const [tag, [type, id]] of this.messageData.addedTags.entries())
       parsedMessage = parsedMessage.replaceAll(tag, `<${tag.substring(0, 1)}${type == TagType.Role ? '&' : ''}${id}>`);
+    if (!this.api.profile)
+      return;
     try {
       let msg: MessageModel | undefined;
       if (!this.messageData.editingId) {
         msg = await (!this.dateMode ? this.postFreqMessage(parsedMessage) : this.postPonctMessage(parsedMessage));
-        msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.username, this.api.profile!.avatar);
+        msg.creator = new UserModel(this.api.profile.id, this.api.profile.username, this.api.profile.avatar);
         this.api.currentGuild?.messages.push(msg);
         this.newMessage.emit(msg);
       } else {
@@ -163,9 +167,11 @@ export class GuildAddMessageComponent {
   }
 
   private async postFreqMessage(parsedMessage: string): Promise<MessageModel> {
+    if (!this.messageData.selectedChannel || !this.messageData.description)
+      throw new Error("Missing data");
     return await this.api.postFreqMessage([], new PostFreqMessageInModel(
-      this.messageData.selectedChannel!,
-      this.messageData.description!,
+      this.messageData.selectedChannel,
+      this.messageData.description,
       this.messageData.message,
       parsedMessage,
       this.messageData.cron,
@@ -175,11 +181,13 @@ export class GuildAddMessageComponent {
   }
 
   private async postPonctMessage(parsedMessage: string): Promise<MessageModel> {
+    if (!this.messageData.selectedChannel || !this.messageData.description)
+      throw new Error("Missing data");
     // Convert to UTC
     const postingDate = new Date(this.messageData.date.getTime() - (this.messageData.date.getTimezoneOffset() * 60_000)).toISOString();
     return await this.api.postPonctualMessage([], new PostPonctMessageInModel(
-      this.messageData.selectedChannel!,
-      this.messageData.description!,
+      this.messageData.selectedChannel,
+      this.messageData.description,
       this.messageData.message,
       parsedMessage,
       postingDate,
@@ -189,6 +197,8 @@ export class GuildAddMessageComponent {
   }
 
   private async patchMessage(parsedMessage: string): Promise<MessageModel | undefined> {
+    if (!this.messageData.selectedChannel || !this.messageData.description)
+      throw new Error("Missing data");
     // Convert to UTC
     let patchedDate;
     if (this.dateMode)
@@ -197,21 +207,23 @@ export class GuildAddMessageComponent {
       patchedDate = null;
     await this.api.patchMessage(this.messageData.editingId as string, new PatchMessageModel(
       patchedDate,
-      this.messageData.selectedChannel!,
-      this.messageData.description!,
+      this.messageData.selectedChannel,
+      this.messageData.description,
       this.messageData.message,
       parsedMessage,
       !this.dateMode ? this.messageData.cron : null,
       this.messageData.cronState,
       this.messageData.activeTab,
     ));
-    let msg = this.api.currentGuild!.messages.find(el => el.id == this.messageData.editingId);
+    if (!this.api.currentGuild || !this.api.profile)
+      return;
+    const msg = this.api.currentGuild.messages.find(el => el.id == this.messageData.editingId);
     if (msg) {
       msg.date = this.messageData.date;
       msg.channelId = this.messageData.selectedChannel || msg.channelId;
       if (this.messageData.selectedChannel)
         msg.channelName = this.api.currentGuild?.channels.find(el => el.id == this.messageData.selectedChannel)?.name;
-      msg.creator = new UserModel(this.api.profile!.id, this.api.profile!.username, this.api.profile!.avatar);
+      msg.creator = new UserModel(this.api.profile.id, this.api.profile.username, this.api.profile.avatar);
       msg.cron = this.messageData.cron;
       msg.cronState = this.messageData.cronState;
       msg.cronTab = this.messageData.activeTab;
