@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 .wrapper {
 	width: clamp(600px, 90%, 1300px);
