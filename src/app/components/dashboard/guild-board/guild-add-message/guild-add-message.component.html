@@ -12,21 +12,23 @@
 		<p class="desc">{{ messageData.description }}</p>
 		<button mat-button (click)="expandedMessage = !expandedMessage">{{ messageData.editingId ? "Edit" : "Write" }} my message <mat-icon color="accent" [style]="expandedMessage ? 'transform: rotate(180deg)' : ''">arrow_downward</mat-icon></button>
 	</div>
-	<mat-divider *ngIf="expandedMessage && messageData.description"></mat-divider>
-	<div *ngIf="expandedMessage && messageData.description" class="message-builder">
-		<textarea #textarea (keydown)="onKeydown($event)" [(ngModel)]="messageData.message" [ngModelOptions]="{standalone: true}" placeholder="Write your message here..." [mentionConfig]="mentionConfig" (searchTerm)="onInput($event)"></textarea>
-		<mat-divider *ngIf="suggestions.length > 0 && inputMode" class="divider-suggestions"></mat-divider>
-		<div class="suggestions" *ngIf="suggestions.length > 0 && inputMode">
-			<button mat-button class="suggestion-el" *ngFor="let el of suggestions; let i = index" [class.selected]="i === selectedIndex" (click)="onSuggestionsClick(el)">
-				{{ inputMode }}{{ el.name }}
-			</button>
+	<ng-container *ngIf="expandedMessage && messageData.description">
+		<mat-divider></mat-divider>
+		<div class="message-builder">
+			<textarea #textarea (keydown)="onKeydown($event)" [(ngModel)]="messageData.message" [ngModelOptions]="{standalone: true}" placeholder="Write your message here..." [mentionConfig]="mentionConfig" (searchTerm)="onInput($event)"></textarea>
+			<mat-divider *ngIf="suggestions.length > 0 && inputMode" class="divider-suggestions"></mat-divider>
+			<div class="suggestions" *ngIf="suggestions.length > 0 && inputMode">
+				<button mat-button class="suggestion-el" *ngFor="let el of suggestions; let i = index" [class.selected]="i === selectedIndex" (click)="onSuggestionsClick(el)">
+					{{ inputMode }}{{ el.name }}
+				</button>
+			</div>
 		</div>
-	</div>
-	<div class="channel-picker" *ngIf="expandedMessage && messageData.description && messageData.message.length > 0">
-		<mat-select [(ngModel)]="messageData.selectedChannel" placeholder="Select your channel" [ngModelOptions]="{standalone: true}">
-				<mat-option *ngFor="let item of api.currentGuild!.channels" [value]="item.id">#{{ item.name }}</mat-option>
-		</mat-select>
-		<button [attr.disabled]="messageData.selectedChannel ? null : true" mat-button (click)="addMessage()">{{ messageData.editingId ? "Update" : "Add" }} my message <mat-icon color="accent" class="mat-18">send</mat-icon></button>
-	</div>
-	<!-- <mat-divider *ngIf="expandedMessage && description && message.length > 0" class="divider-channel-picker"></mat-divider> -->
+		<app-guild-add-attachment></app-guild-add-attachment>
+		<div class="channel-picker" *ngIf="messageData.message.length > 0">
+			<mat-select [(ngModel)]="messageData.selectedChannel" placeholder="Select your channel" [ngModelOptions]="{standalone: true}">
+					<mat-option *ngFor="let item of api.currentGuild!.channels" [value]="item.id">#{{ item.name }}</mat-option>
+			</mat-select>
+			<button [attr.disabled]="messageData.selectedChannel ? null : true" mat-button (click)="addMessage()">{{ messageData.editingId ? "Update" : "Add" }} my message <mat-icon color="accent" class="mat-18">send</mat-icon></button>
+		</div>
+	</ng-container>
 </form>

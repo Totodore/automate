@@ -44,6 +44,7 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MentionModule } from 'angular-mentions';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { GuildAddAttachmentComponent } from './components/dashboard/guild-board/guild-add-message/guild-add-attachment/guild-add-attachment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +62,8 @@ import { environment } from '../environments/environment';
     NoGuildComponent,
     ConfirmComponent,
     CronEditorComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    GuildAddAttachmentComponent
   ],
   imports: [
     BrowserModule,

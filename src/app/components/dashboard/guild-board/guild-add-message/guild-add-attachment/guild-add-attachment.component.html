@@ -1,0 +1,10 @@
+<div class="file-list" #fileList (mousewheel)="onScroll($any($event), fileList)">
+	<div class="file" *ngFor="let file of attachments; let i = index">
+		<span class="file-name">{{ file.name }}</span>
+		<mat-icon color="accent" class="close-icon mat-18" (click)="removeAttachment(i)">close</mat-icon>
+	</div>
+</div>
+<input #fileInput type="file" multiple="true" (change)="addAttachments(fileInput.files)" />
+<button mat-button class="add-btn" (click)="fileInput.click()">
+	Add an attachment ({{ attachments.length }}/10) <mat-icon matPrefix color="accent" class="mat-18">add</mat-icon>
+</button>
