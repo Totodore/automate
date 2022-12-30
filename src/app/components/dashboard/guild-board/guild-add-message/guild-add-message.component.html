@@ -23,12 +23,16 @@
 				</button>
 			</div>
 		</div>
-		<app-guild-add-attachment></app-guild-add-attachment>
+		<app-guild-add-attachment [files]="messageData.files ?? []"></app-guild-add-attachment>
 		<div class="channel-picker" *ngIf="messageData.message.length > 0">
 			<mat-select [(ngModel)]="messageData.selectedChannel" placeholder="Select your channel" [ngModelOptions]="{standalone: true}">
 					<mat-option *ngFor="let item of api.currentGuild!.channels" [value]="item.id">#{{ item.name }}</mat-option>
 			</mat-select>
-			<button [attr.disabled]="messageData.selectedChannel ? null : true" mat-button (click)="addMessage()">{{ messageData.editingId ? "Update" : "Add" }} my message <mat-icon color="accent" class="mat-18">send</mat-icon></button>
+			<button [attr.disabled]="messageData.selectedChannel ? null : true" mat-button (click)="addMessage()">
+				{{ messageData.editingId ? "Update" : "Add" }} my message 
+				<mat-icon *ngIf="!sending" color="accent" class="mat-18">send</mat-icon>
+				<mat-progress-spinner class="loader" *ngIf="sending" matPrefix mode="indeterminate" [diameter]="22" [strokeWidth]="2" color="accent"></mat-progress-spinner>
+			</button>
 		</div>
 	</ng-container>
 </form>

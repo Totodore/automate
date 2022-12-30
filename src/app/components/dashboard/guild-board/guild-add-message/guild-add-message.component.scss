@@ -4,10 +4,12 @@ h1 {
 	font-size: 2rem;
 	color: whitesmoke;
 	margin-top: 30px;
+
 	@media (max-width: 650px) {
 		font-size: 1.4rem;
 	}
 }
+
 .editing {
 	display: flex;
 	width: fit-content;
@@ -19,43 +21,52 @@ h1 {
 	border-top-right-radius: 5px;
 	padding: 5px 10px;
 	transform: translateX(-1px);
+
 	h3 {
 		margin-bottom: 0px;
 		color: #cbcbcb;
 	}
+
 	button {
 		border: none;
 	}
 }
+
 form {
 	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 	border-radius: 5px;
 	overflow: hidden;
+
 	.infos {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
+
 		.desc {
 			margin: 12px;
 			max-width: calc(100% - 185px);
 			font-size: 0.9rem;
 		}
+
 		button {
 			margin-right: 4px;
+
 			mat-icon {
 				font-size: 1.3rem;
-    		margin-left: 5px;
+				margin-left: 5px;
 				transition: all 300ms;
 				transform-origin: center;
 			}
 		}
 	}
+
 	.message-builder {
 		width: 100%;
 		padding: 6px 9px;
 		padding-bottom: 0;
 		box-sizing: border-box;
+
 		textarea {
 			font-family: Roboto, "Helvetica Neue", sans-serif;
 			font-size: 14px;
@@ -69,19 +80,24 @@ form {
 			border: none;
 			outline: none;
 			color: whitesmoke;
+
 			&::placeholder {
 				font-family: Roboto, "Helvetica Neue", sans-serif;
 			}
 		}
-		.divider-suggestions, .suggestions {
+
+		.divider-suggestions,
+		.suggestions {
 			width: calc(100% + 18px);
 			margin-left: -9px;
 		}
+
 		.suggestions {
 			overflow-x: auto;
 			padding-left: 5px;
 			padding-bottom: 3px;
 			display: flex;
+
 			.suggestion-el {
 				color: #F79058;
 				opacity: 0.1;
@@ -92,35 +108,51 @@ form {
 				margin: 0 5px;
 				margin-top: 2px;
 				min-width: fit-content;
+
 				&.selected {
 					background-color: #ffffff0e;
 				}
 			}
 		}
 	}
+
 	.channel-picker {
 		width: 100%;
 		display: flex;
 		align-items: center;
 		border-top: rgba(255, 255, 255, 0.12) 1px solid;
 		height: 44px;
+
 		mat-select {
 			flex: 1;
 			margin-left: 10px;
 		}
+
 		button {
 			margin-left: 5px;
 			margin-right: 4px;
 			border: none;
+
 			mat-icon {
 				font-size: 1.3rem;
-    		margin-left: 5px;
+				margin-left: 5px;
 				transition: all 300ms;
 				transform-origin: center;
+			}
+
+			.loader {
+				margin-right: 10px;
+			}
+			::ng-deep .mdc-button__label {
+				display: flex;
+				flex-direction: row-reverse;
+				align-items: center;
+				justify-content: space-between;
 			}
 		}
 	}
 }
-.editing + form {
+
+.editing+form {
 	border-top-left-radius: 0;
 }

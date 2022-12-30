@@ -29,6 +29,11 @@ export class MessageModel {
     public cronTab?: Tab,
   ) { }
 }
+export interface File {
+  id: string;
+  name: string;
+  messageId: string;
+}
 
 export interface DiscordProfile extends Discord.Profile {
   guilds: DiscordGuild[];
@@ -137,6 +142,7 @@ export class PatchMessageModel {
     public cron: string | null,
     public cronState?: Partial<StateDataModel> | null,
     public cronTab?: Tab | null,
+    public removedFiles?: string[]
   ) {}
 
 }

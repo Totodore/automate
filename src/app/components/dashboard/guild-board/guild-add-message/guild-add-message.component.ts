@@ -1,11 +1,12 @@
 import { StateDataModel, Tab } from './cron-editor/cron-options';
 import { SnackbarService } from './../../../../services/snackbar.service';
-import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel, PostPonctMessageInModel, MessageType, TagType } from './../../../../models/api.model';
+import { MemberModel, MessageModel, PostFreqMessageInModel, UserModel, PostPonctMessageInModel, MessageType, TagType, File } from './../../../../models/api.model';
 import { ApiService } from './../../../../services/api.service';
 import { Component, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { toString as cronDescriptor } from "cronstrue";
 import { GuildElement, PatchMessageModel } from 'src/app/models/api.model';
 import { MentionConfig } from 'angular-mentions';
+import { GuildAddAttachmentComponent } from './guild-add-attachment/guild-add-attachment.component';
 @Component({
   selector: 'app-guild-add-message',
   templateUrl: './guild-add-message.component.html',
@@ -20,6 +21,7 @@ export class GuildAddMessageComponent {
   public selectedIndex = 0;
 
   public messageData = this.baseMessageModel();
+  public sending = false;
 
   public mentionConfig: MentionConfig = {
     mentions: [
@@ -40,6 +42,9 @@ export class GuildAddMessageComponent {
   @ViewChild("textarea")
   private textarea?: ElementRef<HTMLTextAreaElement>;
 
+  @ViewChild(GuildAddAttachmentComponent)
+  private attachmentComponent?: GuildAddAttachmentComponent;
+
   @Output()
   public readonly newMessage = new EventEmitter<MessageModel>();
 
@@ -51,6 +56,7 @@ export class GuildAddMessageComponent {
     this.messageData.cronState = val?.cronState;
     this.messageData.selectedChannel = val?.channelId;
     this.messageData.message = val?.message || "";
+    this.messageData.files = val?.files || [];
     this.expandedMessage = this.messageData.message?.length > 0;
   }
   
@@ -145,6 +151,7 @@ export class GuildAddMessageComponent {
     if (!this.api.profile)
       return;
     try {
+      this.sending = true;
       let msg: MessageModel | undefined;
       if (!this.messageData.editingId) {
         msg = await (!this.dateMode ? this.postFreqMessage(parsedMessage) : this.postPonctMessage(parsedMessage));
@@ -163,13 +170,18 @@ export class GuildAddMessageComponent {
     } catch (e) {
       console.error(e);
       this.snackbar.snack("Impossible to post this message!");
+      this.sending = false;
+    } finally {
+      this.sending = false;
     }
   }
 
   private async postFreqMessage(parsedMessage: string): Promise<MessageModel> {
     if (!this.messageData.selectedChannel || !this.messageData.description)
       throw new Error("Missing data");
-    return await this.api.postFreqMessage([], new PostFreqMessageInModel(
+    const files = this.attachmentComponent?.attachments ?? [];
+    
+    return await this.api.postFreqMessage(files, new PostFreqMessageInModel(
       this.messageData.selectedChannel,
       this.messageData.description,
       this.messageData.message,
@@ -183,9 +195,10 @@ export class GuildAddMessageComponent {
   private async postPonctMessage(parsedMessage: string): Promise<MessageModel> {
     if (!this.messageData.selectedChannel || !this.messageData.description)
       throw new Error("Missing data");
+    const files = this.attachmentComponent?.attachments ?? [];
     // Convert to UTC
     const postingDate = new Date(this.messageData.date.getTime() - (this.messageData.date.getTimezoneOffset() * 60_000)).toISOString();
-    return await this.api.postPonctualMessage([], new PostPonctMessageInModel(
+    return await this.api.postPonctualMessage(files, new PostPonctMessageInModel(
       this.messageData.selectedChannel,
       this.messageData.description,
       this.messageData.message,
@@ -205,7 +218,11 @@ export class GuildAddMessageComponent {
       patchedDate = new Date(this.messageData.date.getTime() - (this.messageData.date.getTimezoneOffset() * 60_000)).toISOString();
     else
       patchedDate = null;
-    await this.api.patchMessage(this.messageData.editingId as string, new PatchMessageModel(
+    // Remove existing files from the list to send only the new ones
+    const existingFileNames = this.messageData.files?.map(file => file.name);
+    const files = this.attachmentComponent?.attachments?.filter(file => !existingFileNames?.includes(file.name)) ?? [];
+    console.log(existingFileNames, files, this.attachmentComponent?.attachments);
+    const addedFiles = await this.api.patchMessage(files, this.messageData.editingId as string, new PatchMessageModel(
       patchedDate,
       this.messageData.selectedChannel,
       this.messageData.description,
@@ -214,6 +231,7 @@ export class GuildAddMessageComponent {
       !this.dateMode ? this.messageData.cron : null,
       this.messageData.cronState,
       this.messageData.activeTab,
+      this.attachmentComponent?.removedFiles?.map(el => el.id) ?? []
     ));
     if (!this.api.currentGuild || !this.api.profile)
       return;
@@ -232,6 +250,8 @@ export class GuildAddMessageComponent {
       msg.parsedMessage = this.messageData.parsedMessage;
       msg.type = this.messageData.date ? MessageType.PONCTUAL : MessageType.FREQUENTIAL;
       msg.updatedDate = new Date();
+      msg.files = msg.files.filter(el => !this.attachmentComponent?.removedFiles.includes(el));
+      msg.files.push(...addedFiles);
     }
     return msg;
   }
@@ -246,6 +266,7 @@ export class GuildAddMessageComponent {
       parsedMessage: "",
       editingId: null,
       activeTab: "minutes",
+      files: [],
     }
   }
 
@@ -263,4 +284,5 @@ export interface AddMessageModel {
   selectedChannel?: string;
   cronState?: Partial<StateDataModel>;
   activeTab?: Tab;
+  files?: File[];
 }

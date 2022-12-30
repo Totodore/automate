@@ -2,7 +2,7 @@ import { ProgressService } from './progress.service';
 import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 import { map, timeout } from "rxjs/operators";
-import { PatchMessageModel, PostFreqMessageInModel } from 'src/app/models/api.model';
+import { File as FileEntity, PatchMessageModel, PostFreqMessageInModel } from 'src/app/models/api.model';
 import { DiscordProfile, MessageModel, GuildReqModel, MemberModel, PostPonctMessageInModel } from './../models/api.model';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -69,7 +69,7 @@ export class ApiService {
       formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString() ?? "");
     for (const file of files)
       formData.append("files", file);
-    return await this.post(`guild/${this.currentGuild?.id}/message/freq`, body);
+    return await this.post(`guild/${this.currentGuild?.id}/message/freq`, formData);
   }
 
   public async postPonctualMessage(files: File[], body: Partial<PostPonctMessageInModel>): Promise<MessageModel> {
@@ -78,11 +78,26 @@ export class ApiService {
       formData.append(key, typeof val === "object" ? JSON.stringify(val) : val?.toString() ?? "");
     for (const file of files)
       formData.append("files", file);
-    return await this.post(`guild/${this.currentGuild?.id}/message/ponctual`, body);
+    return await this.post(`guild/${this.currentGuild?.id}/message/ponctual`, formData);
   }
 
-  public async patchMessage(msgId: string, body: PatchMessageModel) {
-    await this.patch(`guild/${this.currentGuild?.id}/message/${msgId}`, body);
+  /**
+   * @returns the list of new files in the message
+   */
+  public async patchMessage(files: File[], msgId: string, body: PatchMessageModel): Promise<FileEntity[]> {
+    const formData = new FormData();
+    for (const [key, val] of Object.entries(body))
+      if (!!val) {
+        // Special encoding for arrays
+        if (Array.isArray(val)) {
+          for (const v of val)
+            formData.append(`${key}[]`, v);
+        } else
+          formData.append(key, typeof val === "object" ? JSON.stringify(val) : val.toString());
+      }
+    for (const file of files)
+      formData.append("files", file);
+    return await this.patch(`guild/${this.currentGuild?.id}/message/${msgId}`, formData);
   }
   public async deleteGuildFromServer() {
     await this.delete(`guild/${this.currentGuild?.id}`);

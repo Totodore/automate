@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { File as FileEntity } from 'src/app/models/api.model';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
@@ -12,7 +13,18 @@ export class GuildAddAttachmentComponent {
   constructor(
     private readonly snackbar: SnackbarService,
   ) { }
+
+  private _previousFiles: FileEntity[] = [];
+
   public attachments: File[] = [];
+
+  @Input()
+  public set files(val: FileEntity[]) {
+    this._previousFiles = val;
+    this.attachments = val.map(v => new File([], v.name));
+  }
+
+  public removedFiles: FileEntity[] = [];
 
   public onScroll(event: WheelEvent, target: HTMLElement) {
     target.scrollLeft += Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
@@ -41,6 +53,10 @@ export class GuildAddAttachmentComponent {
   }
 
   public removeAttachment(i: number) {
-    this.attachments.splice(i, 1);
+    const file = this.attachments.splice(i, 1)[0];
+    const prev = this._previousFiles.find(f => f.name === file.name);
+    if (!prev)
+      return;
+    this.removedFiles.push(prev);
   }
 }
